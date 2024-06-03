@@ -1,10 +1,14 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(SignupPage());
+  runApp(const SignupPage());
 }
 
 class SignupPage extends StatelessWidget {
+  const SignupPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,7 +17,7 @@ class SignupPage extends StatelessWidget {
           width: 320,
           height: 568,
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -33,7 +37,7 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -47,14 +51,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 135,
                 top: 93,
                 child: Text(
@@ -68,7 +72,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 148,
                 child: Text(
@@ -82,7 +86,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 119,
                 child: Text(
@@ -103,14 +107,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 147,
                 child: Text(
@@ -124,7 +128,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 119,
                 child: Text(
@@ -145,14 +149,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 354,
                 child: Text(
@@ -173,14 +177,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 64,
                 top: 382,
                 child: Text(
@@ -194,7 +198,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 63,
                 top: 213,
                 child: Text(
@@ -208,7 +212,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 63,
                 top: 181,
                 child: Text(
@@ -229,14 +233,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 63,
                 top: 253,
                 child: Text(
@@ -257,14 +261,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFD9D9D9),
+                    color: const Color(0xFFD9D9D9),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 63,
                 top: 320,
                 child: Text(
@@ -278,7 +282,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 63,
                 top: 292,
                 child: Text(
@@ -299,14 +303,14 @@ class SignupPage extends StatelessWidget {
                   width: 233,
                   height: 33,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF4399FF),
+                    color: const Color(0xFF4399FF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 127,
                 top: 470,
                 child: Text(
@@ -326,9 +330,9 @@ class SignupPage extends StatelessWidget {
                 child: Container(
                   width: 150,
                   height: 75.41,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage("https://via.placeholder.com/150x75"),
+                      image: NetworkImage("assets/DayWon.png"),
                       fit: BoxFit.fill,
                     ),
                   ),
