@@ -12,8 +12,8 @@ class MainPage extends StatelessWidget {
         builder: (context, constraints) {
           return Center(
             child: Container(
-              width: constraints.maxWidth < 600 ? constraints.maxWidth : 320,
-              height: constraints.maxHeight < 600 ? constraints.maxHeight : 568,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(
                 color: Colors.white,

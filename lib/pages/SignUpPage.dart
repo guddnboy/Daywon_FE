@@ -14,8 +14,8 @@ class SignupPage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 320,
-          height: 568,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(
             color: Colors.white,

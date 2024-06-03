@@ -20,6 +20,30 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Positioned(
+                  left: (MediaQuery.of(context).size.width - 150) / 2,
+                  top: MediaQuery.of(context).size.height * 0.3,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/DayWon.png"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 180,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage("assets/Daywon.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
@@ -38,16 +62,6 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        width: 180,
-                        height: 80,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage("assets/DayWon.png"),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 20),
                       const Text(
                         '로그인',
