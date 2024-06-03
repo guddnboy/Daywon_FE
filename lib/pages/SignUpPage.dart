@@ -30,6 +30,21 @@ class SignupPage extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              // 이미지
+              Positioned(
+                left: 80,
+                top: 30,
+                child: Container(
+                  width: 150,
+                  height: 75.41,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage("assets/DayWon.png"),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ),
               Positioned(
                 left: 44,
                 top: 138,
@@ -321,20 +336,6 @@ class SignupPage extends StatelessWidget {
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                     height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 80,
-                top: 30,
-                child: Container(
-                  width: 150,
-                  height: 75.41,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("assets/DayWon.png"),
-                      fit: BoxFit.fill,
-                    ),
                   ),
                 ),
               ),
