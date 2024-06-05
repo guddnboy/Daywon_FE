@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/pages/AdminPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/SignUpPage.dart';
 import 'package:project/pages/findID.dart';
@@ -168,6 +169,31 @@ class LoginPage extends StatelessWidget {
                           ),
                           child: const Text(
                             '회원가입',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdminPage()),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide.none,
+                            ),
+                          ),
+                          child: const Text(
+                            '관리자 페이지',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12,
