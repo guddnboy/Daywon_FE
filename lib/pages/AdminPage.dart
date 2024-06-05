@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const AdminPage());
 }
 
 class AdminPage extends StatefulWidget {
-  const AdminPage({Key? key});
+  const AdminPage({Key? key}) : super(key: key);
 
   @override
   _AdminPageState createState() => _AdminPageState();
@@ -21,18 +18,14 @@ class _AdminPageState extends State<AdminPage> {
   @override
   void initState() {
     super.initState();
-    // 세션 데이터를 가져와서 nickname과 numberOfProblems를 업데이트합니다.
     fetchSessionData();
   }
 
   Future<void> fetchSessionData() async {
-    // 세션 데이터를 가져오는 것을 가정합니다.
-    await Future.delayed(const Duration(seconds: 2)); // 딜레이를 시뮬레이션합니다.
-    // 세션에서 닉네임과 문제 수를 가져왔다고 가정합니다.
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      nickname = 'John Doe'; // 예시 닉네임
+      nickname = 'John Doe';
       numberOfProblems = 10;
-      // 예시 문제 수
     });
   }
 
@@ -136,8 +129,8 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                           ),
                           Text(
-                            "$numberOfProblems 개",
-                            style: TextStyle(
+                            '$numberOfProblems 개',
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 30,
                               fontFamily: 'Inter',
@@ -147,6 +140,82 @@ class _AdminPageState extends State<AdminPage> {
                         ],
                       ),
                     ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: const ShapeDecoration(
+                            color: Color(0xFF0075FF),
+                            shape: OvalBorder(),
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          '문제 생성 및 확인',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // 문제 생성 버튼 클릭 시 동작
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF4399FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      minimumSize:
+                          Size(MediaQuery.of(context).size.width * 0.5, 0),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text(
+                      '문제 생성',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: TextButton(
+                      onPressed: () {
+                        // 문제 확인 버튼 클릭 시 동작
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xFF4399FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        minimumSize:
+                            Size(MediaQuery.of(context).size.width * 0.5, 0),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: const Text(
+                        '문제 확인',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
