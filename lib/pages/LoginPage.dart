@@ -41,15 +41,15 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      '로그인',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    // const Text(
+                    //   '로그인',
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 18,
+                    //     fontFamily: 'Inter',
+                    //     fontWeight: FontWeight.w600,
+                    //   ),
+                    // ),
                     const SizedBox(height: 20),
                     TextField(
                       decoration: InputDecoration(
@@ -80,6 +80,7 @@ class LoginPage extends StatelessWidget {
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
+                    // 로그인 버튼
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -99,7 +100,8 @@ class LoginPage extends StatelessWidget {
                         child: const Text(
                           '로그인',
                           style: TextStyle(
-                            fontSize: 15,
+                            color: Colors.white,
+                            fontSize: 16,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                           ),
@@ -107,6 +109,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
