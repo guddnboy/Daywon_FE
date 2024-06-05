@@ -36,6 +36,7 @@ dependencies:
 flutter_native_splash:
   image: assets/splashScreen.png # 추가할 이미지 파일 경로를 추가
   color: "#ffffff"
+  fullscreen: true
 
 dev_dependencies:
   flutter_test:
