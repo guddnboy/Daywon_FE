@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/pages/LoginPage.dart';
 
 void main() {
@@ -58,6 +59,10 @@ class SignupPage extends StatelessWidget {
                           borderSide: BorderSide.none,
                         ),
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9]')), // 영문자와 숫자만 허용
+                      ],
                     ),
                   ),
                 ),
@@ -73,6 +78,7 @@ class SignupPage extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.8,
                     child: TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: '비밀번호',
                         labelStyle: const TextStyle(
@@ -95,6 +101,7 @@ class SignupPage extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.8,
                     child: TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
                         labelText: '비밀번호 확인',
                         labelStyle: const TextStyle(
