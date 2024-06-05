@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/SignUpPage.dart';
+import 'package:project/pages/findID.dart';
 
 void main() {
   runApp(const LoginPage());
@@ -101,7 +102,11 @@ class LoginPage extends StatelessWidget {
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Handle 아이디 찾기 button press
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const findID()),
+                            );
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: Colors.white,
