@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const AdminPage());
@@ -28,7 +31,8 @@ class _AdminPageState extends State<AdminPage> {
     // 세션에서 닉네임과 문제 수를 가져왔다고 가정합니다.
     setState(() {
       nickname = 'John Doe'; // 예시 닉네임
-      numberOfProblems = 10; // 예시 문제 수
+      numberOfProblems = 10;
+      // 예시 문제 수
     });
   }
 
@@ -56,69 +60,92 @@ class _AdminPageState extends State<AdminPage> {
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "$nickname 님, 안녕하세요!",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w800,
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: nickname,
+                            style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w800),
+                          ),
+                          const TextSpan(
+                            text: ' 님, 안녕하세요!',
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   Stack(
                     children: [
-                      Center(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                            horizontal: 10.0,
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          height: 132,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF4399FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 10.0,
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 132,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF4399FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/DayWon.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "데이원 관리자 계정",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      "생성된 문제 수",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("데이원 관리자 계정"),
-                                  Text("생성된 문제 수"),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
+                          Text(
                             "$numberOfProblems 개",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16,
+                              fontSize: 30,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                        ),
-                      )
+                        ],
+                      ),
                     ],
                   ),
                 ],
