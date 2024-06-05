@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/SignUpPage.dart';
 
@@ -25,6 +26,8 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    const SizedBox(height: 20),
+                    // 이미지 요소
                     Container(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
@@ -58,6 +61,10 @@ class LoginPage extends StatelessWidget {
                           borderSide: BorderSide.none,
                         ),
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z0-9]')), // 영문자와 숫자만 허용
+                      ],
                     ),
                     const SizedBox(height: 10),
                     TextField(
