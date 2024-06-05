@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:project/pages/LoginPage.dart';
 
 void main() {
   runApp(const SignupPage());
@@ -11,338 +12,156 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x3F000000),
-                blurRadius: 4,
-                offset: Offset(0, 4),
-                spreadRadius: 0,
-              )
-            ],
-          ),
-          child: Stack(
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height,
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // 이미지
-              Positioned(
-                left: 80,
-                top: 30,
-                child: Container(
-                  width: 150,
-                  height: 75.41,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("assets/DayWon.png"),
-                      fit: BoxFit.fill,
+              Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.3,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/DayWon.png"),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: '아이디',
+                      filled: true,
+                      fillColor: const Color(0xFFD9D9D9),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                left: 44,
-                top: 138,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: '비밀번호',
+                      filled: true,
+                      fillColor: const Color(0xFFD9D9D9),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Positioned(
-                left: 44,
-                top: 203,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: '비밀번호 확인',
+                      filled: true,
+                      fillColor: const Color(0xFFD9D9D9),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-              const Positioned(
-                left: 135,
-                top: 93,
-                child: Text(
-                  '회원가입',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 64,
-                top: 148,
-                child: Text(
-                  '아이디',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 64,
-                top: 119,
-                child: Text(
-                  '아이디',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 137,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: '이메일',
+                      filled: true,
+                      fillColor: const Color(0xFFD9D9D9),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-              const Positioned(
-                left: 64,
-                top: 147,
-                child: Text(
-                  '아이디',
-                  style: TextStyle(
-                    color: Color(0xFF838383),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 64,
-                top: 119,
-                child: Text(
-                  '아이디',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 373,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: '닉네임',
+                      filled: true,
+                      fillColor: const Color(0xFFD9D9D9),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
                 ),
               ),
-              const Positioned(
-                left: 64,
-                top: 354,
-                child: Text(
-                  '닉네임',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 372,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 20.0),
+                      backgroundColor: const Color(0xFF4399FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ), // Background color
                     ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 64,
-                top: 382,
-                child: Text(
-                  '닉네임',
-                  style: TextStyle(
-                    color: Color(0xFF838383),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 63,
-                top: 213,
-                child: Text(
-                  '비밀번호',
-                  style: TextStyle(
-                    color: Color(0xFF838383),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 63,
-                top: 181,
-                child: Text(
-                  '비밀번호',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 243,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                    child: const Text(
+                      '회원가입하기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 63,
-                top: 253,
-                child: Text(
-                  '비밀번호 확인 ',
-                  style: TextStyle(
-                    color: Color(0xFF838383),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 310,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 63,
-                top: 320,
-                child: Text(
-                  '이메일',
-                  style: TextStyle(
-                    color: Color(0xFF838383),
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 63,
-                top: 292,
-                child: Text(
-                  '이메일',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                    height: 0,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 44,
-                top: 462,
-                child: Container(
-                  width: 233,
-                  height: 33,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF4399FF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-              ),
-              const Positioned(
-                left: 127,
-                top: 470,
-                child: Text(
-                  '회원가입',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                 ),
               ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
