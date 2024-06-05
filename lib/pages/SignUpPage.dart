@@ -37,6 +37,9 @@ class SignupPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: '아이디',
+                      labelStyle: const TextStyle(
+                        fontSize: 13,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFFD9D9D9),
                       contentPadding: const EdgeInsets.symmetric(
@@ -56,6 +59,9 @@ class SignupPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: '비밀번호',
+                      labelStyle: const TextStyle(
+                        fontSize: 13,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFFD9D9D9),
                       contentPadding: const EdgeInsets.symmetric(
@@ -75,6 +81,9 @@ class SignupPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: '비밀번호 확인',
+                      labelStyle: const TextStyle(
+                        fontSize: 13,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFFD9D9D9),
                       contentPadding: const EdgeInsets.symmetric(
@@ -94,6 +103,9 @@ class SignupPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: '이메일',
+                      labelStyle: const TextStyle(
+                        fontSize: 13,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFFD9D9D9),
                       contentPadding: const EdgeInsets.symmetric(
@@ -113,6 +125,9 @@ class SignupPage extends StatelessWidget {
                   child: TextField(
                     decoration: InputDecoration(
                       labelText: '닉네임',
+                      labelStyle: const TextStyle(
+                        fontSize: 13,
+                      ),
                       filled: true,
                       fillColor: const Color(0xFFD9D9D9),
                       contentPadding: const EdgeInsets.symmetric(
