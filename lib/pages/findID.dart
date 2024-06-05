@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const findID());
@@ -31,12 +29,70 @@ class findID extends StatelessWidget {
                     ),
                   ),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [],
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('이메일'),
                   ),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Column(
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: '이메일 주소',
+                            labelStyle: const TextStyle(
+                              fontSize: 13,
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFD9D9D9),
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal: 20.0,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: '인증번호',
+                                labelStyle: const TextStyle(
+                                  fontSize: 13,
+                                ),
+                                filled: true,
+                                fillColor: const Color(0xFFD9D9D9),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 20.0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // 인증 절차
+                          },
+                          child: const Text('인증요청'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
