@@ -19,6 +19,7 @@ class LoginPage extends StatelessWidget {
           child: Stack(
             children: [
               Container(
+                color: Colors.white,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.all(16.0),
