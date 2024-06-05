@@ -111,18 +111,20 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 10),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () {
                             // Handle 아이디 찾기 button press
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.zero,
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white, // 버튼 배경색 설정
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
+                              side: BorderSide.none, // 테두리 없애기
                             ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '아이디 찾기',
@@ -134,16 +136,18 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () {
                             // Handle 비밀번호 찾기 button press
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.zero,
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white, // 버튼 배경색 설정
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
+                              side: BorderSide.none, // 테두리 없애기
                             ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '비밀번호 찾기',
@@ -155,20 +159,22 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        ElevatedButton(
+                        TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignupPage()),
+                                  builder: (context) => const SignupPage()),
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            padding: EdgeInsets.zero,
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white, // 버튼 배경색 설정
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
+                              side: BorderSide.none, // 테두리 없애기
                             ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '회원가입',
@@ -182,6 +188,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 20),
                     const Text(
                       'Day￦과 금융 학습을 시작하세요!',
