@@ -27,7 +27,6 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    // 이미지 요소
                     Container(
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
@@ -35,21 +34,10 @@ class LoginPage extends StatelessWidget {
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("assets/DayWon.png"),
-                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    // const Text(
-                    //   '로그인',
-                    //   style: TextStyle(
-                    //     color: Colors.black,
-                    //     fontSize: 18,
-                    //     fontFamily: 'Inter',
-                    //     fontWeight: FontWeight.w600,
-                    //   ),
-                    // ),
                     const SizedBox(height: 20),
                     TextField(
                       decoration: InputDecoration(
@@ -80,7 +68,6 @@ class LoginPage extends StatelessWidget {
                       obscureText: true,
                     ),
                     const SizedBox(height: 20),
-                    // 로그인 버튼
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -109,22 +96,19 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
                           onPressed: () {
                             // Handle 아이디 찾기 button press
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.white, // 버튼 배경색 설정
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide.none, // 테두리 없애기
+                              side: BorderSide.none,
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '아이디 찾기',
@@ -141,13 +125,11 @@ class LoginPage extends StatelessWidget {
                             // Handle 비밀번호 찾기 button press
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.white, // 버튼 배경색 설정
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide.none, // 테두리 없애기
+                              side: BorderSide.none,
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '비밀번호 찾기',
@@ -168,13 +150,11 @@ class LoginPage extends StatelessWidget {
                             );
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor: Colors.white, // 버튼 배경색 설정
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide.none, // 테두리 없애기
+                              side: BorderSide.none,
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20), // 패딩 설정
                           ),
                           child: const Text(
                             '회원가입',
@@ -188,7 +168,6 @@ class LoginPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 20),
                     const Text(
                       'Day￦과 금융 학습을 시작하세요!',
