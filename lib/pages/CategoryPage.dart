@@ -20,6 +20,11 @@ class CategoryPage extends StatelessWidget {
             double containerWidth = constraints.maxWidth * 0.8;
             double containerHeight = constraints.maxHeight * 0.65;
 
+            String category1 = '세금';
+            String category2 = '자산관리';
+            String category3 = '금융기초상식';
+            String category4 = '기본 상식';
+
             return Stack(
               children: [
                 Center(
@@ -84,7 +89,9 @@ class CategoryPage extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LearningPage()));
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category1,
+                                            )));
                               },
                               child: const Text(
                                 '세금',
@@ -109,10 +116,12 @@ class CategoryPage extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LearningPage()));
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category2,
+                                            )));
                               },
                               child: const Text(
-                                '투자',
+                                '자산관리',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -134,10 +143,12 @@ class CategoryPage extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LearningPage()));
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category3,
+                                            )));
                               },
                               child: const Text(
-                                '저축',
+                                '금융기초상식',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -159,7 +170,9 @@ class CategoryPage extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LearningPage()));
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category4,
+                                            )));
                               },
                               child: const Text(
                                 '기본 상식',
@@ -182,10 +195,8 @@ class CategoryPage extends StatelessWidget {
                   right: 50,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LearningPage()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => MainPage()));
                     },
                     child: Image.asset(
                       'assets/img/backbtn.png',

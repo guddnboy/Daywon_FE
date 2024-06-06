@@ -1,14 +1,33 @@
+// ignore_for_file: file_names
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
 
 void main() {
   runApp(const MaterialApp(
-    home: LearningPage(),
+    home: LearningPage(selectedCategory: ''),
   ));
 }
 
-class LearningPage extends StatelessWidget {
-  const LearningPage({super.key});
+class LearningPage extends StatefulWidget {
+  final String selectedCategory;
+
+  const LearningPage({Key? key, required this.selectedCategory})
+      : super(key: key);
+
+  @override
+  _LearningPageState createState() => _LearningPageState();
+}
+
+class _LearningPageState extends State<LearningPage> {
+  late String selectedCategory; // 선택된 카테고리를 저장할 변수
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCategory = widget.selectedCategory;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +72,24 @@ class LearningPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: Text(
+                                selectedCategory.isNotEmpty
+                                    ? selectedCategory // 선택된 카테고리 텍스트 표시
+                                    : '오늘의 학습', // 기본 텍스트
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -62,10 +99,7 @@ class LearningPage extends StatelessWidget {
                   right: 50,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LearningPage()));
+                      Navigator.pop(context);
                     },
                     child: Image.asset(
                       'assets/img/backbtn.png',
@@ -86,7 +120,7 @@ class LearningPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 5),
                       const Text(
-                        '오늘의 학습',
+                        '오늘의 학습', // 기본 텍스트
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -133,7 +167,9 @@ class LearningPage extends StatelessWidget {
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           // Handle tap logic here, e.g., navigating to different pages
-          print('Tapped index: $index');
+          if (kDebugMode) {
+            print('Tapped index: $index');
+          }
           switch (index) {
             case 0:
               Navigator.pop(context);
