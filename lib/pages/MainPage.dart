@@ -24,19 +24,21 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   String nickname = '';
+  int points = 0;
 
   @override
   void initState() {
     super.initState();
-    fetchNickname();
+    fetchUser();
   }
 
-  Future<void> fetchNickname() async {
+  Future<void> fetchUser() async {
     // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
     // 예시로 2초 후에 닉네임을 "마리모"로 설정합니다.
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
-      nickname = '마리모'; // 데이터베이스에서 가져온 닉네임으로 설정
+      nickname = '마리모';
+      points = 750000; // 데이터베이스에서 가져온 닉네임으로 설정
     });
   }
 
@@ -176,6 +178,34 @@ class _MainPageState extends State<MainPage> {
                                       ],
                                     ),
                                   ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  points.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                  ),
+                                ),
+                                const Text(
+                                  '원',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
                                 ),
                               ],
                             ),
