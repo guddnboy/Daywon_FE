@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/LearningPage.dart';
 import 'package:project/pages/MainPage.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: CategoryPage(),
   ));
 }
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,7 @@ class CategoryPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: Alignment(
+                      alignment: const Alignment(
                           0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
                       child: Container(
                         width: containerWidth,
@@ -77,7 +80,12 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage()));
+                              },
                               child: const Text(
                                 '세금',
                                 style: TextStyle(
@@ -97,7 +105,12 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage()));
+                              },
                               child: const Text(
                                 '투자',
                                 style: TextStyle(
@@ -117,7 +130,12 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage()));
+                              },
                               child: const Text(
                                 '저축',
                                 style: TextStyle(
@@ -137,7 +155,12 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage()));
+                              },
                               child: const Text(
                                 '기본 상식',
                                 style: TextStyle(
@@ -159,7 +182,10 @@ class CategoryPage extends StatelessWidget {
                   right: 50,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LearningPage()));
                     },
                     child: Image.asset(
                       'assets/backbtn.png',
