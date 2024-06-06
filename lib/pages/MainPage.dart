@@ -28,6 +28,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String nickname = '';
   int points = 0;
+  int days = 0;
   late String _randomImage;
 
   final List<String> _images = [
@@ -56,7 +57,8 @@ class _MainPageState extends State<MainPage> {
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
       nickname = '마리모';
-      points = 750000; // 데이터베이스에서 가져온 닉네임으로 설정
+      points = 750000;
+      days = 13; // 데이터베이스에서 가져온 닉네임으로 설정
     });
   }
 
@@ -276,7 +278,7 @@ class _MainPageState extends State<MainPage> {
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             width: 100,
@@ -290,35 +292,63 @@ class _MainPageState extends State<MainPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: MediaQuery.sizeOf(context).width * 0.4,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CategoryPage()),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                // backgroundColor: const Color(0xFF4399FF),
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    days.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  const Text(
+                                    ' 일 연속 출석',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: const Text(
-                                '학습하기',
-                                style: TextStyle(
-                                  color: const Color(0xFF4399FF),
-                                  fontSize: 18,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w800,
+                              SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.4,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CategoryPage()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    // backgroundColor: const Color(0xFF4399FF),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                  ),
+                                  child: const Text(
+                                    '학습하기',
+                                    style: TextStyle(
+                                      color: const Color(0xFF4399FF),
+                                      fontSize: 18,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
