@@ -134,6 +134,30 @@ class _ShortformPageState extends State<ShortformPage> {
                     ],
                   ),
                 ),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 20),
+                    ),
+                    child: const Text(
+                      '학습하기',
+                      style: TextStyle(
+                        color: const Color(0xFF4399FF),
+                        fontSize: 18,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             );
           },
