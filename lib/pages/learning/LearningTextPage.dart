@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/ShortformPage.dart';
+import 'package:project/pages/learning/ShortformPage.dart';
 
 void main() {
   runApp(const MaterialApp(

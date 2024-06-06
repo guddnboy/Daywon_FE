@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/pages/admin/AdminPage.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/SignUpPage.dart';
-import 'package:project/pages/findID.dart';
-import 'package:project/pages/findPassword.dart';
+import 'package:project/pages/login/SignUpPage.dart';
+import 'package:project/pages/login/findID.dart';
+import 'package:project/pages/login/findPassword.dart';
 
 void main() {
   runApp(const LoginPage());
