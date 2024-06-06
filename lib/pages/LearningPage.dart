@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: LearningPage(),
   ));
 }
 
 class LearningPage extends StatelessWidget {
+  const LearningPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +55,45 @@ class LearningPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                  ),
+                ),
+                Positioned(
+                  top: 60,
+                  right: 50,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LearningPage()));
+                    },
+                    child: Image.asset(
+                      'assets/img/backbtn.png',
+                      width: 45,
+                      height: 45,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 68,
+                  left: 55,
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/img/circle.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 5),
+                      const Text(
+                        '오늘의 학습',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
