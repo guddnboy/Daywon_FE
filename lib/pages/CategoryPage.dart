@@ -195,8 +195,7 @@ class CategoryPage extends StatelessWidget {
                   right: 50,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => MainPage()));
+                      Navigator.pop(context);
                     },
                     child: Image.asset(
                       'assets/img/backbtn.png',
