@@ -188,7 +188,7 @@ class CategoryPage extends StatelessWidget {
                               builder: (context) => LearningPage()));
                     },
                     child: Image.asset(
-                      'assets/backbtn.png',
+                      'assets/img/backbtn.png',
                       width: 45,
                       height: 45,
                     ),
@@ -200,7 +200,7 @@ class CategoryPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset(
-                        'assets/circle.png',
+                        'assets/img/circle.png',
                         width: 20,
                         height: 20,
                       ),
@@ -226,7 +226,7 @@ class CategoryPage extends StatelessWidget {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/backbtn.png',
+              'assets/img/backbtn.png',
               width: 24,
               height: 24,
             ),
@@ -234,7 +234,7 @@ class CategoryPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/homebtn.png',
+              'assets/img/homebtn.png',
               width: 28,
               height: 28,
             ),
@@ -242,7 +242,7 @@ class CategoryPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/mypagebtn.png',
+              'assets/img/mypagebtn.png',
               width: 24,
               height: 24,
             ),

@@ -32,10 +32,10 @@ class _MainPageState extends State<MainPage> {
   late String _randomImage;
 
   final List<String> _images = [
-    'assets/marimo_1.png',
-    'assets/marimo_2.png',
-    'assets/marimo_3.png',
-    'assets/marimo_4.png'
+    'assets/img/marimo_1.png',
+    'assets/img/marimo_2.png',
+    'assets/img/marimo_3.png',
+    'assets/img/marimo_4.png'
   ];
 
   String _getRandomImage() {
@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
                       height: MediaQuery.of(context).size.height * 0.2,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/DayWon.png"),
+                          image: AssetImage("assets/img/DayWon.png"),
                         ),
                       ),
                     ),
@@ -147,7 +147,8 @@ class _MainPageState extends State<MainPage> {
                                     color: Colors.white,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage("assets/marimo_1.png"),
+                                      image:
+                                          AssetImage("assets/img/marimo_1.png"),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -367,7 +368,7 @@ class _MainPageState extends State<MainPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/backbtn.png',
+              'assets/img/backbtn.png',
               width: 24,
               height: 24,
             ),
@@ -375,7 +376,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/homebtn.png',
+              'assets/img/homebtn.png',
               width: 28,
               height: 28,
             ),
@@ -383,7 +384,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/mypagebtn.png',
+              'assets/img/mypagebtn.png',
               width: 24,
               height: 24,
             ),

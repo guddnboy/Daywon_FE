@@ -65,7 +65,7 @@ class LearningPage extends StatelessWidget {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/backbtn.png',
+              'assets/img/backbtn.png',
               width: 24,
               height: 24,
             ),
@@ -73,7 +73,7 @@ class LearningPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/homebtn.png',
+              'assets/img/homebtn.png',
               width: 28,
               height: 28,
             ),
@@ -81,7 +81,7 @@ class LearningPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/mypagebtn.png',
+              'assets/img/mypagebtn.png',
               width: 24,
               height: 24,
             ),

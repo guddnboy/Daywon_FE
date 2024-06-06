@@ -49,7 +49,7 @@ class _AdminPageState extends State<AdminPage> {
                     height: MediaQuery.of(context).size.height * 0.3,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/DayWon.png"),
+                        image: AssetImage("assets/img/DayWon.png"),
                       ),
                     ),
                   ),
@@ -110,7 +110,7 @@ class _AdminPageState extends State<AdminPage> {
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
-                                  image: AssetImage("assets/DayWon.png"),
+                                  image: AssetImage("assets/img/DayWon.png"),
                                   fit: BoxFit.fill,
                                 ),
                               ),
