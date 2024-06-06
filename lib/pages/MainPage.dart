@@ -394,8 +394,6 @@ class _MainPageState extends State<MainPage> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          // Handle tap logic here, e.g., navigating to different pages
-          print('Tapped index: $index');
           switch (index) {
             case 0:
               Navigator.pop(context);
