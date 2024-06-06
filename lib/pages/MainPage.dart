@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:project/pages/CategoryPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -257,6 +258,34 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
+                      Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryPage()),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4399FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          child: const Text(
+                            '학습하기',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -264,6 +293,58 @@ class _MainPageState extends State<MainPage> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/backbtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Back',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/homebtn.png',
+              width: 28,
+              height: 28,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/mypagebtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'My Page',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          // Handle tap logic here, e.g., navigating to different pages
+          print('Tapped index: $index');
+          switch (index) {
+            case 0:
+              Navigator.pop(context);
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
+              break;
+          }
+        },
       ),
     );
   }
