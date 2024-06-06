@@ -1,371 +1,417 @@
 // ignore_for_file: unnecessary_const
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'CategoryPage.dart';
+import 'dart:math';
 
-class MainPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:project/pages/CategoryPage.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  String nickname = '';
+  int points = 0;
+  int days = 0;
+  late String _randomImage;
+
+  final List<String> _images = [
+    'assets/marimo_1.png',
+    'assets/marimo_2.png',
+    'assets/marimo_3.png',
+    'assets/marimo_4.png'
+  ];
+
+  String _getRandomImage() {
+    final random = Random();
+    int index = random.nextInt(_images.length);
+    return _images[index];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUser();
+    _randomImage = _getRandomImage();
+  }
+
+  Future<void> fetchUser() async {
+    // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
+    // 예시로 2초 후에 닉네임을 "마리모"로 설정합니다.
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      nickname = '마리모';
+      points = 750000;
+      days = 13; // 데이터베이스에서 가져온 닉네임으로 설정
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Center(
-            child: Container(
+      body: Center(
+        child: Stack(
+          children: [
+            Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: Stack(
+              padding: const EdgeInsets.all(20.0),
+              color: Colors.white,
+              child: Column(
                 children: [
-                  Positioned(
-                    left: 19,
-                    top: 126,
+                  Align(
+                    alignment: Alignment.centerLeft,
                     child: Container(
-                      width: 282,
-                      height: 132,
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFF4399FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x3F000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 21,
-                    top: 93,
-                    child: Text(
-                      '마리모',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w800,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 65,
-                    top: 93,
-                    child: Text(
-                      '님, 오늘의 학습을 시작하세요! ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 80,
-                    top: 140,
-                    child: Text(
-                      '자유 입출금 통장',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 82,
-                    top: 158,
-                    child: Text(
-                      '데이원은행',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 133,
-                    top: 158,
-                    child: Text(
-                      '302112354868684',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 81,
-                    top: 182,
-                    child: Text(
-                      '750,000 ',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 214,
-                    top: 182,
-                    child: Text(
-                      '원',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 132,
-                    top: 396,
-                    width: 121,
-                    height: 30,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CategoryPage(),
-                          ),
-                        );
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xFF4399FF)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(17),
-                            side: BorderSide(
-                              color: Color(0xFF0075FF),
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        '학습 시작하기',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w500,
-                          height: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 125,
-                    top: 358,
-                    child: Text(
-                      '10',
-                      style: TextStyle(
-                        color: Color(0xFF1D1D1D),
-                        fontSize: 22,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 152,
-                    top: 358,
-                    child: Text(
-                      '일 연속 출석',
-                      style: TextStyle(
-                        color: Color(0xFF1D1D1D),
-                        fontSize: 22,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  const Positioned(
-                    left: 48,
-                    top: 323,
-                    child: Text(
-                      '오늘의 학습',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 26,
-                    top: 323,
-                    child: Container(
-                      width: 15,
-                      height: 15,
-                      decoration: const ShapeDecoration(
-                        color: Color(0xFF0075FF),
-                        shape: OvalBorder(),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: 517,
-                    child: Container(
-                      width: constraints.maxWidth < 600
-                          ? constraints.maxWidth
-                          : 320,
-                      height: 51,
-                      decoration: const BoxDecoration(color: Color(0xFF8A8A8A)),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: 510,
-                    child: Container(
-                      width: constraints.maxWidth < 600
-                          ? constraints.maxWidth
-                          : 320,
-                      height: 58,
-                      decoration: const ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignOutside,
-                            color: Color(0xFF4399FF),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 0,
-                    top: 15,
-                    child: Container(
-                      width: 150,
-                      height: 75.41,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.2,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/DayWon.png"),
-                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 33,
-                    top: 140,
-                    child: SizedBox(
-                      width: 35,
-                      height: 35,
-                      child: Stack(
+                  Row(
+                    children: [
+                      Text(
+                        nickname,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w800,
+                          height: 0,
+                        ),
+                      ),
+                      const Text(
+                        '님, 오늘의 학습을 시작하세요! ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10.0),
+                  Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10.0,
+                          horizontal: 10.0,
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFF4399FF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          shadows: const [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: AssetImage("assets/marimo_1.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          nickname,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const Text(
+                                          "  자유 입출금 통장",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          "DayWon",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "0000-0000-0000-0000",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  points.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0,
+                                  ),
+                                ),
+                                const Text(
+                                  '원',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Color.fromARGB(255, 222, 222, 222),
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Row(
                         children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
+                          Align(
+                            alignment: Alignment.centerLeft,
                             child: Container(
-                              width: 35,
-                              height: 35,
+                              width: 18,
+                              height: 18,
                               decoration: const ShapeDecoration(
-                                color: Colors.white,
+                                color: Color(0xFF0075FF),
                                 shape: OvalBorder(),
                               ),
                             ),
                           ),
-                          Positioned(
-                            left: 1.59,
-                            top: 10.18,
-                            child: Container(
-                              width: 31.82,
-                              height: 16,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage("assets/DayWon.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+                          const SizedBox(width: 10.0),
+                          const Text(
+                            '오늘의 학습',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    left: -13,
-                    top: 296,
-                    child: Container(
-                      width: constraints.maxWidth < 600
-                          ? constraints.maxWidth
-                          : 350,
-                      decoration: const ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            strokeAlign: BorderSide.strokeAlignCenter,
-                            color: Color(0xFFEBEBEB),
+                      const SizedBox(height: 50),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(_randomImage),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 31,
-                    top: 356,
-                    child: Container(
-                      width: 75,
-                      height: 74,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                          side: const BorderSide(
-                            width: 1,
-                            color: Colors.grey,
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    days.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  const Text(
+                                    ' 일 연속 출석',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.4,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CategoryPage()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    // backgroundColor: const Color(0xFF4399FF),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                  ),
+                                  child: const Text(
+                                    '학습하기',
+                                    style: TextStyle(
+                                      color: const Color(0xFF4399FF),
+                                      fontSize: 18,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                        ],
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
             ),
-          );
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/backbtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Back',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/homebtn.png',
+              width: 28,
+              height: 28,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/mypagebtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'My Page',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          // Handle tap logic here, e.g., navigating to different pages
+          print('Tapped index: $index');
+          switch (index) {
+            case 0:
+              Navigator.pop(context);
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
+              break;
+          }
         },
       ),
     );
