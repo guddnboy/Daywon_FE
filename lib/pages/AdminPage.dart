@@ -75,71 +75,67 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ),
                   ),
-                  Stack(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 10.0,
-                            ),
-                            width: MediaQuery.of(context).size.width,
-                            height: 132,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFF4399FF),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 10.0,
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: 132,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF4399FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage("assets/DayWon.png"),
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
-                            child: Row(
+                            const SizedBox(width: 10),
+                            const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image: AssetImage("assets/DayWon.png"),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
+                                Text(
+                                  "데이원 관리자 계정",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                                const SizedBox(width: 10),
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "데이원 관리자 계정",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text(
-                                      "생성된 문제 수",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
+                                Text(
+                                  "생성된 문제 수",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
+                          ],
+                        ),
+                        Text(
+                          '$numberOfProblems 개',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w800,
                           ),
-                          Text(
-                            '$numberOfProblems 개',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [
