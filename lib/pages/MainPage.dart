@@ -277,6 +277,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -318,6 +319,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                 ],
                               ),
+                              const SizedBox(height: 20),
                               SizedBox(
                                 width: MediaQuery.sizeOf(context).width * 0.4,
                                 child: ElevatedButton(
