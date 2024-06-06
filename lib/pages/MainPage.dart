@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               color: Colors.white,
               child: Column(
                 children: [
@@ -211,6 +211,51 @@ class _MainPageState extends State<MainPage> {
                             ),
                           ],
                         ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: const ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Color.fromARGB(255, 222, 222, 222),
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              width: 18,
+                              height: 18,
+                              decoration: const ShapeDecoration(
+                                color: Color(0xFF0075FF),
+                                shape: OvalBorder(),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          const Text(
+                            '오늘의 학습',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

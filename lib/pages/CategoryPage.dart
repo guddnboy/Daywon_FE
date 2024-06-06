@@ -28,7 +28,8 @@ class CategoryPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: Alignment(0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
+                      alignment: Alignment(
+                          0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
                       child: Container(
                         width: containerWidth,
                         height: containerHeight,
@@ -248,4 +249,4 @@ class CategoryPage extends StatelessWidget {
       ),
     );
   }
-} 
+}
