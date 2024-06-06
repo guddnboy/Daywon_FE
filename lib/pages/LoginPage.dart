@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/pages/AdminPage.dart';
+import 'package:project/pages/admin/AdminPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/SignUpPage.dart';
 import 'package:project/pages/findID.dart';
