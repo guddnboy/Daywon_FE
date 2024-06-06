@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_const
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:project/pages/CategoryPage.dart';
 
@@ -26,11 +28,26 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String nickname = '';
   int points = 0;
+  late String _randomImage;
+
+  final List<String> _images = [
+    'assets/marimo_1.png',
+    'assets/marimo_2.png',
+    'assets/marimo_3.png',
+    'assets/marimo_4.png'
+  ];
+
+  String _getRandomImage() {
+    final random = Random();
+    int index = random.nextInt(_images.length);
+    return _images[index];
+  }
 
   @override
   void initState() {
     super.initState();
     fetchUser();
+    _randomImage = _getRandomImage();
   }
 
   Future<void> fetchUser() async {
@@ -128,7 +145,7 @@ class _MainPageState extends State<MainPage> {
                                     color: Colors.white,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
-                                      image: AssetImage("assets/marimo.png"),
+                                      image: AssetImage("assets/marimo_1.png"),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -258,33 +275,52 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CategoryPage()),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4399FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: const Text(
-                            '학습하기',
-                            style: TextStyle(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(_randomImage),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                        ),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.4,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => CategoryPage()),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                // backgroundColor: const Color(0xFF4399FF),
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                              child: const Text(
+                                '학습하기',
+                                style: TextStyle(
+                                  color: const Color(0xFF4399FF),
+                                  fontSize: 18,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
