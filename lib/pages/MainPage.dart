@@ -1,10 +1,45 @@
 // ignore_for_file: unnecessary_const
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'CategoryPage.dart';
 
-class MainPage extends StatelessWidget {
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  String nickname = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNickname();
+  }
+
+  Future<void> fetchNickname() async {
+    // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
+    // 예시로 2초 후에 닉네임을 "마리모"로 설정합니다.
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      nickname = '마리모'; // 데이터베이스에서 가져온 닉네임으로 설정
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,8 +47,8 @@ class MainPage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               padding: const EdgeInsets.all(16.0),
               color: Colors.white,
               child: Column(
@@ -30,11 +65,11 @@ class MainPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Row(
+                  Row(
                     children: [
                       Text(
-                        '마리모',
-                        style: TextStyle(
+                        nickname,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
                           fontFamily: 'Inter',
@@ -42,7 +77,7 @@ class MainPage extends StatelessWidget {
                           height: 0,
                         ),
                       ),
-                      Text(
+                      const Text(
                         '님, 오늘의 학습을 시작하세요! ',
                         style: TextStyle(
                           color: Colors.black,
@@ -62,8 +97,8 @@ class MainPage extends StatelessWidget {
                           vertical: 10.0,
                           horizontal: 10.0,
                         ),
-                        width: MediaQuery.sizeOf(context).width,
-                        height: MediaQuery.sizeOf(context).height * 0.2,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.2,
                         decoration: ShapeDecoration(
                           color: const Color(0xFF4399FF),
                           shape: RoundedRectangleBorder(
@@ -96,20 +131,49 @@ class MainPage extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                const Column(
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "마리모 자유 입출금 통장",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          nickname,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const Text(
+                                          "  자유 입출금 통장",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      "DayWon 은행",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
+                                    const Row(
+                                      children: [
+                                        Text(
+                                          "DayWon",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "0000-0000-0000-0000",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
