@@ -1,32 +1,30 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project/pages/MainPage.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: ShortformPage(selectedCategory: ''),
-  ));
-}
+import 'package:video_player/video_player.dart';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
 
-  const ShortformPage({super.key, required this.selectedCategory});
+  const ShortformPage({Key? key, required this.selectedCategory})
+      : super(key: key);
 
   @override
   _ShortformPageState createState() => _ShortformPageState();
 }
 
 class _ShortformPageState extends State<ShortformPage> {
-  late String selectedCategory; // 선택된 카테고리를 저장할 변수
-  String explanation = ''; // 개념 설명을 저장할 변수
+  late String selectedCategory;
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCategory;
+    _controller = VideoPlayerController.network(
+      'Vedio_URL',
+    );
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
   }
 
   @override
@@ -49,8 +47,7 @@ class _ShortformPageState extends State<ShortformPage> {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: const Alignment(
-                          0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
+                      alignment: const Alignment(0, 0.3),
                       child: Container(
                         width: containerWidth,
                         height: containerHeight,
@@ -76,28 +73,22 @@ class _ShortformPageState extends State<ShortformPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Text(
-                                selectedCategory.isNotEmpty
-                                    ? selectedCategory // 선택된 카테고리 텍스트 표시
-                                    : '오늘의 학습', // 기본 텍스트
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            // 개념 설명 텍스트 표시
-                            Padding(
                               padding: const EdgeInsets.all(20),
                               child: Center(
-                                child: Text(
-                                  explanation,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
+                                child: FutureBuilder(
+                                  future: _initializeVideoPlayerFuture,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return AspectRatio(
+                                        aspectRatio:
+                                            _controller.value.aspectRatio,
+                                        child: VideoPlayer(_controller),
+                                      );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -133,7 +124,7 @@ class _ShortformPageState extends State<ShortformPage> {
                       ),
                       const SizedBox(width: 5),
                       const Text(
-                        '오늘의 학습', // 기본 텍스트
+                        '오늘의 학습',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -149,5 +140,11 @@ class _ShortformPageState extends State<ShortformPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
