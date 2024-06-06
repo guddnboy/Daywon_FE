@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/ProblemPage.dart';
 import 'package:video_player/video_player.dart';
 
 class ShortformPage extends StatefulWidget {
@@ -138,7 +139,12 @@ class _ShortformPageState extends State<ShortformPage> {
                   bottom: 20,
                   right: 20,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProblemPage()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -148,7 +154,7 @@ class _ShortformPageState extends State<ShortformPage> {
                           vertical: 12, horizontal: 20),
                     ),
                     child: const Text(
-                      '학습하기',
+                      '문제 풀러 가기',
                       style: TextStyle(
                         color: const Color(0xFF4399FF),
                         fontSize: 18,
