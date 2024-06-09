@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:project/pages/MyPage/CorrectProblem.dart';
+import 'package:project/pages/MyPage/WrongProblem.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
+import 'package:project/pages/MyPage/WrongProblemDetails.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,15 +24,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Correctproblem(),
+      home: Wrongproblem(),
     );
   }
 }
 
-class Correctproblemcommentarypage extends StatelessWidget {
+class Wrongproblemcommentarypage extends StatelessWidget {
   final String selectedChoice;
 
-  const Correctproblemcommentarypage({super.key, required this.selectedChoice});
+  const Wrongproblemcommentarypage({super.key, required this.selectedChoice});
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +159,7 @@ class Correctproblemcommentarypage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Correctproblem()),
+                                                      Wrongproblem()),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -171,7 +171,7 @@ class Correctproblemcommentarypage extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
                                           ),
                                           child: const Text(
-                                            '맞은 문제 보기',
+                                            '틀린 문제 보기',
                                             style: TextStyle(
                                               color: Color(0xFF4399FF),
                                               fontSize: 14,
@@ -215,7 +215,7 @@ class Correctproblemcommentarypage extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             const Text(
-                              '맞은 문제',
+                              '틀린 문제',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
