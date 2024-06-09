@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/ProblemPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +12,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CommentaryPage(),
+      home: ProblemPage(),
     );
   }
 }
 
 class CommentaryPage extends StatelessWidget {
+  final String selectedChoice;
+
+  const CommentaryPage({Key? key, required this.selectedChoice})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    // 데이터베이스에서 가져온 문제 해설 내용
+    String problemExplanation = '문제에 대한 해설 부분';
+
     return Scaffold(
       body: Center(
         child: LayoutBuilder(
@@ -75,12 +82,12 @@ class CommentaryPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
-                                child: const Center(
+                                child: Center(
                                   child: Column(
                                     children: [
                                       Text(
-                                        '정기예금: Point -40',
-                                        style: TextStyle(
+                                        selectedChoice, // 선택한 보기 내용 표시
+                                        style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 16,
                                           fontFamily: 'Inter',
@@ -88,92 +95,20 @@ class CommentaryPage extends StatelessWidget {
                                           height: 0,
                                         ),
                                       ),
-                                      const SizedBox(
+                                      const SizedBox(height: 10),
+                                      SizedBox(
                                         width: 186,
                                         child: Text.rich(
                                           TextSpan(
                                             children: [
                                               TextSpan(
-                                                text: '정기예금',
-                                                style: TextStyle(
+                                                text:
+                                                    problemExplanation, // 문제에 대한 해설 표시
+                                                style: const TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 11,
                                                   fontFamily: 'Inter',
                                                   fontWeight: FontWeight.w600,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    '은 일정 기간 동안 돈을 은행에 맡기고 찾지 않는 저축 방식이야.\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    '이자는 은행이 맡긴 돈에 대해 주는 보상으로, 기간이 길수록 이자도 높아져.\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    '기간 동안 돈을 찾지 않기로 약속하므로, 약속을 어기면 이자를 덜 받을 수 있어.\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text: '\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
-                                                  height: 0,
-                                                ),
-                                              ),
-                                              TextSpan(
-                                                text:
-                                                    '1번은 ~~ 해서 답이 될 수 없어\n2번은 ~~ 해서 답이 될 수 없어\n4번은 ~~ 해서 답이 될 수 없어\n',
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 11,
-                                                  fontFamily: 'Inter',
-                                                  fontWeight: FontWeight.w400,
                                                   height: 0,
                                                 ),
                                               ),
