@@ -25,66 +25,68 @@ class AdminCheckProblemPage extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 2,
-                        color: Color(0xFF4399FF),
+            child: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    height: MediaQuery.sizeOf(context).height * 0.8,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                          width: 2,
+                          color: Color(0xFF4399FF),
+                        ),
+                        borderRadius: BorderRadius.circular(17),
                       ),
-                      borderRadius: BorderRadius.circular(17),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 40),
-                        const Text(
-                          '생성된 문제 확인',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 10),
+                          const Text(
+                            '생성된 문제 확인',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        _buildDataWidget(
-                          futureData: fetchProblem(),
-                          title: '생성된 문제',
-                        ),
-                        const SizedBox(height: 20),
-                        _buildDataWidget(
-                          futureData: fetchExplanation(),
-                          title: '문제 해설',
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          _buildDataWidget(
+                            futureData: fetchProblem(),
+                            title: '생성된 문제',
+                          ),
+                          const SizedBox(height: 20),
+                          _buildDataWidget(
+                            futureData: fetchExplanation(),
+                            title: '문제 해설',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      'assets/img/backbtn.png',
-                      width: 45,
-                      height: 45,
+                  Positioned(
+                    top: 10,
+                    left: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(
+                        'assets/img/backbtn.png',
+                        width: 45,
+                        height: 45,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
