@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage/CorrectProblem.dart';
-
+import 'package:project/pages/MyPage/WrongProblem.dart';
 void main() {
   runApp(MyApp());
 }
@@ -131,7 +131,12 @@ class MyPage extends StatelessWidget {
                     SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Wrongproblem()),
+                            );},
                         child: Text('틀린 문제'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF55A3FF),
