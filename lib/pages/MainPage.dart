@@ -4,7 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:project/pages/CategoryPage.dart';
-import 'package:project/pages/MyPage.dart';
+import 'package:project/pages/MyPage/MyPage.dart';
 
 void main() {
   runApp(const MyApp());

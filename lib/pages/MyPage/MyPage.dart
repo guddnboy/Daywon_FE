@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/CorrectProblem.dart';
+import 'package:project/pages/MyPage/CorrectProblem.dart';
 
 void main() {
   runApp(MyApp());

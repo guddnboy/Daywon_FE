@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/MyPage/CorrectProblemCommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/MyPage/CorrectProblem.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -131,7 +133,15 @@ class Correctproblemdetails extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        // 보기 버튼을 누를 때 CommentaryPage로 해당 보기의 텍스트 전달
+                                       Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Correctproblemcommentarypage(
+                                                    selectedChoice:
+                                                        problem.choices[i]),
+                                          ),
+                                        ); // 보기 버튼을 누를 때 CommentaryPage로 해당 보기의 텍스트 전달
                                       },
                                       child: Row(
                                         mainAxisAlignment:
