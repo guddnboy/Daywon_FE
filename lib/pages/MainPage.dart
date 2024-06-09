@@ -95,8 +95,6 @@ class _MainPageState extends State<MainPage> {
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w800,
                           height: 0,
                         ),
                       ),
@@ -105,8 +103,6 @@ class _MainPageState extends State<MainPage> {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
                           height: 0,
                         ),
                       ),
@@ -165,15 +161,12 @@ class _MainPageState extends State<MainPage> {
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 20,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                         const Text(
                                           "  자유 입출금 통장",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ],
@@ -184,7 +177,6 @@ class _MainPageState extends State<MainPage> {
                                           "DayWon",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                         SizedBox(
@@ -194,7 +186,6 @@ class _MainPageState extends State<MainPage> {
                                           "0000-0000-0000-0000",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                       ],
@@ -214,8 +205,6 @@ class _MainPageState extends State<MainPage> {
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w700,
                                     height: 0,
                                   ),
                                 ),
@@ -224,8 +213,6 @@ class _MainPageState extends State<MainPage> {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 30,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
                                     height: 0,
                                   ),
                                 ),
@@ -272,8 +259,6 @@ class _MainPageState extends State<MainPage> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
                               height: 0,
                             ),
                           ),
@@ -304,8 +289,6 @@ class _MainPageState extends State<MainPage> {
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w800,
                                       height: 0,
                                     ),
                                   ),
@@ -314,8 +297,6 @@ class _MainPageState extends State<MainPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w800,
                                       height: 0,
                                     ),
                                   ),
@@ -346,8 +327,6 @@ class _MainPageState extends State<MainPage> {
                                     style: TextStyle(
                                       color: const Color(0xFF4399FF),
                                       fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ),
