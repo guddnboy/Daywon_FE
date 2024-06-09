@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const findPassword());
+  runApp(const findID());
 }
 
-class findPassword extends StatelessWidget {
-  const findPassword({super.key});
+class findID extends StatelessWidget {
+  const findID({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class findPassword extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.1,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/DayWon.png"),
+                      image: AssetImage("assets/img/DayWon.png"),
                     ),
                   ),
                 ),
@@ -33,7 +33,7 @@ class findPassword extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('아이디'),
+                    child: Text('이메일'),
                   ),
                 ),
                 Padding(
@@ -44,7 +44,7 @@ class findPassword extends StatelessWidget {
                       children: [
                         TextField(
                           decoration: InputDecoration(
-                            labelText: '아이디',
+                            labelText: '이메일 주소',
                             labelStyle: const TextStyle(
                               fontSize: 13,
                             ),
@@ -67,7 +67,7 @@ class findPassword extends StatelessWidget {
                             child: TextField(
                               obscureText: true,
                               decoration: InputDecoration(
-                                labelText: '이메일 주소',
+                                labelText: '인증번호',
                                 labelStyle: const TextStyle(
                                   fontSize: 13,
                                 ),
@@ -87,7 +87,7 @@ class findPassword extends StatelessWidget {
                           onPressed: () {
                             // 인증 절차
                           },
-                          child: const Text('비밀번호 찾기'),
+                          child: const Text('인증요청'),
                         ),
                       ],
                     ),

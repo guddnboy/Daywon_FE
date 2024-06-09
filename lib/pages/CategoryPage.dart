@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/learning/LearningTextPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: CategoryPage(),
   ));
 }
 
 class CategoryPage extends StatelessWidget {
+  const CategoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +20,11 @@ class CategoryPage extends StatelessWidget {
           builder: (context, constraints) {
             double containerWidth = constraints.maxWidth * 0.8;
             double containerHeight = constraints.maxHeight * 0.65;
+
+            String category1 = '세금';
+            String category2 = '자산관리';
+            String category3 = '금융기초상식';
+            String category4 = '기본 상식';
 
             return Stack(
               children: [
@@ -29,7 +37,8 @@ class CategoryPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: Alignment(0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
+                      alignment: const Alignment(
+                          0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
                       child: Container(
                         width: containerWidth,
                         height: containerHeight,
@@ -77,7 +86,14 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category1,
+                                            )));
+                              },
                               child: const Text(
                                 '세금',
                                 style: TextStyle(
@@ -97,9 +113,16 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category2,
+                                            )));
+                              },
                               child: const Text(
-                                '투자',
+                                '자산관리',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -117,9 +140,16 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category3,
+                                            )));
+                              },
                               child: const Text(
-                                '저축',
+                                '금융기초상식',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -137,7 +167,14 @@ class CategoryPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearningPage(
+                                              selectedCategory: category4,
+                                            )));
+                              },
                               child: const Text(
                                 '기본 상식',
                                 style: TextStyle(
@@ -162,7 +199,7 @@ class CategoryPage extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Image.asset(
-                      'assets/backbtn.png',
+                      'assets/img/backbtn.png',
                       width: 45,
                       height: 45,
                     ),
@@ -174,7 +211,7 @@ class CategoryPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Image.asset(
-                        'assets/circle.png',
+                        'assets/img/circle.png',
                         width: 20,
                         height: 20,
                       ),
@@ -200,7 +237,7 @@ class CategoryPage extends StatelessWidget {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/backbtn.png',
+              'assets/img/backbtn.png',
               width: 24,
               height: 24,
             ),
@@ -208,7 +245,7 @@ class CategoryPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/homebtn.png',
+              'assets/img/homebtn.png',
               width: 28,
               height: 28,
             ),
@@ -216,7 +253,7 @@ class CategoryPage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/mypagebtn.png',
+              'assets/img/mypagebtn.png',
               width: 24,
               height: 24,
             ),
@@ -226,8 +263,6 @@ class CategoryPage extends StatelessWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          // Handle tap logic here, e.g., navigating to different pages
-          print('Tapped index: $index');
           switch (index) {
             case 0:
               Navigator.pop(context);
@@ -249,4 +284,4 @@ class CategoryPage extends StatelessWidget {
       ),
     );
   }
-} 
+}

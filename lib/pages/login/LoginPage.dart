@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project/pages/admin/AdminPage.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/SignUpPage.dart';
-import 'package:project/pages/findID.dart';
-import 'package:project/pages/findPassword.dart';
+import 'package:project/pages/login/SignUpPage.dart';
+import 'package:project/pages/login/findID.dart';
+import 'package:project/pages/login/findPassword.dart';
 
 void main() {
   runApp(const LoginPage());
@@ -35,7 +36,7 @@ class LoginPage extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * 0.3,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/DayWon.png"),
+                            image: AssetImage("assets/img/DayWon.png"),
                           ),
                         ),
                       ),
@@ -168,6 +169,31 @@ class LoginPage extends StatelessWidget {
                           ),
                           child: const Text(
                             '회원가입',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdminPage()),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: BorderSide.none,
+                            ),
+                          ),
+                          child: const Text(
+                            '관리자 페이지',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12,

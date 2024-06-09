@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:project/pages/LoginPage.dart';
+import 'package:project/pages/login/LoginPage.dart';
 
 void main() {
   runApp(const SignupPage());
@@ -29,7 +29,7 @@ class SignupPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.1,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/DayWon.png"),
+                      image: AssetImage("assets/img/DayWon.png"),
                     ),
                   ),
                 ),
