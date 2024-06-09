@@ -113,21 +113,54 @@ class ProblemListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final problems = ProblemData.fetchProblems(problemType);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(problemType),
       ),
       body: ListView.builder(
-        itemCount: 5, // Replace with the actual number of problems
+        itemCount: problems.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text('$problemType ${index + 1}'),
+            title: Text(problems[index].title),
+            subtitle: Text(problems[index].description),
             onTap: () {
-              // Navigate to the detail page for the selected problem
+              // 선택된 문제에 대한 동작 추가
             },
           );
         },
       ),
     );
+  }
+}
+
+class Problem {
+  final String title;
+  final String description;
+
+  Problem({required this.title, required this.description});
+}
+
+class ProblemData {
+  static List<Problem> fetchProblems(String problemType) {
+    // 가상의 데이터로 대체합니다. 실제로는 데이터베이스에서 가져와야 합니다.
+    List<Problem> problems = [];
+
+    if (problemType == '검수가 완료된 문제') {
+      problems = [
+        Problem(title: '검수 완료된 문제 1', description: '문제 1의 설명'),
+        Problem(title: '검수 완료된 문제 2', description: '문제 2의 설명'),
+        // 나머지 문제들도 추가할 수 있습니다.
+      ];
+    } else if (problemType == '검수가 필요한 문제') {
+      problems = [
+        Problem(title: '검수 필요한 문제 1', description: '문제 1의 설명'),
+        Problem(title: '검수 필요한 문제 2', description: '문제 2의 설명'),
+        // 나머지 문제들도 추가할 수 있습니다.
+      ];
+    }
+
+    return problems;
   }
 }
