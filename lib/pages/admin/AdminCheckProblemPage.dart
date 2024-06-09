@@ -10,8 +10,8 @@ class AdminCheckProblemPage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 320,
-          height: 568,
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height,
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(
             color: Colors.white,
