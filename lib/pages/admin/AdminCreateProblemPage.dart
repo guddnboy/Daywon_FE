@@ -165,6 +165,8 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                         ElevatedButton(
                           onPressed: () {
                             // Handle create problem
+                            // Assume the problem creation is successful
+                            _showSuccessDialog(context);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1C84FF),
@@ -209,6 +211,26 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
       ),
     );
   }
+}
+
+void _showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('문제 생성 성공'),
+        content: const Text('문제가 성공적으로 생성되었습니다.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('확인'),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class CategoryButton extends StatelessWidget {
