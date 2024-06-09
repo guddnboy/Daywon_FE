@@ -29,10 +29,17 @@ class AdminCreateProblemPage extends StatefulWidget {
 
 class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
   String? selectedCategory;
+  String? selectedLevel;
 
   void selectCategory(String category) {
     setState(() {
       selectedCategory = category;
+    });
+  }
+
+  void selectLevel(String level) {
+    setState(() {
+      selectedLevel = level;
     });
   }
 
@@ -100,19 +107,19 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            CategoryBox(
+                            CategoryButton(
                               title: '세금',
                               isSelected: selectedCategory == '세금',
                               onSelect: selectCategory,
                             ),
                             const SizedBox(width: 20),
-                            CategoryBox(
+                            CategoryButton(
                               title: '투자',
                               isSelected: selectedCategory == '투자',
                               onSelect: selectCategory,
                             ),
                             const SizedBox(width: 20),
-                            CategoryBox(
+                            CategoryButton(
                               title: '저축',
                               isSelected: selectedCategory == '저축',
                               onSelect: selectCategory,
@@ -132,16 +139,36 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            LevelBox(level: '1'),
-                            SizedBox(width: 20),
-                            LevelBox(level: '2'),
-                            SizedBox(width: 20),
-                            LevelBox(level: '3'),
-                            SizedBox(width: 20),
-                            LevelBox(level: '4'),
-                            SizedBox(width: 20),
-                            LevelBox(level: '5'),
+                          children: [
+                            LevelButton(
+                              level: '1',
+                              isSelected: selectedLevel == '1',
+                              onSelect: selectLevel,
+                            ),
+                            const SizedBox(width: 20),
+                            LevelButton(
+                              level: '2',
+                              isSelected: selectedLevel == '2',
+                              onSelect: selectLevel,
+                            ),
+                            const SizedBox(width: 20),
+                            LevelButton(
+                              level: '3',
+                              isSelected: selectedLevel == '3',
+                              onSelect: selectLevel,
+                            ),
+                            const SizedBox(width: 20),
+                            LevelButton(
+                              level: '4',
+                              isSelected: selectedLevel == '4',
+                              onSelect: selectLevel,
+                            ),
+                            const SizedBox(width: 20),
+                            LevelButton(
+                              level: '5',
+                              isSelected: selectedLevel == '5',
+                              onSelect: selectLevel,
+                            ),
                           ],
                         ),
                         const SizedBox(height: 40),
@@ -185,12 +212,12 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
   }
 }
 
-class CategoryBox extends StatelessWidget {
+class CategoryButton extends StatelessWidget {
   final String title;
   final bool isSelected;
   final Function(String) onSelect;
 
-  const CategoryBox({
+  const CategoryButton({
     super.key,
     required this.title,
     required this.isSelected,
@@ -226,30 +253,40 @@ class CategoryBox extends StatelessWidget {
   }
 }
 
-class LevelBox extends StatelessWidget {
+class LevelButton extends StatelessWidget {
   final String level;
+  final bool isSelected;
+  final Function(String) onSelect;
 
-  const LevelBox({super.key, required this.level});
+  const LevelButton({
+    super.key,
+    required this.level,
+    required this.isSelected,
+    required this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 30,
-      height: 30,
-      decoration: ShapeDecoration(
-        color: const Color(0xFF59A5FF),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: () => onSelect(level),
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: ShapeDecoration(
+          color: isSelected ? Colors.blueAccent : const Color(0xFF59A5FF),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-      ),
-      child: Center(
-        child: Text(
-          level,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
+        child: Center(
+          child: Text(
+            level,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ),
       ),
