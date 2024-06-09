@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/CorrectProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage.dart';
 
@@ -143,7 +144,14 @@ class Correctproblem extends StatelessWidget {
                                         ),
                                       ),
                                       onPressed: () {
-                                        // 버튼 눌렀을 때 처리할 내용
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Correctproblemdetails(
+                                                    index: index),
+                                          ),
+                                        );
                                       },
                                       child: Text(
                                         'Button ${index + 1}',
@@ -158,7 +166,7 @@ class Correctproblem extends StatelessWidget {
                                     ),
                                     Positioned(
                                       left: width * 0.02,
-                                      top: height * 0.016,  // Adjusted top position
+                                      top: height * 0.016,
                                       child: Container(
                                         width: width * 0.08,
                                         height: width * 0.08,
