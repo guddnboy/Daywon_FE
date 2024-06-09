@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:project/pages/CategoryPage.dart';
+import 'package:project/pages/MyPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -407,7 +408,7 @@ class _MainPageState extends State<MainPage> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage()),
+                MaterialPageRoute(builder: (context) => MyPage()),
               );
               break;
           }
