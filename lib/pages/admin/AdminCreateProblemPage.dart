@@ -1,23 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const FigmaToCodeApp());
-}
-
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
-      ),
-      home: const Scaffold(
-        body: AdminCreateProblemPage(),
-      ),
-    );
-  }
+  runApp(const AdminCreateProblemPage());
 }
 
 class AdminCreateProblemPage extends StatefulWidget {
@@ -66,7 +50,7 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
             child: Stack(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   height: MediaQuery.of(context).size.height * 0.7,
                   decoration: ShapeDecoration(
                     color: Colors.white,
@@ -178,30 +162,25 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                           ],
                         ),
                         const SizedBox(height: 40),
-                        GestureDetector(
-                          onTap: () {
+                        ElevatedButton(
+                          onPressed: () {
                             // Handle create problem
                           },
-                          child: Container(
-                            width: 199,
-                            height: 43,
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFF1C84FF),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF1C84FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Center(
-                              child: Text(
-                                '문제 생성하기',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                            minimumSize: const Size(199, 43),
+                          ),
+                          child: const Text(
+                            '문제 생성하기',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -238,7 +217,9 @@ class CategoryButton extends StatelessWidget {
         width: 61,
         height: 61,
         decoration: ShapeDecoration(
-          color: isSelected ? Colors.blueAccent : const Color(0xFF53A2FF),
+          color: isSelected
+              ? const Color.fromARGB(255, 58, 98, 167)
+              : const Color(0xFF53A2FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -279,7 +260,9 @@ class LevelButton extends StatelessWidget {
         width: 30,
         height: 30,
         decoration: ShapeDecoration(
-          color: isSelected ? Colors.blueAccent : const Color(0xFF59A5FF),
+          color: isSelected
+              ? const Color.fromARGB(255, 58, 98, 167)
+              : const Color(0xFF59A5FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
