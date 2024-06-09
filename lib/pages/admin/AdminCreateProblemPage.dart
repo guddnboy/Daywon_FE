@@ -1,15 +1,46 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(AdminCreateProblemPage());
+  runApp(const FigmaToCodeApp());
 }
 
-class AdminCreateProblemPage extends StatelessWidget {
+class FigmaToCodeApp extends StatelessWidget {
+  const FigmaToCodeApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      ),
+      home: const Scaffold(
+        body: AdminCreateProblemPage(),
+      ),
+    );
+  }
+}
+
+class AdminCreateProblemPage extends StatefulWidget {
+  const AdminCreateProblemPage({super.key});
+
+  @override
+  _AdminCreateProblemPageState createState() => _AdminCreateProblemPageState();
+}
+
+class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
+  String? selectedCategory;
+
+  void selectCategory(String category) {
+    setState(() {
+      selectedCategory = category;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           clipBehavior: Clip.antiAlias,
@@ -24,31 +55,28 @@ class AdminCreateProblemPage extends StatelessWidget {
               )
             ],
           ),
-          child: Stack(
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 2,
-                            color: Color(0xFF4399FF),
-                          ),
-                          borderRadius: BorderRadius.circular(17),
-                        ),
+          child: Center(
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        width: 2,
+                        color: Color(0xFF4399FF),
                       ),
+                      borderRadius: BorderRadius.circular(17),
                     ),
-                    Positioned(
-                      top: 0,
-                      left: (MediaQuery.of(context).size.width * 0.8 - 250) / 2,
-                      child: const SizedBox(
-                        width: 250,
-                        child: Text(
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 40),
+                        const Text(
                           '문제 생성',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -56,54 +84,175 @@ class AdminCreateProblemPage extends StatelessWidget {
                             fontSize: 30,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
-                            height: 0,
                           ),
                         ),
-                      ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          '카테고리',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CategoryBox(
+                              title: '세금',
+                              isSelected: selectedCategory == '세금',
+                              onSelect: selectCategory,
+                            ),
+                            const SizedBox(width: 20),
+                            CategoryBox(
+                              title: '투자',
+                              isSelected: selectedCategory == '투자',
+                              onSelect: selectCategory,
+                            ),
+                            const SizedBox(width: 20),
+                            CategoryBox(
+                              title: '저축',
+                              isSelected: selectedCategory == '저축',
+                              onSelect: selectCategory,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 40),
+                        const Text(
+                          '레벨',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            LevelBox(level: '1'),
+                            SizedBox(width: 20),
+                            LevelBox(level: '2'),
+                            SizedBox(width: 20),
+                            LevelBox(level: '3'),
+                            SizedBox(width: 20),
+                            LevelBox(level: '4'),
+                            SizedBox(width: 20),
+                            LevelBox(level: '5'),
+                          ],
+                        ),
+                        const SizedBox(height: 40),
+                        GestureDetector(
+                          onTap: () {
+                            // Handle create problem
+                          },
+                          child: Container(
+                            width: 199,
+                            height: 43,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF1C84FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                '문제 생성하기',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: 60,
-                right: 50,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    'assets/img/backbtn.png',
-                    width: 45,
-                    height: 45,
                   ),
                 ),
-              ),
-              Positioned(
-                top: 68,
-                left: 55,
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/img/circle.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      '문제 생성',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class CategoryBox extends StatelessWidget {
+  final String title;
+  final bool isSelected;
+  final Function(String) onSelect;
+
+  const CategoryBox({
+    super.key,
+    required this.title,
+    required this.isSelected,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onSelect(title),
+      child: Container(
+        width: 61,
+        height: 61,
+        decoration: ShapeDecoration(
+          color: isSelected ? Colors.blueAccent : const Color(0xFF53A2FF),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LevelBox extends StatelessWidget {
+  final String level;
+
+  const LevelBox({super.key, required this.level});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 30,
+      height: 30,
+      decoration: ShapeDecoration(
+        color: const Color(0xFF59A5FF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          level,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 15,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 }
