@@ -31,44 +31,54 @@ class AdminCheckProblemPage extends StatelessWidget {
                   Container(
                     width: MediaQuery.sizeOf(context).width * 0.9,
                     height: MediaQuery.sizeOf(context).height * 0.8,
-                    decoration: ShapeDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                          width: 2,
-                          color: Color(0xFF4399FF),
-                        ),
-                        borderRadius: BorderRadius.circular(17),
+                      borderRadius: BorderRadius.circular(17),
+                      border: Border.all(
+                        width: 2,
+                        color: Color(0xFF4399FF),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 10),
-                          const Text(
-                            '생성된 문제 확인',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          '생성된 문제 확인',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(height: 20),
-                          _buildDataWidget(
-                            futureData: fetchProblem(),
-                            title: '생성된 문제',
-                          ),
-                          const SizedBox(height: 20),
-                          _buildDataWidget(
-                            futureData: fetchExplanation(),
-                            title: '문제 해설',
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProblemListPage(
+                                    problemType: '검수가 완료된 문제'),
+                              ),
+                            );
+                          },
+                          child: const Text('검수가 완료된 문제'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProblemListPage(
+                                    problemType: '검수가 필요한 문제'),
+                              ),
+                            );
+                          },
+                          child: const Text('검수가 필요한 문제'),
+                        ),
+                      ],
                     ),
                   ),
                   Positioned(
@@ -93,86 +103,31 @@ class AdminCheckProblemPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildDataWidget({
-    required Future<String> futureData,
-    required String title,
-  }) {
-    return FutureBuilder<String>(
-      future: futureData,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          if (title == '생성된 문제') {
-            return Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    snapshot.data ?? '데이터를 불러오는 중 오류가 발생했습니다.',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else if (title == '문제 해설') {
-            return Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    snapshot.data ?? '데이터를 불러오는 중 오류가 발생했습니다.',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox(); // 예외 처리
-          }
-        }
-      },
+class ProblemListPage extends StatelessWidget {
+  final String problemType;
+
+  const ProblemListPage({Key? key, required this.problemType})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(problemType),
+      ),
+      body: ListView.builder(
+        itemCount: 5, // Replace with the actual number of problems
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('$problemType ${index + 1}'),
+            onTap: () {
+              // Navigate to the detail page for the selected problem
+            },
+          );
+        },
+      ),
     );
-  }
-
-  Future<String> fetchProblem() async {
-    await Future.delayed(const Duration(seconds: 1)); // 가상의 지연 시간
-    return '문제 내용이 여기에 보여질 거야';
-  }
-
-  Future<String> fetchExplanation() async {
-    await Future.delayed(const Duration(seconds: 1)); // 가상의 지연 시간
-    return '이 문제의 해설들이 여기에 보여질 거야';
   }
 }
