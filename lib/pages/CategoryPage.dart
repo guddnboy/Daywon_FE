@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/learning/LearningTextPage.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage.dart';
+import 'package:project/pages/MyPage/MyPage.dart';
 
 void main() {
   runApp(const MaterialApp(
