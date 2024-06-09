@@ -220,7 +220,7 @@ class _AdminPageState extends State<AdminPage> {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
                 child: const Text(
-                  '문제 확인',
+                  '문제 검수',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
