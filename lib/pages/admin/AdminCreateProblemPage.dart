@@ -188,6 +188,20 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 10,
+                  left: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image.asset(
+                      'assets/img/backbtn.png',
+                      width: 45,
+                      height: 45,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
