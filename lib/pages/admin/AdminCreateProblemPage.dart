@@ -10,8 +10,8 @@ class AdminCreateProblemPage extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: MediaQuery.sizeOf(context).width,
-          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           clipBehavior: Clip.antiAlias,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -26,7 +26,44 @@ class AdminCreateProblemPage extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              Column(),
+              Center(
+                child: Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            width: 2,
+                            color: Color(0xFF4399FF),
+                          ),
+                          borderRadius: BorderRadius.circular(17),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 0,
+                      left: (MediaQuery.of(context).size.width * 0.8 - 250) / 2,
+                      child: const SizedBox(
+                        width: 250,
+                        child: Text(
+                          '문제 생성',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Positioned(
                 top: 60,
                 right: 50,
