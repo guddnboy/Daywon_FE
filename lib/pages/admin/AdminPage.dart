@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:project/pages/admin/AdminCheckProblemPage.dart';
 import 'package:project/pages/admin/AdminCreateProblemPage.dart';
 
 void main() {
@@ -204,7 +205,11 @@ class _AdminPageState extends State<AdminPage> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  // 문제 확인 버튼 클릭 시 동작
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AdminCheckProblemPage()),
+                  );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF8BC0FF),
