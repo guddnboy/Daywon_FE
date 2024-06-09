@@ -16,7 +16,7 @@ class AdminCheckProblemPage extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Colors.white,
             boxShadow: [
-              const BoxShadow(
+              BoxShadow(
                 color: Color(0x3F000000),
                 blurRadius: 4,
                 offset: Offset(0, 4),
@@ -43,7 +43,7 @@ class AdminCheckProblemPage extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 40),
                         const Text(
@@ -104,35 +104,61 @@ class AdminCheckProblemPage extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
+          if (title == '생성된 문제') {
+            return Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  snapshot.data ?? '데이터를 불러오는 중 오류가 발생했습니다.',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                  const SizedBox(height: 5),
+                  Text(
+                    snapshot.data ?? '데이터를 불러오는 중 오류가 발생했습니다.',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
+                ],
+              ),
+            );
+          } else if (title == '문제 해설') {
+            return Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    snapshot.data ?? '데이터를 불러오는 중 오류가 발생했습니다.',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(); // 예외 처리
+          }
         }
       },
     );
@@ -140,11 +166,11 @@ class AdminCheckProblemPage extends StatelessWidget {
 
   Future<String> fetchProblem() async {
     await Future.delayed(const Duration(seconds: 1)); // 가상의 지연 시간
-    return '생성된 문제: 문제 내용입니다.';
+    return '문제 내용이 여기에 보여질 거야';
   }
 
   Future<String> fetchExplanation() async {
     await Future.delayed(const Duration(seconds: 1)); // 가상의 지연 시간
-    return '문제 해설: 이 문제의 해설입니다.';
+    return '이 문제의 해설들이 여기에 보여질 거야';
   }
 }
