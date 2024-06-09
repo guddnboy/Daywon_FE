@@ -49,6 +49,231 @@ class ProblemPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              width: 224,
+                              child: Text(
+                                '문제 예시가 무언가 있음 이 상황에서 선택해야하는 상품은?',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 25), // 간격 조정
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF8BC0FF),
+                                fixedSize: const Size(227, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: OvalBorder(),
+                                        ),
+                                      ),
+                                      const Text(
+                                        '1',
+                                        style: TextStyle(
+                                          color: Color(0xFF0075FF),
+                                          fontSize: 22,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 10), // 적절한 간격을 위해 추가
+                                  const Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '보기 1번',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 25), // 간격 조정
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF55A3FF),
+                                fixedSize: const Size(227, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: OvalBorder(),
+                                        ),
+                                      ),
+                                      const Text(
+                                        '2',
+                                        style: TextStyle(
+                                          color: Color(0xFF0075FF),
+                                          fontSize: 22,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 10), // 적절한 간격을 위해 추가
+                                  const Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '보기 2번',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 25), // 간격 조정
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF0075FF),
+                                fixedSize: const Size(227, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: OvalBorder(),
+                                        ),
+                                      ),
+                                      const Text(
+                                        '3',
+                                        style: TextStyle(
+                                          color: Color(0xFF0075FF),
+                                          fontSize: 22,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 10), // 적절한 간격을 위해 추가
+                                  const Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '보기 3번',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 25), // 간격 조정
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF0056BD),
+                                fixedSize: const Size(227, 55),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 25,
+                                        height: 25,
+                                        decoration: const ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: OvalBorder(),
+                                        ),
+                                      ),
+                                      const Text(
+                                        '4',
+                                        style: TextStyle(
+                                          color: Color(0xFF0075FF),
+                                          fontSize: 22,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 10), // 적절한 간격을 위해 추가
+                                  const Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '보기 4번',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
