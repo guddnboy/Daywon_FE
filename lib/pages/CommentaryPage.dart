@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/ProblemPage.dart';
 
@@ -52,99 +53,141 @@ class CommentaryPage extends StatelessWidget {
                   String problemExplanation = snapshot.data!;
                   return Stack(
                     children: [
-                      Center(
-                        child: Container(
-                          width: constraints.maxWidth,
-                          height: constraints.maxHeight,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Align(
-                            alignment: const Alignment(0, 0.3),
-                            child: Container(
-                              width: containerWidth,
-                              height: containerHeight,
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                    width: 2,
-                                    color: Color(0xFF4399FF),
+                      Column(
+                        children: [
+                          Container(
+                            width: constraints.maxWidth,
+                            height: constraints.maxHeight,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Align(
+                              alignment: const Alignment(0, 0.3),
+                              child: Container(
+                                width: containerWidth,
+                                height: containerHeight,
+                                decoration: ShapeDecoration(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    side: const BorderSide(
+                                      width: 2,
+                                      color: Color(0xFF4399FF),
+                                    ),
+                                    borderRadius: BorderRadius.circular(17),
                                   ),
-                                  borderRadius: BorderRadius.circular(17),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
                                 ),
-                                shadows: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 30, vertical: 30),
-                                    child: Container(
-                                      width: containerWidth,
-                                      height: containerHeight,
-                                      decoration: ShapeDecoration(
-                                        color: const Color.fromARGB(
-                                            223, 234, 230, 230),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              selectedChoice, // 선택한 보기 내용 표시
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16,
-                                                fontFamily: 'Inter',
-                                                fontWeight: FontWeight.w700,
-                                                height: 0,
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 30, vertical: 30),
+                                          child: SingleChildScrollView(
+                                            child: Container(
+                                              width: containerWidth,
+                                              height: containerHeight * 0.7,
+                                              decoration: ShapeDecoration(
+                                                color: const Color.fromARGB(
+                                                    223, 234, 230, 230),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            SizedBox(
-                                              width: 186,
-                                              child: Text.rich(
-                                                TextSpan(
+                                              child: Center(
+                                                child: Column(
                                                   children: [
-                                                    TextSpan(
-                                                      text:
-                                                          problemExplanation, // 문제에 대한 해설 표시
+                                                    Text(
+                                                      selectedChoice, // 선택한 보기 내용 표시
                                                       style: const TextStyle(
                                                         color: Colors.black,
-                                                        fontSize: 11,
+                                                        fontSize: 16,
                                                         fontFamily: 'Inter',
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.w700,
                                                         height: 0,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    SizedBox(
+                                                      width: 186,
+                                                      child: Text.rich(
+                                                        TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text:
+                                                                  problemExplanation, // 문제에 대한 해설 표시
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 11,
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                height: 0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.justify,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                                textAlign: TextAlign.justify,
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MainPage()),
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 12),
+                                          ),
+                                          child: const Text(
+                                            '학습 완료',
+                                            style: TextStyle(
+                                              color: Color(0xFF4399FF),
+                                              fontSize: 14,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Positioned(
                         top: 60,
