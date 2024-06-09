@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/CommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
 
 void main() {
@@ -121,7 +122,18 @@ class ProblemPage extends StatelessWidget {
                                               BorderRadius.circular(20),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        // 보기 버튼을 누를 때 CommentaryPage로 해당 보기의 텍스트 전달
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CommentaryPage(
+                                                    selectedChoice:
+                                                        problem.choices[i]),
+                                          ),
+                                        );
+                                      },
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,

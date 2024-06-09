@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/pages/ProblemPage.dart';
 import 'package:video_player/video_player.dart';
 
@@ -70,30 +71,63 @@ class _ShortformPageState extends State<ShortformPage> {
                             ),
                           ],
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Center(
-                                child: FutureBuilder(
-                                  future: _initializeVideoPlayerFuture,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                      return AspectRatio(
-                                        aspectRatio:
-                                            _controller.value.aspectRatio,
-                                        child: VideoPlayer(_controller),
-                                      );
-                                    } else {
-                                      return CircularProgressIndicator();
-                                    }
-                                  },
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Center(
+                                  child: FutureBuilder(
+                                    future: _initializeVideoPlayerFuture,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.done) {
+                                        return AspectRatio(
+                                          aspectRatio:
+                                              _controller.value.aspectRatio,
+                                          child: VideoPlayer(_controller),
+                                        );
+                                      } else {
+                                        return CircularProgressIndicator();
+                                      }
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 50),
+                              Positioned(
+                                bottom: 20,
+                                right: 20,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProblemPage()),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12, horizontal: 20),
+                                  ),
+                                  child: const Text(
+                                    '문제 풀러 가기',
+                                    style: TextStyle(
+                                      color: const Color(0xFF4399FF),
+                                      fontSize: 18,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -133,35 +167,6 @@ class _ShortformPageState extends State<ShortformPage> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ProblemPage()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 20),
-                    ),
-                    child: const Text(
-                      '문제 풀러 가기',
-                      style: TextStyle(
-                        color: const Color(0xFF4399FF),
-                        fontSize: 18,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
                   ),
                 ),
               ],
