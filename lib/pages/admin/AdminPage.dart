@@ -77,6 +77,7 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10.0,
@@ -147,6 +148,7 @@ class _AdminPageState extends State<AdminPage> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       SizedBox(
@@ -174,17 +176,17 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
                       // 문제 생성 버튼 클릭 시 동작
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: const Color(0xFF4399FF),
+                      backgroundColor: const Color(0xFF8BC0FF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      minimumSize:
-                          Size(MediaQuery.of(context).size.width * 0.5, 0),
+                      minimumSize: Size(MediaQuery.of(context).size.width, 70),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                     ),
                     child: const Text(
@@ -197,29 +199,26 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: TextButton(
-                      onPressed: () {
-                        // 문제 확인 버튼 클릭 시 동작
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF4399FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        minimumSize:
-                            Size(MediaQuery.of(context).size.width * 0.5, 0),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      // 문제 확인 버튼 클릭 시 동작
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFF8BC0FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        '문제 확인',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
-                        ),
+                      minimumSize: Size(MediaQuery.of(context).size.width, 70),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text(
+                      '문제 확인',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
