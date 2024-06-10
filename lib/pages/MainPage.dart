@@ -93,10 +93,11 @@ class _MainPageState extends State<MainPage> {
                       Text(
                         nickname,
                         style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          height: 0,
-                        ),
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800
+                            // height: 0,
+                            ),
                       ),
                       const Text(
                         '님, 오늘의 학습을 시작하세요! ',
