@@ -1,21 +1,34 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage/CorrectProblem.dart';
 import 'package:project/pages/MyPage/WrongProblem.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyPage(),
+      title: 'DayWon',
+      theme: ThemeData(
+        fontFamily: 'LaundryGothic',
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4399FF)),
+        useMaterial3: true,
+      ),
+      home: const MyPage(),
     );
   }
 }
 
 class MyPage extends StatelessWidget {
+  const MyPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,22 +39,23 @@ class MyPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 80), // 상단 공간 추가
+                const SizedBox(height: 80), // 상단 공간 추가
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFF0F0F0),
+                    color: const Color(0xFFF0F0F0),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           CircleAvatar(
                             radius: 40,
-                            backgroundImage: AssetImage('assets/img/marimo_1.png'), // 이미지 경로를 수정해주세요.
+                            backgroundImage: AssetImage(
+                                'assets/img/marimo_1.png'), // 이미지 경로를 수정해주세요.
                           ),
                           SizedBox(width: 16),
                           Column(
@@ -91,8 +105,8 @@ class MyPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
-                Row(
+                const SizedBox(height: 15),
+                const Row(
                   children: [
                     Icon(Icons.circle, color: Colors.blue, size: 14),
                     SizedBox(width: 8),
@@ -105,54 +119,60 @@ class MyPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () { 
+                        onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Correctproblem()),
-                            );},
-                        child: Text('맞은 문제'),
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Correctproblem()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFABD2FF),
                           foregroundColor: Colors.white,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 20,
+                            fontFamily: 'LaundryGothic',
                           ),
-                          minimumSize: Size(60, 60), // 버튼의 최소 크기
-                          padding: EdgeInsets.symmetric(vertical: 20), // 내부 여백
+                          minimumSize: const Size(60, 60), // 버튼의 최소 크기
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 20), // 내부 여백
                         ),
+                        child: const Text('맞은 문제'),
                       ),
                     ),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Wrongproblem()),
-                            );},
-                        child: Text('틀린 문제'),
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Wrongproblem()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF55A3FF),
                           foregroundColor: Colors.white,
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                             fontSize: 20,
+                            fontFamily: 'LaundryGothic',
                           ),
-                          minimumSize: Size(60, 60), // 버튼의 최소 크기
-                          padding: EdgeInsets.symmetric(vertical: 20), // 내부 여백
+                          minimumSize: const Size(60, 60), // 버튼의 최소 크기
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 20), // 내부 여백
                         ),
+                        child: const Text('틀린 문제'),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-                Row(
+                const SizedBox(height: 10),
+                const Row(
                   children: [
                     Icon(Icons.circle, color: Colors.blue, size: 14),
                     SizedBox(width: 8),
@@ -165,7 +185,7 @@ class MyPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -184,14 +204,17 @@ class MyPage extends StatelessWidget {
                                   height: 40,
                                 )
                               : null,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 4),
                           title: Text('${index + 1}위'),
                           subtitle: Text('사용자 ${index + 1}'),
-                          trailing: Text('Points 점', style: TextStyle(fontSize: 16)),
+                          trailing: const Text('Points 점',
+                              style: TextStyle(fontSize: 16)),
                         );
                       },
                       separatorBuilder: (context, index) {
-                        return Divider(color: const Color.fromARGB(255, 209, 209, 209));
+                        return const Divider(
+                            color: Color.fromARGB(255, 209, 209, 209));
                       },
                     ),
                   ),
@@ -199,7 +222,7 @@ class MyPage extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 35, // 원하는 top 위치
             left: 16, // 원하는 left 위치
             child: Text(
@@ -256,7 +279,7 @@ class MyPage extends StatelessWidget {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyPage()),
+                MaterialPageRoute(builder: (context) => const MyPage()),
               );
               break;
           }

@@ -120,7 +120,6 @@ class _ShortformPageState extends State<ShortformPage> {
                                     style: TextStyle(
                                       color: const Color(0xFF4399FF),
                                       fontSize: 18,
-                                      fontFamily: 'Inter',
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),

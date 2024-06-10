@@ -71,7 +71,6 @@ class CategoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 30,
-                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                   height: 1.2,
                                 ),
@@ -99,7 +98,6 @@ class CategoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -126,7 +124,6 @@ class CategoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -153,7 +150,6 @@ class CategoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -180,7 +176,6 @@ class CategoryPage extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
-                                  fontFamily: 'Inter',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

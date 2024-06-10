@@ -58,16 +58,15 @@ class _AdminPageState extends State<AdminPage> {
                 child: RichText(
                   text: TextSpan(
                     style: const TextStyle(
+                      fontFamily: 'LaundryGothic',
                       color: Colors.black,
                       fontSize: 20,
-                      fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                     ),
                     children: [
                       TextSpan(
                         text: nickname,
-                        style: const TextStyle(
-                            fontFamily: 'Inter', fontWeight: FontWeight.w800),
+                        style: const TextStyle(fontWeight: FontWeight.w800),
                       ),
                       const TextSpan(
                         text: ' 님, 안녕하세요!',
@@ -140,7 +139,6 @@ class _AdminPageState extends State<AdminPage> {
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 30,
-                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -167,7 +165,6 @@ class _AdminPageState extends State<AdminPage> {
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
-                        fontFamily: 'Inter',
                         fontWeight: FontWeight.w600,
                         height: 0,
                       ),
@@ -197,7 +194,6 @@ class _AdminPageState extends State<AdminPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -224,7 +220,6 @@ class _AdminPageState extends State<AdminPage> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
-                    fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
