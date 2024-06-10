@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage/MyPage.dart';
-import 'package:project/pages/admin/NeedToCheckProblemDetails.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:project/pages/admin/AdminPage.dart';
 
 void main() {
   runApp(ModifyProblem());
@@ -13,56 +14,6 @@ class ModifyProblem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChatScreen(),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/backbtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'Back',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/homebtn.png',
-              width: 28,
-              height: 28,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/mypagebtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'My Page',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pop(context);
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyPage()),
-              );
-              break;
-          }
-        },
-      ),
     );
   }
 }
@@ -82,70 +33,87 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Future<String> sendMessage(String message) async {
+    const endpoint =
+        'YOUR_GPT_API_ENDPOINT'; // Replace with your GPT API endpoint
+    const apiKey = 'YOUR_API_KEY'; // Replace with your GPT API key
+
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey',
+      },
+      body: jsonEncode({'text': message}),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      final String generatedText = data['generated_text'];
+      return generatedText;
+    } else {
+      throw Exception('Failed to send message');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        clipBehavior: Clip.antiAlias,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x3F000000),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-              spreadRadius: 0,
-            )
-          ],
-        ),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final width = constraints.maxWidth;
-            final height = constraints.maxHeight;
-
-            return Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('문제 수정하기'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              children:
+                  messages.map((msg) => ChatBubble(message: msg)).toList(),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: Row(
               children: [
                 Expanded(
-                  child: ListView(
-                    children: messages
-                        .map((msg) => ChatBubble(message: msg))
-                        .toList(),
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      hintText: '메시지를 입력하세요...',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _controller,
-                          decoration: const InputDecoration(
-                            hintText: '메시지를 입력하세요...',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: () {
-                          final message = _controller.text;
-                          if (message.isNotEmpty) {
-                            addMessage(message);
-                            _controller
-                                .clear(); // Clear the text field after sending the message
-                          }
-                        },
-                        child: const Text('전송'),
-                      ),
-                    ],
-                  ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: () async {
+                    final message = _controller.text;
+                    if (message.isNotEmpty) {
+                      addMessage(message);
+                      _controller.clear();
+                      try {
+                        final response = await sendMessage(message);
+                        addMessage(response);
+                      } catch (e) {
+                        print('Error: $e');
+                      }
+                    }
+                  },
+                  child: const Text('전송'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AdminPage()),
+                    );
+                  },
+                  child: const Text('수정 완료'),
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -154,7 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
 class ChatBubble extends StatelessWidget {
   final String message;
 
-  ChatBubble({
+  const ChatBubble({
     required this.message,
   });
 
