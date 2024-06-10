@@ -203,7 +203,6 @@ class SignupPage extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
-                          fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),
                       ),
