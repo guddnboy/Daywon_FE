@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
-import 'package:project/pages/admin/AdminCheckProblemPage.dart';
+import 'package:project/pages/admin/CompleteCheckProblem.dart';
+
 import 'package:project/pages/admin/AdminCreateProblemPage.dart';
+import 'package:project/pages/admin/NeedToCheckProblem.dart';
 
 void main() {
   runApp(const AdminPage());
@@ -199,30 +201,70 @@ class _AdminPageState extends State<AdminPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AdminCheckProblemPage()),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFF8BC0FF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NeedToCheckProblem(),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xFF8BC0FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.5,
+                            70), // 화면 폭의 반만큼의 너비
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: const Text(
+                        '검수 필요 문제',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                   ),
-                  minimumSize: Size(MediaQuery.of(context).size.width, 70),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: const Text(
-                  '문제 검수',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                  const SizedBox(width: 8), // 각 버튼 사이에 간격을 추가합니다.
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CompleteCheckProblem(),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color(0xFF8BC0FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        minimumSize: Size(
+                            MediaQuery.of(context).size.width * 0.5,
+                            70), // 화면 폭의 반만큼의 너비
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      child: const Text(
+                        '검수 완료 문제',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
