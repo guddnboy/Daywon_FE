@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
@@ -7,6 +9,7 @@ void main() {
   runApp(Correctproblem());
 }
 
+// ignore: use_key_in_widget_constructors
 class Correctproblem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class Correctproblem extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -42,7 +45,7 @@ class Correctproblem extends StatelessWidget {
                         width: width * 0.8,
                         height: height * 0.7,
                         decoration: BoxDecoration(
-                          color: Color(0xFF8BC0FF),
+                          color: const Color(0xFF8BC0FF),
                           borderRadius: BorderRadius.circular(24),
                         ),
                       ),
@@ -55,7 +58,7 @@ class Correctproblem extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: width * 0.07,
-                          fontFamily: 'Inter',
+                          fontFamily: 'LaundryGothic',
                           fontWeight: FontWeight.w700,
                           height: 1.2,
                         ),
@@ -69,7 +72,7 @@ class Correctproblem extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: width * 0.035,
-                          fontFamily: 'Inter',
+                          fontFamily: 'LaundryGothic',
                           fontWeight: FontWeight.w400,
                           height: 1.2,
                         ),
@@ -81,7 +84,7 @@ class Correctproblem extends StatelessWidget {
                       child: Container(
                         width: width * 0.3,
                         height: width * 0.3,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xFF065ABD),
                           shape: BoxShape.circle,
                         ),
@@ -94,7 +97,7 @@ class Correctproblem extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: width * 0.03,
-                                    fontFamily: 'Inter',
+                                    fontFamily: 'LaundryGothic',
                                     fontWeight: FontWeight.w700,
                                     height: 1.2,
                                   ),
@@ -104,7 +107,7 @@ class Correctproblem extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: width * 0.04,
-                                    fontFamily: 'Inter',
+                                    fontFamily: 'LaundryGothic',
                                     fontWeight: FontWeight.w700,
                                     height: 1.2,
                                   ),
@@ -123,24 +126,27 @@ class Correctproblem extends StatelessWidget {
                         width: width * 0.7,
                         height: height * 0.45,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255),
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.circular(24),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: ListView.builder(
                             itemCount: 20,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Stack(
                                   children: [
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white,
-                                        minimumSize: Size(width * 0.65, height * 0.08),
+                                        minimumSize:
+                                            Size(width * 0.65, height * 0.08),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                         ),
                                       ),
                                       onPressed: () {
@@ -158,7 +164,7 @@ class Correctproblem extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: width * 0.035,
                                           color: Colors.black,
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'LaundryGothic',
                                           fontWeight: FontWeight.w700,
                                           height: 1.2,
                                         ),
@@ -170,7 +176,7 @@ class Correctproblem extends StatelessWidget {
                                       child: Container(
                                         width: width * 0.08,
                                         height: width * 0.08,
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                           color: Color(0xFF065ABD),
                                           shape: BoxShape.circle,
                                         ),
@@ -180,7 +186,7 @@ class Correctproblem extends StatelessWidget {
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: width * 0.04,
-                                              fontFamily: 'Inter',
+                                              fontFamily: 'LaundryGothic',
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
@@ -245,7 +251,7 @@ class Correctproblem extends StatelessWidget {
               case 2:
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyPage()),
+                  MaterialPageRoute(builder: (context) => const MyPage()),
                 );
                 break;
             }
