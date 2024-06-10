@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:project/pages/MyPage/CorrectProblem.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
+import 'package:project/pages/admin/CompleteCheckProblem.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,10 +30,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class NeedToCheckProblemCommentaryPage extends StatelessWidget {
+class CompleteCheckProblemCommentaryPage extends StatelessWidget {
   final String selectedChoice;
 
-  const NeedToCheckProblemCommentaryPage(
+  const CompleteCheckProblemCommentaryPage(
       {super.key, required this.selectedChoice});
 
   @override
@@ -159,7 +160,7 @@ class NeedToCheckProblemCommentaryPage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Correctproblem()),
+                                                      CompleteCheckProblem()),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -172,7 +173,7 @@ class NeedToCheckProblemCommentaryPage extends StatelessWidget {
                                                 vertical: 16, horizontal: 24),
                                           ),
                                           child: const Text(
-                                            '검수 필요 문제 보기',
+                                            '검수 완료 문제 보기',
                                             style: TextStyle(
                                               color: Color(0xFF4399FF),
                                               fontSize: 14,
@@ -216,7 +217,7 @@ class NeedToCheckProblemCommentaryPage extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             const Text(
-                              '검수 필요 문제',
+                              '검수 완료 문제',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,

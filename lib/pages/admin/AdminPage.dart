@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_const
 
 import 'package:flutter/material.dart';
+import 'package:project/pages/admin/CompleteCheckProblem.dart';
 
 import 'package:project/pages/admin/AdminCreateProblemPage.dart';
 import 'package:project/pages/admin/NeedToCheckProblem.dart';
@@ -239,7 +240,7 @@ class _AdminPageState extends State<AdminPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NeedToCheckProblem(),
+                            builder: (context) => CompleteCheckProblem(),
                           ),
                         );
                       },

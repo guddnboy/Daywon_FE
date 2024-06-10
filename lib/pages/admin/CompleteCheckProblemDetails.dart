@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: NeedToCheckProblemDetails(index: 0),
+      home: CompleteCheckProblemDetails(index: 0),
     );
   }
 }
@@ -40,10 +40,11 @@ Future<Problem> fetchProblem(int index) async {
   return problems[index % problems.length];
 }
 
-class NeedToCheckProblemDetails extends StatelessWidget {
+class CompleteCheckProblemDetails extends StatelessWidget {
   final int index;
 
-  NeedToCheckProblemDetails({Key? key, required this.index}) : super(key: key);
+  CompleteCheckProblemDetails({Key? key, required this.index})
+      : super(key: key);
 
   final List<Color> buttonColors = [
     const Color(0xFF8BC0FF),
@@ -134,7 +135,17 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                                               BorderRadius.circular(20),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CompleteCheckProblemCommentaryPage(
+                                                    selectedChoice:
+                                                        problem.choices[i]),
+                                          ),
+                                        ); // 보기 버튼을 누를 때 CommentaryPage로 해당 보기의 텍스트 전달
+                                      },
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
