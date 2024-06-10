@@ -3,6 +3,7 @@ import 'package:project/pages/MyPage/CorrectProblemCommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/MyPage/CorrectProblem.dart';
 import 'package:project/pages/admin/CompleteCheckProblemCommentaryPage.dart';
+import 'package:project/pages/admin/ModifyProblem.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -182,6 +183,36 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 20), // 간격 조정
                                   ],
+                                  const SizedBox(height: 20),
+                                  SizedBox(
+                                    width: 210,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ModifyProblem()),
+                                        );
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12),
+                                      ),
+                                      child: const Text(
+                                        '수정하기',
+                                        style: TextStyle(
+                                          color: Color(0xFF4399FF),
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -214,7 +245,7 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             const Text(
-                              '검수 완료 문제',
+                              '검수 필요 문제',
                               style: TextStyle(
                                 fontSize: 18, // 텍스트 크기 조정
                                 color: Colors.black,
