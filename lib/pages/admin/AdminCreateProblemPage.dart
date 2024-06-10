@@ -73,7 +73,6 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 30,
-                            fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -83,7 +82,6 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
-                            fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -122,7 +120,6 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
-                            fontFamily: 'Inter',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -181,7 +178,6 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
-                              fontFamily: 'Inter',
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -266,7 +262,6 @@ class CategoryButton extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white,
               fontSize: 10,
-              fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -309,7 +304,6 @@ class LevelButton extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white,
               fontSize: 15,
-              fontFamily: 'Inter',
               fontWeight: FontWeight.w600,
             ),
           ),
