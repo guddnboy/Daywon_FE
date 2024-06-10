@@ -102,7 +102,7 @@ class ProblemPage extends StatelessWidget {
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14, // 텍스트 크기 조정
-                                        fontFamily: 'Inter',
+
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
@@ -116,7 +116,8 @@ class ProblemPage extends StatelessWidget {
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: buttonColors[i],
-                                        fixedSize: const Size(210, 50), // 버튼 크기 조정
+                                        fixedSize:
+                                            const Size(210, 50), // 버튼 크기 조정
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -155,7 +156,7 @@ class ProblemPage extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
                                                   fontSize: 20, // 텍스트 크기 조정
-                                                  fontFamily: 'Inter',
+
                                                   fontWeight: FontWeight.w800,
                                                 ),
                                               ),
@@ -170,7 +171,7 @@ class ProblemPage extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16, // 텍스트 크기 조정
-                                                  fontFamily: 'Inter',
+
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
