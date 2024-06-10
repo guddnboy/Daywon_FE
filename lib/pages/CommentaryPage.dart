@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/pages/MainPage.dart';
@@ -23,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'LaundryGothic'),
       home: ProblemPage(),
     );
   }
@@ -112,7 +111,6 @@ class CommentaryPage extends StatelessWidget {
                                                       style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 16,
-                                                        fontFamily: 'Inter',
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         height: 0,
@@ -132,8 +130,6 @@ class CommentaryPage extends StatelessWidget {
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 11,
-                                                                fontFamily:
-                                                                    'Inter',
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
@@ -175,7 +171,6 @@ class CommentaryPage extends StatelessWidget {
                                             style: TextStyle(
                                               color: Color(0xFF4399FF),
                                               fontSize: 14,
-                                              fontFamily: 'Inter',
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),
