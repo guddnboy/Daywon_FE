@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: Wrongproblem(),
     );
   }
@@ -113,7 +113,6 @@ class Wrongproblemcommentarypage extends StatelessWidget {
                                                       style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 16,
-                                                        fontFamily: 'Inter',
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         height: 0,
@@ -133,8 +132,6 @@ class Wrongproblemcommentarypage extends StatelessWidget {
                                                                 color: Colors
                                                                     .black,
                                                                 fontSize: 11,
-                                                                fontFamily:
-                                                                    'Inter',
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
@@ -159,7 +156,7 @@ class Wrongproblemcommentarypage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Wrongproblem()),
+                                                      const Wrongproblem()),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -168,14 +165,14 @@ class Wrongproblemcommentarypage extends StatelessWidget {
                                               borderRadius:
                                                   BorderRadius.circular(14),
                                             ),
-                                            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 16, horizontal: 24),
                                           ),
                                           child: const Text(
                                             '틀린 문제 보기',
                                             style: TextStyle(
                                               color: Color(0xFF4399FF),
                                               fontSize: 14,
-                                              fontFamily: 'Inter',
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),
