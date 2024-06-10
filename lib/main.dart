@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DayWon',
       theme: ThemeData(
-        fontFamily: "laundryGothic",
+        fontFamily: "LaundryGothic",
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4399FF)),
         useMaterial3: true,
       ),
