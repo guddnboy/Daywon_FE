@@ -112,7 +112,7 @@ class Correctproblemdetails extends StatelessWidget {
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14, // 텍스트 크기 조정
-                                        fontFamily: 'Inter',
+                                        fontFamily: 'LaundryGothic',
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
@@ -126,14 +126,15 @@ class Correctproblemdetails extends StatelessWidget {
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: buttonColors[i],
-                                        fixedSize: const Size(210, 50), // 버튼 크기 조정
+                                        fixedSize:
+                                            const Size(210, 50), // 버튼 크기 조정
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),
                                       ),
                                       onPressed: () {
-                                       Navigator.push(
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
@@ -164,7 +165,7 @@ class Correctproblemdetails extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
                                                   fontSize: 20, // 텍스트 크기 조정
-                                                  fontFamily: 'Inter',
+                                                  fontFamily: 'LaundryGothic',
                                                   fontWeight: FontWeight.w800,
                                                 ),
                                               ),
@@ -179,7 +180,7 @@ class Correctproblemdetails extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16, // 텍스트 크기 조정
-                                                  fontFamily: 'Inter',
+                                                  fontFamily: 'LaundryGothic',
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
