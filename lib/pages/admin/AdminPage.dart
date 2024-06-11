@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/pages/admin/CompleteCheckProblem.dart';
-
 import 'package:project/pages/admin/AdminCreateProblemPage.dart';
 import 'package:project/pages/admin/NeedToCheckProblem.dart';
+import 'package:project/pages/admin/AdminAccountManagementPage.dart';
 
 void main() {
   runApp(const AdminPage());
@@ -41,14 +41,13 @@ class _AdminPageState extends State<AdminPage> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          padding: const EdgeInsets.all(30.0),
           color: Colors.white,
-          padding: const EdgeInsets.all(40.0),
           child: Column(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width * 0.5,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.25,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/img/DayWon.png"),
@@ -80,11 +79,9 @@ class _AdminPageState extends State<AdminPage> {
               const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 10.0,
+                  vertical: 15.0,
+                  horizontal: 15.0,
                 ),
-                width: MediaQuery.of(context).size.width,
-                height: 132,
                 decoration: ShapeDecoration(
                   color: const Color(0xFF4399FF),
                   shape: RoundedRectangleBorder(
@@ -140,7 +137,7 @@ class _AdminPageState extends State<AdminPage> {
                       '$numberOfProblems 개',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 26,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -166,7 +163,7 @@ class _AdminPageState extends State<AdminPage> {
                       '문제 생성 및 확인',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         height: 0,
                       ),
@@ -174,7 +171,7 @@ class _AdminPageState extends State<AdminPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -188,7 +185,7 @@ class _AdminPageState extends State<AdminPage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  minimumSize: Size(MediaQuery.of(context).size.width, 70),
+                  minimumSize: Size(MediaQuery.of(context).size.width, 65),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
                 child: const Text(
@@ -200,7 +197,7 @@ class _AdminPageState extends State<AdminPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -220,7 +217,7 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                         minimumSize: Size(
                             MediaQuery.of(context).size.width * 0.5,
-                            70), // 화면 폭의 반만큼의 너비
+                            65), // 화면 폭의 반만큼의 너비
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: const Text(
@@ -251,7 +248,7 @@ class _AdminPageState extends State<AdminPage> {
                         ),
                         minimumSize: Size(
                             MediaQuery.of(context).size.width * 0.5,
-                            70), // 화면 폭의 반만큼의 너비
+                            65), // 화면 폭의 반만큼의 너비
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                       child: const Text(
@@ -265,6 +262,33 @@ class _AdminPageState extends State<AdminPage> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 15), // 버튼 간의 간격
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AdminAccountManagementPage(), // 관리자 계정 관리 페이지로 이동
+                    ),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFF8BC0FF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  minimumSize: Size(MediaQuery.of(context).size.width, 65),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+                child: const Text(
+                  '관리자 계정 관리',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ],
           ),
