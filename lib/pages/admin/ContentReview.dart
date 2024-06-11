@@ -75,10 +75,10 @@ class ContentReview extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: const Text(
-                              '세금',
+                              '개념 스크립트',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -94,10 +94,10 @@ class ContentReview extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: const Text(
-                              '자산관리',
+                              '숏폼/예시 스크립트',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -113,10 +113,10 @@ class ContentReview extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: const Text(
-                              '금융시사상식',
+                              '학습 문제 및 해설',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
