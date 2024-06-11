@@ -102,14 +102,8 @@ class _AdminCreateProblemPageState extends State<AdminCreateProblemPage> {
                             ),
                             const SizedBox(width: 10),
                             CategoryButton(
-                              title: '금융기초상식',
-                              isSelected: selectedCategory == '금융기초상식',
-                              onSelect: selectCategory,
-                            ),
-                            const SizedBox(width: 10),
-                            CategoryButton(
-                              title: '기본 상식',
-                              isSelected: selectedCategory == '기본 상식',
+                              title: '금융시사상식',
+                              isSelected: selectedCategory == '금융시사상식',
                               onSelect: selectCategory,
                             ),
                           ],
