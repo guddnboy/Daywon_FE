@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/login/LoginPage.dart';
 import 'pages/MainPage.dart';
-import 'pages/CategoryPage.dart';
+import 'pages/user/CategoryPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DayWon',
       theme: ThemeData(
-        fontFamily: "LaundryGothic",
+        fontFamily: "KCC-Hanbit",
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4399FF)),
         useMaterial3: true,
       ),

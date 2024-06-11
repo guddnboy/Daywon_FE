@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:project/pages/MyPage/CorrectProblem.dart';
+import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
+import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
 import 'package:project/pages/admin/CompleteCheckProblem.dart';
 
 void main() {
@@ -116,7 +116,7 @@ class CompleteCheckProblemCommentaryPage extends StatelessWidget {
                                                         color: Colors.black,
                                                         fontSize: 16,
                                                         fontFamily:
-                                                            'LaundryGothic',
+                                                            'KCC-Hanbit',
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         height: 0,
@@ -177,7 +177,7 @@ class CompleteCheckProblemCommentaryPage extends StatelessWidget {
                                             style: TextStyle(
                                               color: Color(0xFF4399FF),
                                               fontSize: 14,
-                                              fontFamily: 'LaundryGothic',
+                                              fontFamily: 'KCC-Hanbit',
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project/pages/MyPage/CorrectProblemCommentaryPage.dart';
+import 'package:project/pages/user/Mypage/CorrectProblemCommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage/CorrectProblem.dart';
+import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 import 'package:project/pages/admin/CompleteCheckProblemCommentaryPage.dart';
 import 'package:project/pages/admin/ModifyProblem.dart';
 
@@ -114,7 +114,7 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14, // 텍스트 크기 조정
-                                        fontFamily: 'LaundryGothic',
+                                        fontFamily: 'KCC-Hanbit',
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
@@ -157,7 +157,7 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
                                                   fontSize: 20, // 텍스트 크기 조정
-                                                  fontFamily: 'LaundryGothic',
+                                                  fontFamily: 'KCC-Hanbit',
                                                   fontWeight: FontWeight.w800,
                                                 ),
                                               ),
@@ -172,7 +172,7 @@ class NeedToCheckProblemDetails extends StatelessWidget {
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16, // 텍스트 크기 조정
-                                                  fontFamily: 'LaundryGothic',
+                                                  fontFamily: 'KCC-Hanbit',
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),

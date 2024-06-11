@@ -201,10 +201,10 @@ class LoginPage extends StatelessWidget {
                     const Text(
                       'Day￦과 금융 학습을 시작하세요!',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Inter'),
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ],

@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:project/pages/MyPage/CorrectProblemDetails.dart';
+import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/MyPage/MyPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/admin/CompleteCheckProblemDetails.dart';
 import 'package:project/pages/admin/NeedToCheckProblemDetails.dart';
 
