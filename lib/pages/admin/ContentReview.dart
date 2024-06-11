@@ -35,38 +35,97 @@ class ContentReview extends StatelessWidget {
                 final height = constraints.maxHeight;
                 return Stack(
                   children: [
-                    Container(
-                      width: width * 0.9,
-                      height: height * 0.7,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 2,
-                            color: Color(0xFF4399FF),
-                          ),
-                          borderRadius: BorderRadius.circular(17),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: height * 0.07,
-                      child: const Center(
-                        child: Text(
-                          '검수할 콘텐츠 선택',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            height: 1.2,
+                    Center(
+                      child: Container(
+                        width: width * 0.8,
+                        height: height * 0.5,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                              width: 2,
+                              color: Color(0xFF4399FF),
+                            ),
+                            borderRadius: BorderRadius.circular(17),
                           ),
                         ),
                       ),
                     ),
+                    Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            '검수할 콘텐츠 선택',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                              height: 1.2,
+                            ),
+                          ),
+                          const SizedBox(height: 50), // 간격 조정
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFABD2FF),
+                              fixedSize: const Size(190, 55),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              '세금',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 25), // 간격 조정
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF55A3FF),
+                              fixedSize: const Size(190, 55),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              '자산관리',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 25), // 간격 조정
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF0075FF),
+                              fixedSize: const Size(190, 55),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              '금융시사상식',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Positioned(
-                      top: 10,
+                      top: 50,
                       left: 10,
                       child: GestureDetector(
                         onTap: () {
