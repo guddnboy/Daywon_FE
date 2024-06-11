@@ -6,10 +6,10 @@ import 'dart:convert';
 import 'package:project/pages/admin/AdminPage.dart';
 
 void main() {
-  runApp(ModifyProblem());
+  runApp(ModifyCaseScript());
 }
 
-class ModifyProblem extends StatelessWidget {
+class ModifyCaseScript extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('문제 수정'),
+        title: const Text('숏폼/예시 스크립트 수정'),
       ),
       body: Column(
         children: [

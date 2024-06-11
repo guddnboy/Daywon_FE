@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/admin/CompleteCheckProblem.dart';
 import 'package:project/pages/admin/AdminCreateProblemPage.dart';
+import 'package:project/pages/admin/ContentReview.dart';
 import 'package:project/pages/admin/NeedToCheckProblem.dart';
 import 'package:project/pages/admin/AdminAccountManagementPage.dart';
 
@@ -206,7 +207,7 @@ class _AdminPageState extends State<AdminPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NeedToCheckProblem(),
+                            builder: (context) => const ContentReview(),
                           ),
                         );
                       },
