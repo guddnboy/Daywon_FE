@@ -46,12 +46,12 @@ class _MainPageState extends State<MainPage> {
   //   return _images[index];
   // }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchUser();
-  //   _randomImage = _getRandomImage();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    fetchUser();
+    // _randomImage = _getRandomImage();
+  }
 
   Future<void> fetchUser() async {
     // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
