@@ -29,7 +29,7 @@ class AdminAccountManagementPage extends StatefulWidget {
 class _AdminAccountManagementPageState
     extends State<AdminAccountManagementPage> {
   List<Account> accounts = List.generate(
-      20, (index) => Account(id: '아이디$index', status: '활성화 상태', level: 1));
+      20, (index) => Account(id: '아이디$index', status: '활성화 상태', level: null));
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,22 @@ class _AdminAccountManagementPageState
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              const SizedBox(height: 40), // 상단 여백 줄이기
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/img/backbtn.png',
+                      width: 40,
+                      height: 40,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
@@ -52,10 +67,13 @@ class _AdminAccountManagementPageState
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const [
-                        Text('아이디', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('활성화 상태', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('아이디',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('활성화 상태',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                         Text('레벨', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('비밀번호 확인', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('비밀번호 확인',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
                       ],
                     ),
                     const Divider(color: Colors.black),
@@ -127,6 +145,7 @@ class _AdminAccountManagementPageState
                                   selectedLevel = value;
                                 });
                               },
+                              hint: Text("레벨"),
                             ),
                           ],
                         ),
@@ -157,56 +176,6 @@ class _AdminAccountManagementPageState
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/backbtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'Back',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/homebtn.png',
-              width: 28,
-              height: 28,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/mypagebtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'My Page',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pop(context);
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyPage()),
-              );
-              break;
-          }
-        },
-      ),
     );
   }
 }
@@ -214,7 +183,7 @@ class _AdminAccountManagementPageState
 class Account {
   String id;
   String status;
-  int level;
+  int? level;
 
   Account({required this.id, required this.status, required this.level});
 }
@@ -265,6 +234,7 @@ class _AccountRowState extends State<AccountRow> {
         ),
         DropdownButton<int>(
           value: selectedLevel,
+          hint: Text("레벨"),
           items: [
             DropdownMenuItem<int>(
               value: 1,
