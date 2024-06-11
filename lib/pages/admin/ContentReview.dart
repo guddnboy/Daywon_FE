@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/admin/ModifyProblem.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -111,7 +112,13 @@ class ContentReview extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ModifyProblem()),
+                              );
+                            },
                             child: const Text(
                               '학습 문제 및 해설',
                               style: TextStyle(
