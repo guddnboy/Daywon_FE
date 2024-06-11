@@ -8,11 +8,15 @@ void main() {
 }
 
 // 비동기로 데이터베이스에서 문제 해설 내용을 가져오는 함수
-Future<String> fetchProblemExplanation() async {
+Future<Map<String, dynamic>> fetchProblemExplanation() async {
   // 데이터베이스나 API 호출로 데이터를 가져오는 부분
   await Future.delayed(const Duration(seconds: 1));
-  const commentary = '이곳에 문제에 대한 해설이 기록될 거다.';
-  return commentary;
+  const points = 60;
+  const commentary = '이곳에 문제에 대한 해설이 기록될 것입니다.';
+  return {
+    'points': points,
+    'commentary': commentary,
+  };
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +45,7 @@ class CommentaryPage extends StatelessWidget {
             double containerWidth = constraints.maxWidth * 0.8;
             double containerHeight = constraints.maxHeight * 0.65;
 
-            return FutureBuilder<String>(
+            return FutureBuilder<Map<String, dynamic>>(
               future: fetchProblemExplanation(), // 비동기로 문제 해설 내용을 가져옴
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,7 +53,8 @@ class CommentaryPage extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
-                  String problemExplanation = snapshot.data!;
+                  String problemExplanation = snapshot.data!['commentary'];
+                  int points = snapshot.data!['points'];
                   return Stack(
                     children: [
                       Column(
@@ -113,6 +118,17 @@ class CommentaryPage extends StatelessWidget {
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.w700,
+                                                        height: 0,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Text(
+                                                      '획득 포인트 : $points', // 포인트 표시
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w600,
                                                         height: 0,
                                                       ),
                                                     ),

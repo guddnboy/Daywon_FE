@@ -23,8 +23,7 @@ class CategoryPage extends StatelessWidget {
 
             String category1 = '세금';
             String category2 = '자산관리';
-            String category3 = '금융기초상식';
-            String category4 = '기본 상식';
+            String category3 = '금융시사상식';
 
             return Stack(
               children: [
@@ -146,33 +145,7 @@ class CategoryPage extends StatelessWidget {
                                             )));
                               },
                               child: const Text(
-                                '금융기초상식',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 25), // 간격 조정
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF0056BD),
-                                fixedSize: const Size(190, 55),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LearningPage(
-                                              selectedCategory: category4,
-                                            )));
-                              },
-                              child: const Text(
-                                '기본 상식',
+                                '금융시사상식',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
