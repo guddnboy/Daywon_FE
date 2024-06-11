@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/pages/admin/ModifyCaseScript.dart';
+import 'package:project/pages/admin/ModifyConceptScript.dart';
 import 'package:project/pages/admin/ModifyProblem.dart';
 
 void main() {
@@ -74,7 +76,14 @@ class ContentReview extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ModifyConceptScript()),
+                              );
+                            },
                             child: const Text(
                               '개념 스크립트',
                               style: TextStyle(
@@ -93,7 +102,13 @@ class ContentReview extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ModifyCaseScript()),
+                              );
+                            },
                             child: const Text(
                               '숏폼/예시 스크립트',
                               style: TextStyle(
