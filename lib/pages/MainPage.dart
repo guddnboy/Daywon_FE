@@ -3,8 +3,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:project/pages/CategoryPage.dart';
-import 'package:project/pages/MyPage/MyPage.dart';
+import 'package:project/pages/user/CategoryPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 
 void main() {
   runApp(const MyApp());

@@ -60,7 +60,7 @@ class _AdminPageState extends State<AdminPage> {
                 child: RichText(
                   text: TextSpan(
                     style: const TextStyle(
-                      fontFamily: 'LaundryGothic',
+                      fontFamily: 'KCC-Hanbit',
                       color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
