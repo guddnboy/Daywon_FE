@@ -30,27 +30,28 @@ class _MainPageState extends State<MainPage> {
   String nickname = '';
   int points = 0;
   int days = 0;
-  late String _randomImage;
 
-  final List<String> _images = [
-    'assets/img/marimo_1.png',
-    'assets/img/marimo_2.png',
-    'assets/img/marimo_3.png',
-    'assets/img/marimo_4.png'
-  ];
+  // late String _randomImage;
 
-  String _getRandomImage() {
-    final random = Random();
-    int index = random.nextInt(_images.length);
-    return _images[index];
-  }
+  // final List<String> _images = [
+  //   'assets/img/marimo_1.png',
+  //   'assets/img/marimo_2.png',
+  //   'assets/img/marimo_3.png',
+  //   'assets/img/marimo_4.png'
+  // ];
 
-  @override
-  void initState() {
-    super.initState();
-    fetchUser();
-    _randomImage = _getRandomImage();
-  }
+  // String _getRandomImage() {
+  //   final random = Random();
+  //   int index = random.nextInt(_images.length);
+  //   return _images[index];
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchUser();
+  //   _randomImage = _getRandomImage();
+  // }
 
   Future<void> fetchUser() async {
     // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
@@ -272,11 +273,11 @@ class _MainPageState extends State<MainPage> {
                           Container(
                             width: 100,
                             height: 100,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: AssetImage(_randomImage),
+                                image: AssetImage("assets/img/marimo_1.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -311,7 +312,8 @@ class _MainPageState extends State<MainPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => CategoryPage()),
+                                          builder: (context) =>
+                                              const CategoryPage()),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -388,7 +390,7 @@ class _MainPageState extends State<MainPage> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyPage()),
+                MaterialPageRoute(builder: (context) => const MyPage()),
               );
               break;
           }
