@@ -7,7 +7,6 @@ import 'package:project/pages/login/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'config.dart';
 
-
 void main() {
   runApp(MyApp(apiUrl: Config.apiUrl));
 }

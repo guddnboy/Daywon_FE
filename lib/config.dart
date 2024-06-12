@@ -7,7 +7,9 @@ class Config {
   static String _getApiUrl() {
     if (kIsWeb) {
       // 웹 환경에서는 String.fromEnvironment를 사용합니다.
-      return const String.fromEnvironment('DAYWON_PORT', defaultValue: 'http://localhost:8000');
+
+      return const String.fromEnvironment('DAYWON_PORT',
+          defaultValue: 'http://localhost:8000');
     } else {
       // 모바일 환경에서는 Platform.environment를 사용합니다.
       if (Platform.environment.containsKey('DAYWON_PORT')) {
