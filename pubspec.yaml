@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
     
   flutter_native_splash: ^2.4.0 # 스플래시 스크린
   http: ^1.2.1
