@@ -11,9 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:project/main.dart';
 
 void main() {
+  const String apiUrl = 'http://localhost:8000'; // apiUrl 정의
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(apiUrl: apiUrl)); // apiUrl을 넘겨줌
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

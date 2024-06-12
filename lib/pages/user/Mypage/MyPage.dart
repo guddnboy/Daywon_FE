@@ -5,27 +5,6 @@ import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DayWon',
-      theme: ThemeData(
-        fontFamily: 'KCC-Hanbit',
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4399FF)),
-        useMaterial3: true,
-      ),
-      home: const MyPage(),
-    );
-  }
-}
-
 class MyPage extends StatelessWidget {
   const MyPage({super.key});
 
