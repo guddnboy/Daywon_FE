@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/pages/admin/AdminPage.dart';
@@ -176,7 +174,7 @@ class LoginPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AdminPage()),
+                                  builder: (context) => const AdminPage()),
                             );
                           },
                           style: TextButton.styleFrom(
@@ -199,10 +197,10 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      'Day￦과 금융 학습을 시작하세요!',
+                      'Day￦과 금융 학습을 더 재미있고 효과적으로 만들어 보세요!',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w400,
                       ),
                       textAlign: TextAlign.center,
