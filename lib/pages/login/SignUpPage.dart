@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:project/config.dart'; // Config 클래스를 import 합니다.
+import 'package:project/config.dart';
+import 'package:project/pages/login/LoginPage.dart'; // Config 클래스를 import 합니다.
 
 void main() async {
   runApp(const SignupPage());
@@ -24,17 +26,19 @@ class _SignupPageState extends State<SignupPage> {
 
   bool isNicknameChecked = false;
   bool isEmailChecked = false;
+  bool isPasswordMatched = false;
 
   Widget _buildTextField({
     required TextEditingController controller,
     required String labelText,
     required bool obscureText,
+    double width = double.infinity,
     Widget? suffix,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
-        width: double.infinity,
+        width: width,
         child: Row(
           children: [
             Expanded(
@@ -66,24 +70,28 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget _buildSignupButton(BuildContext context) {
+  Widget _buildButton({
+    required String text,
+    required VoidCallback onPressed,
+    Color? buttonColor,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () => _signUp(context),
+          onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             padding:
                 const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-            backgroundColor: const Color(0xFF4399FF),
+            backgroundColor: buttonColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),
           ),
-          child: const Text(
-            '회원가입하기',
-            style: TextStyle(
+          child: Text(
+            text,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 15,
               fontWeight: FontWeight.w400,
@@ -91,6 +99,22 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSignupButton(BuildContext context) {
+    return _buildButton(
+      text: '회원가입하기',
+      onPressed: () => _signUp(context),
+      buttonColor: const Color(0xFF4399FF),
+    );
+  }
+
+  Widget _buildPasswordConfirmationButton(BuildContext context) {
+    return _buildButton(
+      text: '비밀번호 확인',
+      onPressed: () => _checkPassword(context),
+      buttonColor: const Color(0xFF4399FF),
     );
   }
 
@@ -112,8 +136,8 @@ class _SignupPageState extends State<SignupPage> {
         return;
       }
 
-      if (passwordController.text != confirmPasswordController.text) {
-        _showDialog(context, '비밀번호 오류', '비밀번호가 일치하지 않습니다.');
+      if (!isPasswordMatched) {
+        _showDialog(context, '비밀번호 확인 필요', '비밀번호가 일치하지 않습니다.');
         return;
       }
 
@@ -137,6 +161,15 @@ class _SignupPageState extends State<SignupPage> {
 
       if (response.statusCode == 200) {
         _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다.');
+
+        // 회원가입 성공 후 LoginPage로 이동
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LoginPage(
+                    apiUrl: Config.apiUrl,
+                  )),
+        );
       } else {
         _showDialog(
             context, '회원가입 실패', '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}');
@@ -149,74 +182,71 @@ class _SignupPageState extends State<SignupPage> {
   void _checkNickname(BuildContext context) async {
     final serverUri = Config.apiUrl;
     final nickname = nicknameController.text;
-    final response = await http.get(
-      Uri.parse('$serverUri/users/check_nickname/$nickname'),
-    );
 
-    if (response.statusCode == 200) {
-      final isNicknameExists = jsonDecode(response.body)['exists'];
-      if (isNicknameExists) {
-        _showDialog(context, '중복 오류', '이미 사용 중인 닉네임입니다.');
-        isNicknameChecked = false;
-      } else {
-        _showDialog(context, '확인 완료', '사용 가능한 닉네임입니다.');
+    if (nickname.isEmpty) {
+      _showDialog(context, '오류', '닉네임을 입력하세요');
+      return;
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('$serverUri/users/check_nickname/?nickname=$nickname'),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final isNicknameAvailable = responseData['is_available'] ?? false;
+
+        if (isNicknameAvailable) {
+          _showDialog(context, '확인 완료', '사용 가능한 닉네임입니다.');
+        } else {
+          _showDialog(context, '중복 오류', '이미 사용 중인 닉네임입니다.');
+        }
+
         setState(() {
-          isNicknameChecked = true;
+          isNicknameChecked = isNicknameAvailable;
         });
+      } else {
+        _showDialog(context, '오류', '닉네임 확인 중 오류가 발생했습니다.');
       }
-      // 중복 검사 결과를 출력합니다.
-      print('닉네임 중복 검사 결과: $isNicknameExists');
-    } else {
-      _showDialog(context, '오류', '닉네임 확인 중 오류가 발생했습니다.');
+    } catch (e) {
+      _showDialog(context, '오류', '닉네임 확인 중 오류가 발생했습니다: $e');
     }
   }
 
   void _checkEmail(BuildContext context) async {
     final serverUri = Config.apiUrl;
     final email = emailController.text;
-    final response = await http.get(
-      Uri.parse('$serverUri/users/check_email/$email'),
-    );
 
-    if (response.statusCode == 200) {
-      final isEmailExists = jsonDecode(response.body)['exists'];
-      if (isEmailExists) {
-        _showDialog(context, '중복 오류', '이미 사용 중인 이메일입니다.');
-        isEmailChecked = false;
-      } else {
-        _showDialog(context, '확인 완료', '사용 가능한 이메일입니다.');
+    if (email.isEmpty) {
+      _showDialog(context, '오류', '이메일을 입력하세요');
+      return;
+    }
+
+    try {
+      final response = await http.get(
+        Uri.parse('$serverUri/users/check_email/?email=$email'),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final isEmailAvailable = responseData['is_available'] ?? false;
+
+        if (isEmailAvailable) {
+          _showDialog(context, '확인 완료', '사용 가능한 이메일입니다.');
+        } else {
+          _showDialog(context, '중복 오류', '이미 사용 중인 이메일입니다.');
+        }
+
         setState(() {
-          isEmailChecked = true;
+          isEmailChecked = isEmailAvailable;
         });
+      } else {
+        _showDialog(context, '오류', '이메일 확인 중 오류가 발생했습니다.');
       }
-      // 중복 검사 결과를 출력합니다.
-      print('이메일 중복 검사 결과: $isEmailExists');
-    } else {
-      _showDialog(context, '오류', '이메일 확인 중 오류가 발생했습니다.');
+    } catch (e) {
+      _showDialog(context, '오류', '이메일 확인 중 오류가 발생했습니다: $e');
     }
-  }
-
-  void _checkPassword(BuildContext context) {
-    final password = passwordController.text;
-    final confirmPassword = confirmPasswordController.text;
-
-    if (password == confirmPassword) {
-      _showDialog(context, '확인 완료', '비밀번호가 일치합니다.');
-    } else {
-      _showDialog(context, '일치하지 않음', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-      // 입력 데이터 초기화
-      passwordController.clear();
-      confirmPasswordController.clear();
-    }
-  }
-
-  // 입력값이 비어있는지 확인하는 메서드
-  bool _isInputEmpty() {
-    return nameController.text.isEmpty ||
-        passwordController.text.isEmpty ||
-        confirmPasswordController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        nicknameController.text.isEmpty;
   }
 
   void _showDialog(BuildContext context, String title, String content) {
@@ -239,6 +269,37 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
+  void _checkPassword(BuildContext context) {
+    final password = passwordController.text;
+    final confirmPassword = confirmPasswordController.text;
+
+    if (password == confirmPassword && password.isNotEmpty) {
+      setState(() {
+        isPasswordMatched = true; // 비밀번호 일치 상태 업데이트
+      });
+      _showDialog(context, '확인 완료', '비밀번호가 일치합니다.');
+    } else if (password.isEmpty) {
+      setState(() {
+        isPasswordMatched = false; // 비밀번호 불일치 상태 업데이트
+      });
+      _showDialog(context, '오류', '비밀번호를 입력하세요.');
+    } else {
+      setState(() {
+        isPasswordMatched = false; // 비밀번호 불일치 상태 업데이트
+      });
+      _showDialog(context, '일치하지 않음', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    }
+  }
+
+  // 입력값이 비어있는지 확인하는 메서드
+  bool _isInputEmpty() {
+    return nameController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        nicknameController.text.isEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,33 +308,13 @@ class _SignupPageState extends State<SignupPage> {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 40.0),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/img/DayWon.png"),
-                    ),
-                  ),
-                ),
+                const SizedBox(height: 100),
                 _buildTextField(
                   controller: nameController,
                   labelText: '이름',
                   obscureText: false,
-                ),
-                _buildTextField(
-                  controller: nicknameController,
-                  labelText: '닉네임',
-                  obscureText: false,
-                  suffix: TextButton(
-                    onPressed: () => _checkNickname(context),
-                    child: const Text('중복검사'),
-                  ),
                 ),
                 _buildTextField(
                   controller: emailController,
@@ -281,7 +322,16 @@ class _SignupPageState extends State<SignupPage> {
                   obscureText: false,
                   suffix: TextButton(
                     onPressed: () => _checkEmail(context),
-                    child: const Text('중복검사'),
+                    child: const Text('중복 확인'),
+                  ),
+                ),
+                _buildTextField(
+                  controller: nicknameController,
+                  labelText: '닉네임',
+                  obscureText: false,
+                  suffix: TextButton(
+                    onPressed: () => _checkNickname(context),
+                    child: const Text('중복 확인'),
                   ),
                 ),
                 _buildTextField(
@@ -293,30 +343,9 @@ class _SignupPageState extends State<SignupPage> {
                   controller: confirmPasswordController,
                   labelText: '비밀번호 확인',
                   obscureText: true,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () => _checkPassword(context),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 20.0),
-                        backgroundColor: const Color(0xFF4399FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                      ),
-                      child: const Text(
-                        '비밀번호 확인',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
+                  suffix: TextButton(
+                    onPressed: () => _checkPassword(context),
+                    child: const Text('확인'),
                   ),
                 ),
                 _buildSignupButton(context),
