@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:project/config.dart';
+import 'package:project/config.dart'; // Config 클래스를 import 합니다.
 
 void main() async {
   runApp(SignupPage());
@@ -10,7 +11,7 @@ void main() async {
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
 
-  final TextEditingController idController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
@@ -89,12 +90,12 @@ class SignupPage extends StatelessWidget {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, dynamic>{
-          'name': idController.text,
+          'name': nameController.text,
           'nickname': nicknameController.text,
           'e_mail': emailController.text,
           'level': '1',
           'user_point': 0,
-          'profile_image': 0,
+          'profile_image': 1,
           'hashed_password': passwordController.text,
         }),
       );
@@ -112,7 +113,7 @@ class SignupPage extends StatelessWidget {
 
   // 입력값이 비어있는지 확인하는 메서드
   bool _isInputEmpty() {
-    return idController.text.isEmpty ||
+    return nameController.text.isEmpty ||
         passwordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty ||
         emailController.text.isEmpty ||
@@ -162,8 +163,18 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
                 _buildTextField(
-                  controller: idController,
-                  labelText: '아이디',
+                  controller: nameController,
+                  labelText: '이름',
+                  obscureText: false,
+                ),
+                _buildTextField(
+                  controller: nicknameController,
+                  labelText: '닉네임',
+                  obscureText: false,
+                ),
+                _buildTextField(
+                  controller: emailController,
+                  labelText: '이메일',
                   obscureText: false,
                 ),
                 _buildTextField(
@@ -175,16 +186,6 @@ class SignupPage extends StatelessWidget {
                   controller: confirmPasswordController,
                   labelText: '비밀번호 확인',
                   obscureText: true,
-                ),
-                _buildTextField(
-                  controller: emailController,
-                  labelText: '이메일',
-                  obscureText: false,
-                ),
-                _buildTextField(
-                  controller: nicknameController,
-                  labelText: '닉네임',
-                  obscureText: false,
                 ),
                 _buildSignupButton(context),
               ],
