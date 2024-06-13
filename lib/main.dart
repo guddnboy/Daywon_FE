@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'dart:io';
-import 'pages/MainPage.dart';
-import 'pages/user/CategoryPage.dart';
 import 'package:project/pages/login/LoginPage.dart';
-import 'package:flutter/material.dart';
 import 'config.dart';
 
 void main() {

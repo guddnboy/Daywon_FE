@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_const
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/CategoryPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';

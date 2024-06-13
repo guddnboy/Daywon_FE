@@ -21,10 +21,6 @@ class CategoryPage extends StatelessWidget {
             double containerWidth = constraints.maxWidth * 0.8;
             double containerHeight = constraints.maxHeight * 0.65;
 
-            String category1 = '세금';
-            String category2 = '자산관리';
-            String category3 = '금융시사상식';
-
             return Stack(
               children: [
                 Center(
@@ -36,8 +32,7 @@ class CategoryPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: const Alignment(
-                          0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
+                      alignment: const Alignment(0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
                       child: Container(
                         width: containerWidth,
                         height: containerHeight,
@@ -86,11 +81,15 @@ class CategoryPage extends StatelessWidget {
                               ),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LearningPage(
-                                              selectedCategory: category1,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LearningPage(
+                                      level:2,
+                                      categoryId: 1,
+                                      selectedCategory: "세금"
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 '세금',
@@ -112,11 +111,15 @@ class CategoryPage extends StatelessWidget {
                               ),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LearningPage(
-                                              selectedCategory: category2,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LearningPage(
+                                      level:2,
+                                      categoryId: 2,
+                                      selectedCategory: "자산관리"
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 '자산관리',
@@ -138,11 +141,15 @@ class CategoryPage extends StatelessWidget {
                               ),
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LearningPage(
-                                              selectedCategory: category3,
-                                            )));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LearningPage(
+                                      level:2,
+                                      categoryId: 3,
+                                      selectedCategory: "금융시사상식"
+                                    ),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 '금융시사상식',

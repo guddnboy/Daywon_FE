@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:project/config.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/learning/ProblemPage.dart';
+import 'package:project/pages/ChatBotPage.dart'; // ChatBotPage를 불러옵니다.
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(const MyApp());
-}
-
-// 비동기로 데이터베이스에서 문제 해설 내용을 가져오는 함수
-Future<Map<String, dynamic>> fetchProblemExplanation() async {
-  // 데이터베이스나 API 호출로 데이터를 가져오는 부분
-  await Future.delayed(const Duration(seconds: 1));
-  const points = 60;
-  const commentary = '이곳에 문제에 대한 해설이 기록될 것입니다.';
-  return {
-    'points': points,
-    'commentary': commentary,
-  };
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'KCC-Hanbit'),
-      home: ProblemPage(),
-    );
-  }
-}
+import 'package:project/pages/user/learning/ChatBotpage.dart';
 
 class CommentaryPage extends StatelessWidget {
+  final String selectedCategory;
+  final int scriptsId;
+  final int qId;
+  final String resultMessage;
+  final int points;
   final String selectedChoice;
 
-  const CommentaryPage({super.key, required this.selectedChoice});
+  const CommentaryPage({
+    Key? key,
+    required this.selectedCategory,
+    required this.scriptsId,
+    required this.qId,
+    required this.resultMessage,
+    required this.points,
+    required this.selectedChoice,
+  }) : super(key: key);
+
+  Future<String> fetchProblemExplanation() async {
+    final response = await http.get(Uri.parse('${Config.apiUrl}/questions/$qId/comments'));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      return jsonData['combined_comment'];
+    } else {
+      throw Exception('Failed to load explanation');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +45,15 @@ class CommentaryPage extends StatelessWidget {
             double containerWidth = constraints.maxWidth * 0.8;
             double containerHeight = constraints.maxHeight * 0.65;
 
-            return FutureBuilder<Map<String, dynamic>>(
-              future: fetchProblemExplanation(), // 비동기로 문제 해설 내용을 가져옴
+            return FutureBuilder<String>(
+              future: fetchProblemExplanation(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
-                  String problemExplanation = snapshot.data!['commentary'];
-                  int points = snapshot.data!['points'];
+                  String problemExplanation = snapshot.data!;
                   return Stack(
                     children: [
                       Column(
@@ -112,24 +111,26 @@ class CommentaryPage extends StatelessWidget {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      selectedChoice, // 선택한 보기 내용 표시
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16,
+                                                      resultMessage,
+                                                      style: TextStyle(
+                                                        color: resultMessage
+                                                                .contains('맞았습니다')
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                        fontSize: 18,
                                                         fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 0,
+                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                     const SizedBox(height: 10),
                                                     Text(
-                                                      '획득 포인트 : $points', // 포인트 표시
+                                                      '획득 포인트: $points',
                                                       style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        height: 0,
+                                                        height: 1.5,
                                                       ),
                                                     ),
                                                     const SizedBox(height: 10),
@@ -140,7 +141,7 @@ class CommentaryPage extends StatelessWidget {
                                                           children: [
                                                             TextSpan(
                                                               text:
-                                                                  problemExplanation, // 문제에 대한 해설 표시
+                                                                  problemExplanation,
                                                               style:
                                                                   const TextStyle(
                                                                 color: Colors
@@ -149,7 +150,7 @@ class CommentaryPage extends StatelessWidget {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                height: 0,
+                                                                height: 1.5,
                                                               ),
                                                             ),
                                                           ],
@@ -164,32 +165,64 @@ class CommentaryPage extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MainPage()),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(14),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          MainPage()),
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(
+                                                    vertical: 12, horizontal: 20),
+                                              ),
+                                              child: const Text(
+                                                '학습 완료',
+                                                style: TextStyle(
+                                                  color: Color(0xFF4399FF),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 12),
-                                          ),
-                                          child: const Text(
-                                            '학습 완료',
-                                            style: TextStyle(
-                                              color: Color(0xFF4399FF),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w800,
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChatBotPage()), // ChatBotPage로 이동합니다.
+                                                );
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(
+                                                    vertical: 12, horizontal: 20),
+                                              ),
+                                              child: const Text(
+                                                '추가 질문하기',
+                                                style: TextStyle(
+                                                  color: Color(0xFF4399FF),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w800,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ],
                                     ),
