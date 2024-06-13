@@ -74,7 +74,7 @@ class _MyPageState extends State<MyPage> {
         userRankings = responseData.map((user) => {
           'user_id': user['user_id'],
           'nickname': user['nickname'],
-          'user_point': user['user_point'],
+          'points': user['points'],
           'ranking_position': user['ranking_position'],
         }).toList();
       });
@@ -271,7 +271,7 @@ class _MyPageState extends State<MyPage> {
                               horizontal: 16, vertical: 4),
                           title: Text('${user['ranking_position']}위'),
                           subtitle: Text('${user['nickname']}'),
-                          trailing: Text('${user['user_point']} 점',
+                          trailing: Text('${user['points']} 점',
                               style: TextStyle(fontSize: 16)),
                         );
                       },
