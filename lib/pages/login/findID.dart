@@ -89,7 +89,7 @@ class findID extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('이메일'),
+                    child: Text('아이디'),
                   ),
                 ),
                 Padding(

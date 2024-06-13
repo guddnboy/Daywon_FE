@@ -1,12 +1,9 @@
-// ignore_for_file: file_names
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:http/http.dart' as http;
-
 
 class MyPage extends StatefulWidget {
   final int userId;
@@ -57,7 +54,6 @@ class _MyPageState extends State<MyPage> {
       final responseData = json.decode(response.body);
       setState(() {
         ranking = responseData['ranking_position'] ?? 0;
-
       });
     } else {
       print('랭킹 데이터 로드 실패');
@@ -86,13 +82,91 @@ class _MyPageState extends State<MyPage> {
   String getProfileImagePath(int profileImageId) {
     switch (profileImageId) {
       case 1:
-        return 'assets/img/marimo_2.png';
-      case 2:
-        return 'assets/img/marimo_3.png';
-      case 3:
-        return 'assets/img/marimo_4.png';
-      default:
         return 'assets/img/marimo_1.png';
+      case 2:
+        return 'assets/img/marimo_2.png';
+      case 3:
+        return 'assets/img/marimo_3.png';
+      default:
+        return 'assets/img/marimo_4.png';
+    }
+  }
+
+  void showProfileEditPopup(BuildContext context) {
+    TextEditingController nicknameController = TextEditingController(text: nickname);
+    int selectedProfileImageId = profileImageId;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('정보 변경'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nicknameController,
+                decoration: const InputDecoration(labelText: '닉네임'),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(4, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedProfileImageId = index;
+                      });
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(getProfileImagePath(index)),
+                      radius: selectedProfileImageId == index ? 30 : 20,
+                    ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: const Text('취소'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('변경'),
+              onPressed: () {
+                setState(() {
+                  nickname = nicknameController.text;
+                  profileImageId = selectedProfileImageId;
+                });
+                updateProfile(widget.userId, nickname, profileImageId).then((_) {
+                  Navigator.of(context).pop(true); // 프로필 업데이트 후 true 반환
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> updateProfile(int userId, String newNickname, int newProfileImageId) async {
+    final url = Uri.parse('${widget.apiUrl}/user/$userId/update');
+    final response = await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'nickname': newNickname,
+        'profile_image': newProfileImageId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('프로필 업데이트 성공');
+    } else {
+      print('프로필 업데이트 실패');
     }
   }
 
@@ -119,7 +193,7 @@ class _MyPageState extends State<MyPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage(getProfileImagePath(profileImageId)), // 이미지 경로를 수정해주세요.
+                        backgroundImage: AssetImage(getProfileImagePath(profileImageId)),
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -163,6 +237,13 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ],
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.blue),
+                        onPressed: () {
+                          showProfileEditPopup(context);
+                        },
                       ),
                     ],
                   ),
@@ -337,13 +418,19 @@ class _MyPageState extends State<MyPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
-              );
+              ).then((_) {
+                // MainPage로 돌아올 때 상태를 새로 고침합니다.
+                fetchUser(widget.userId);
+              });
               break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
-              );
+              ).then((_) {
+                // MainPage로 돌아올 때 상태를 새로 고침합니다.
+                fetchUser(widget.userId);
+              });
               break;
           }
         },

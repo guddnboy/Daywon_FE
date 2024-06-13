@@ -45,19 +45,18 @@ class _MainPageState extends State<MainPage> {
   }
 
   String getProfileImagePath(int profileImageId) {
-    // 여기에 정수 값에 따른 이미지 경로를 매핑합니다.
     switch (profileImageId) {
       case 1:
-        return 'assets/img/marimo_2.png';
-      case 2:
-        return 'assets/img/marimo_3.png';
-      case 3:
-        return 'assets/img/marimo_4.png';
-      // 필요한 만큼 case를 추가하세요.
-      default:
         return 'assets/img/marimo_1.png';
+      case 2:
+        return 'assets/img/marimo_2.png';
+      case 3:
+        return 'assets/img/marimo_3.png';
+      default:
+        return 'assets/img/marimo_4.png';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,7 +146,7 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                         ),
                                         const Text(
-                                          "  자유 입출금 통장",
+                                          "님의, 자유 입출금 통장",
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
@@ -330,13 +329,17 @@ class _MainPageState extends State<MainPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
-              );
+              ).then((_) {
+                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
+              });
               break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
-              );
+              ).then((_) {
+                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
+              });
               break;
           }
         },

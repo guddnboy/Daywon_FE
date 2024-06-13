@@ -152,7 +152,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const findPassword()),
+                          MaterialPageRoute(builder: (context) => ChangePassword(apiUrl: apiUrl,)),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -163,7 +163,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        '비밀번호 찾기',
+                        '비밀번호 변경',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,
