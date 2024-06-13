@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const findID()),
+                          MaterialPageRoute(builder: (context) => findID(apiUrl: apiUrl,)),
                         );
                       },
                       style: TextButton.styleFrom(
