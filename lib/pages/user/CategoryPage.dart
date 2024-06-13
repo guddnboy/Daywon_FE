@@ -242,10 +242,10 @@ class CategoryPage extends StatelessWidget {
               // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MyPage()),
+              // );
               break;
           }
         },

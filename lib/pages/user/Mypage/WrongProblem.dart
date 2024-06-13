@@ -241,10 +241,10 @@ class Wrongproblem extends StatelessWidget {
               // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const MyPage()),
+              // );
               break;
           }
         },

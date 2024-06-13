@@ -7,10 +7,10 @@ import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:http/http.dart' as http;
 
 class MainPage extends StatefulWidget {
-  final String email;
+  final int userId;
   final String apiUrl;
 
-  MainPage({Key? key, required this.email, required this.apiUrl}) : super(key: key);
+  MainPage({Key? key, required this.userId, required this.apiUrl}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -24,11 +24,11 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    fetchUser(widget.email);
+    fetchUser(widget.userId);
   }
 
-  Future<void> fetchUser(String email) async {
-    final url = Uri.parse('${widget.apiUrl}/users/readuser?email=$email');
+  Future<void> fetchUser(int userId) async {
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
     final response = await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
@@ -329,7 +329,7 @@ class _MainPageState extends State<MainPage> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage(email: widget.email, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               );
               break;
             case 2:

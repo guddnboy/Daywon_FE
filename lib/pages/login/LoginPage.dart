@@ -25,11 +25,11 @@ class LoginPage extends StatelessWidget {
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
-      final userId = responseData['e_mail'];  // Assuming the response contains the user id in 'user_id'
+      final userId = responseData['user_id'];  // Assuming the response contains the user id in 'user_id'
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MainPage(email: userId, apiUrl: apiUrl)),
+        MaterialPageRoute(builder: (context) => MainPage(userId: userId, apiUrl: apiUrl)),
       );
     } else {
       showDialog(
