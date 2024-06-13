@@ -77,7 +77,6 @@ flutter:
     - assets/img/rank1.png
     - assets/img/rank2.png
     - assets/img/rank3.png
-
     
   # To add assets to your application, add an assets section, like this:
   # assets:
