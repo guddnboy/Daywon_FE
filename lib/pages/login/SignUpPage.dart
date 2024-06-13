@@ -580,7 +580,7 @@ class _LevelTestPageState extends State<LevelTestPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
-                  widget.updateTestDone(true); // Update test done status
+                  widget.updateTestDone(true);
                 },
                 child: const Text('닫기'),
               ),
