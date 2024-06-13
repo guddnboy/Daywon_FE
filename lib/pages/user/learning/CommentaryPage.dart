@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/config.dart';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/ChatBotPage.dart'; // ChatBotPage를 불러옵니다.
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
