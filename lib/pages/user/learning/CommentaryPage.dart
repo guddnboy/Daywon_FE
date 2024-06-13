@@ -166,12 +166,12 @@ class CommentaryPage extends StatelessWidget {
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MainPage()),
-                                            );
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           MainPage()),
+                                            // );
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.white,
@@ -282,16 +282,16 @@ class CommentaryPage extends StatelessWidget {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
           }
         },

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project/pages/user/learning/CommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -270,16 +266,16 @@ class ProblemPage extends StatelessWidget {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
           }
         },

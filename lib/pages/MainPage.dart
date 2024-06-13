@@ -1,27 +1,17 @@
 // ignore_for_file: unnecessary_const
-
+import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/CategoryPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MainPage(),
-    );
-  }
-}
+import 'package:http/http.dart' as http;
 
 class MainPage extends StatefulWidget {
+  final String email;
+  final String apiUrl;
+
+  MainPage({Key? key, required this.email, required this.apiUrl}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -29,41 +19,45 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String nickname = '';
   int points = 0;
-  int days = 0;
-
-  // late String _randomImage;
-
-  // final List<String> _images = [
-  //   'assets/img/marimo_1.png',
-  //   'assets/img/marimo_2.png',
-  //   'assets/img/marimo_3.png',
-  //   'assets/img/marimo_4.png'
-  // ];
-
-  // String _getRandomImage() {
-  //   final random = Random();
-  //   int index = random.nextInt(_images.length);
-  //   return _images[index];
-  // }
+  int profileImageId = 0;
 
   @override
   void initState() {
     super.initState();
-    fetchUser();
-    // _randomImage = _getRandomImage();
+    fetchUser(widget.email);
   }
 
-  Future<void> fetchUser() async {
-    // 여기에 실제 데이터베이스에서 닉네임을 가져오는 코드를 작성하세요.
-    // 예시로 2초 후에 닉네임을 "마리모"로 설정합니다.
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      nickname = '마리모';
-      points = 750000;
-      days = 13; // 데이터베이스에서 가져온 닉네임으로 설정
-    });
+  Future<void> fetchUser(String email) async {
+    final url = Uri.parse('${widget.apiUrl}/users/readuser?email=$email');
+    final response = await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      setState(() {
+        nickname = responseData['nickname'] ?? 'Unknown';
+        points = responseData['user_point'] ?? 0;
+        profileImageId = responseData['profile_image'] ?? 0;
+      });
+    } else {
+      // Handle error
+      print('Failed to load user data');
+    }
   }
 
+  String getProfileImagePath(int profileImageId) {
+    // 여기에 정수 값에 따른 이미지 경로를 매핑합니다.
+    switch (profileImageId) {
+      case 1:
+        return 'assets/img/marimo_2.png';
+      case 2:
+        return 'assets/img/marimo_3.png';
+      case 3:
+        return 'assets/img/marimo_4.png';
+      // 필요한 만큼 case를 추가하세요.
+      default:
+        return 'assets/img/marimo_1.png';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,19 +133,6 @@ class _MainPageState extends State<MainPage> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image:
-                                          AssetImage("assets/img/marimo_1.png"),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
                                 const SizedBox(width: 10),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,25 +148,6 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         const Text(
                                           "  자유 입출금 통장",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Row(
-                                      children: [
-                                        Text(
-                                          "DayWon",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "0000-0000-0000-0000",
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
@@ -266,36 +228,20 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 50),
+                     const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: AssetImage("assets/img/marimo_1.png"),
-                                fit: BoxFit.fill,
-                              ),
-                            ),
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage(getProfileImagePath(profileImageId)),
                           ),
                           Column(
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    days.toString(),
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      height: 0,
-                                    ),
-                                  ),
                                   const Text(
-                                    ' 일 연속 출석',
+                                    '오늘도 파이팅하세요!',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 20,
@@ -317,7 +263,6 @@ class _MainPageState extends State<MainPage> {
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    // backgroundColor: const Color(0xFF4399FF),
                                     backgroundColor: Colors.white,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
@@ -328,7 +273,7 @@ class _MainPageState extends State<MainPage> {
                                   child: const Text(
                                     '학습하기',
                                     style: TextStyle(
-                                      color: const Color(0xFF4399FF),
+                                      color: Color(0xFF4399FF),
                                       fontSize: 18,
                                     ),
                                   ),
@@ -384,7 +329,7 @@ class _MainPageState extends State<MainPage> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage()),
+                MaterialPageRoute(builder: (context) => MainPage(email: widget.email, apiUrl: widget.apiUrl)),
               );
               break;
             case 2:

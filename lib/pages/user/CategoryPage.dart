@@ -236,10 +236,10 @@ class CategoryPage extends StatelessWidget {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
               Navigator.push(
