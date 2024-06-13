@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'SignUpPage.dart';
 import 'package:project/pages/MainPage.dart';
+import 'findID.dart';
+import 'findPassword.dart';
 
 
 
@@ -127,7 +129,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FindIDPage()),
+                          MaterialPageRoute(builder: (context) => const findID()),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -150,7 +152,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FindPasswordPage()),
+                          MaterialPageRoute(builder: (context) => const findPassword()),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -213,34 +215,3 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class FindIDPage extends StatelessWidget {
-  const FindIDPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('아이디 찾기'),
-      ),
-      body: const Center(
-        child: Text('아이디 찾기 페이지'),
-      ),
-    );
-  }
-}
-
-class FindPasswordPage extends StatelessWidget {
-  const FindPasswordPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('비밀번호 찾기'),
-      ),
-      body: const Center(
-        child: Text('비밀번호 찾기 페이지'),
-      ),
-    );
-  }
-}

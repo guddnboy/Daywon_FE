@@ -335,7 +335,7 @@ class _MainPageState extends State<MainPage> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const MyPage()),
+                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               );
               break;
           }
