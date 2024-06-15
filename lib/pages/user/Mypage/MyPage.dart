@@ -9,7 +9,8 @@ class MyPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
 
-  MyPage({Key? key, required this.userId, required this.apiUrl}) : super(key: key);
+  MyPage({Key? key, required this.userId, required this.apiUrl})
+      : super(key: key);
 
   @override
   _MyPageState createState() => _MyPageState();
@@ -32,7 +33,8 @@ class _MyPageState extends State<MyPage> {
 
   Future<void> fetchUser(int userId) async {
     final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -48,7 +50,8 @@ class _MyPageState extends State<MyPage> {
 
   Future<void> fetchRanking(int userId) async {
     final url = Uri.parse('${widget.apiUrl}/user/$userId/ranking');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -62,17 +65,20 @@ class _MyPageState extends State<MyPage> {
 
   Future<void> fetchAllRankings() async {
     final url = Uri.parse('${widget.apiUrl}/get_all_ranking/');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body) as List;
       setState(() {
-        userRankings = responseData.map((user) => {
-          'user_id': user['user_id'],
-          'nickname': user['nickname'],
-          'points': user['points'],
-          'ranking_position': user['ranking_position'],
-        }).toList();
+        userRankings = responseData
+            .map((user) => {
+                  'user_id': user['user_id'],
+                  'nickname': user['nickname'],
+                  'points': user['points'],
+                  'ranking_position': user['ranking_position'],
+                })
+            .toList();
       });
     } else {
       print('모든 사용자 랭킹 데이터 로드 실패');
@@ -93,7 +99,8 @@ class _MyPageState extends State<MyPage> {
   }
 
   void showProfileEditPopup(BuildContext context) {
-    TextEditingController nicknameController = TextEditingController(text: nickname);
+    TextEditingController nicknameController =
+        TextEditingController(text: nickname);
     int selectedProfileImageId = profileImageId;
 
     showDialog(
@@ -141,7 +148,8 @@ class _MyPageState extends State<MyPage> {
                   nickname = nicknameController.text;
                   profileImageId = selectedProfileImageId;
                 });
-                updateProfile(widget.userId, nickname, profileImageId).then((_) {
+                updateProfile(widget.userId, nickname, profileImageId)
+                    .then((_) {
                   Navigator.of(context).pop(true); // 프로필 업데이트 후 true 반환
                 });
               },
@@ -152,7 +160,8 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  Future<void> updateProfile(int userId, String newNickname, int newProfileImageId) async {
+  Future<void> updateProfile(
+      int userId, String newNickname, int newProfileImageId) async {
     final url = Uri.parse('${widget.apiUrl}/user/$userId/update');
     final response = await http.put(
       url,
@@ -193,7 +202,8 @@ class _MyPageState extends State<MyPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage(getProfileImagePath(profileImageId)),
+                        backgroundImage:
+                            AssetImage(getProfileImagePath(profileImageId)),
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -271,7 +281,9 @@ class _MyPageState extends State<MyPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Correctproblem()),
+                                builder: (context) => Correctproblem(
+                                    userId: widget.userId,
+                                    apiUrl: widget.apiUrl)),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -417,7 +429,9 @@ class _MyPageState extends State<MyPage> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
                 // MainPage로 돌아올 때 상태를 새로 고침합니다.
                 fetchUser(widget.userId);
@@ -426,7 +440,9 @@ class _MyPageState extends State<MyPage> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
                 // MainPage로 돌아올 때 상태를 새로 고침합니다.
                 fetchUser(widget.userId);

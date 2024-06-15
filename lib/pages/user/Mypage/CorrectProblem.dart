@@ -4,13 +4,46 @@ import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(Correctproblem());
+class Correctproblem extends StatefulWidget {
+  final int userId;
+  final String apiUrl;
+  Correctproblem({Key? key, required this.userId, required this.apiUrl})
+      : super(key: key);
+
+  @override
+  _CorrectproblemState createState() => _CorrectproblemState();
 }
 
-// ignore: use_key_in_widget_constructors
-class Correctproblem extends StatelessWidget {
+class _CorrectproblemState extends State<Correctproblem> {
+  String nickname = '';
+  List<dynamic> correctProblems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCorrectProblems(widget.userId);
+  }
+
+  Future<void> fetchCorrectProblems(int userId) async {
+    final url =
+        Uri.parse('${widget.apiUrl}/get_user_history/$userId/?T_F=true');
+
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      setState(() {
+        correctProblems = json.decode(response.body);
+      });
+    } else {
+      print('사용자 히스트로 로드 실패');
+      throw Exception('Failed to load correct problems');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,8 +160,9 @@ class Correctproblem extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: ListView.builder(
-                          itemCount: 20,
+                          itemCount: correctProblems.length,
                           itemBuilder: (context, index) {
+                            final problem = correctProblems[index];
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
@@ -149,12 +183,14 @@ class Correctproblem extends StatelessWidget {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Correctproblemdetails(
-                                                  index: index),
+                                                  index: problem['scripts_id'],
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl),
                                         ),
                                       );
                                     },
                                     child: Text(
-                                      'Button ${index + 1}',
+                                      'Scripts ID: ${problem['scripts_id']}',
                                       style: TextStyle(
                                         fontSize: width * 0.035,
                                         color: Colors.black,
