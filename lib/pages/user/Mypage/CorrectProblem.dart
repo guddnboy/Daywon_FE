@@ -39,7 +39,7 @@ class _CorrectproblemState extends State<Correctproblem> {
         correctProblems = json.decode(response.body);
       });
     } else {
-      print('사용자 히스트로 로드 실패');
+      print('사용자 맞은 히스토리 로드 실패');
       throw Exception('Failed to load correct problems');
     }
   }

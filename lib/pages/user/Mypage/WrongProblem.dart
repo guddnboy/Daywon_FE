@@ -4,13 +4,45 @@ import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-void main() {
-  runApp(const Wrongproblem());
+class Wrongproblem extends StatefulWidget {
+  final int userId;
+  final String apiUrl;
+  const Wrongproblem({Key? key, required this.userId, required this.apiUrl})
+      : super(key: key);
+
+  @override
+  _WrongproblemState createState() => _WrongproblemState();
 }
 
-class Wrongproblem extends StatelessWidget {
-  const Wrongproblem({super.key});
+class _WrongproblemState extends State<Wrongproblem> {
+  String nickname = '';
+  List<dynamic> wrongProblems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchWrongproblems(widget.userId);
+  }
+
+  Future<void> fetchWrongproblems(int userId) async {
+    final url =
+        Uri.parse('${widget.apiUrl}/get_user_history/$userId/?T_F=false');
+
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      setState(() {
+        wrongProblems = json.decode(response.body);
+      });
+    } else {
+      print('사용자 틀린 히스트리 로드 실패');
+      throw Exception('Failed to load wrong problems');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +162,7 @@ class Wrongproblem extends StatelessWidget {
                         child: ListView.builder(
                           itemCount: 20,
                           itemBuilder: (context, index) {
+                            final problem = wrongProblems[index];
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
@@ -149,7 +182,10 @@ class Wrongproblem extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              Wrongproblemdetails(index: index),
+                                              Wrongproblemdetails(
+                                                  index: problem['scripts_id'],
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl),
                                         ),
                                       );
                                     },

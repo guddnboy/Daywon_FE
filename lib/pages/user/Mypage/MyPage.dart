@@ -307,7 +307,9 @@ class _MyPageState extends State<MyPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Wrongproblem()),
+                                builder: (context) => Wrongproblem(
+                                    userId: widget.userId,
+                                    apiUrl: widget.apiUrl)),
                           );
                         },
                         style: ElevatedButton.styleFrom(
