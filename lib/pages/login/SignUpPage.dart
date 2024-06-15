@@ -29,6 +29,8 @@ class _SignupPageState extends State<SignupPage> {
   bool isPasswordMatched = false;
   bool isTestDone = false;
 
+  set level(value) => LevelTestPage.level = value;
+
   void updateTestDone(bool testDone) {
     setState(() {
       isTestDone = testDone;
@@ -150,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
           'name': nameController.text,
           'nickname': nicknameController.text,
           'e_mail': emailController.text,
-          'level': '1',
+          'level': LevelTestPage.level.toString(),
           'user_point': 0,
           'profile_image': 1,
           'hashed_password': passwordController.text,
@@ -393,6 +395,8 @@ class _SignupPageState extends State<SignupPage> {
 class LevelTestPage extends StatefulWidget {
   final Function(bool) updateTestDone;
 
+  static var level;
+
   const LevelTestPage({Key? key, required this.updateTestDone})
       : super(key: key);
 
@@ -547,6 +551,23 @@ class _LevelTestPageState extends State<LevelTestPage> {
       if (question['selectedAnswerIndex'] == question['correctAnswerIndex']) {
         correctAnswers++;
       }
+    }
+
+    int level;
+    if (correctAnswers <= 2) {
+      level = 1;
+    } else if (3 <= correctAnswers && correctAnswers < 5) {
+      level = 2;
+    } else if (5 <= correctAnswers && correctAnswers < 7) {
+      level = 3;
+    } else if (7 <= correctAnswers && correctAnswers < 9) {
+      level = 4;
+    } else {
+      level = 5;
+    }
+
+    if (kDebugMode) {
+      print("사용자 레벨은 $level");
     }
 
     if (!testDone) {
