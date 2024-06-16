@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/config.dart';
 import 'package:project/pages/user/learning/CommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -56,11 +57,15 @@ Future<Problem> fetchProblem(int scriptsId) async {
 class ProblemPage extends StatefulWidget {
   final String selectedCategory;
   final int scriptsId;
+  final int userId;
+  final String apiUrl;
 
   const ProblemPage({
     Key? key,
     required this.selectedCategory,
     required this.scriptsId,
+    required this.userId,
+    required this.apiUrl,
   }) : super(key: key);
 
   @override
@@ -101,6 +106,8 @@ class _ProblemPageState extends State<ProblemPage> {
             resultMessage: resultMessage,
             points: points,
             selectedChoice: problem.options[selectedOption - 1],
+            userId: widget.userId,
+            apiUrl: widget.apiUrl,
           ),
         ),
       );
@@ -326,13 +333,17 @@ class _ProblemPageState extends State<ProblemPage> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage()),
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
               );
               break;
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage()),
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
               );
               break;
           }

@@ -2,9 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/MyPage.dart';
-
 void main() {
   runApp(const Wrongproblem());
 }

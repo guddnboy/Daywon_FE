@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/MyPage.dart';
+
 
 void main() {
   runApp(Correctproblem());

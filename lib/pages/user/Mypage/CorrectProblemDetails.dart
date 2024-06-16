@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/CorrectProblemCommentaryPage.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

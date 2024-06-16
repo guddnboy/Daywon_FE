@@ -255,7 +255,7 @@ class _MainPageState extends State<MainPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const CategoryPage()),
+                                              CategoryPage(userId: widget.userId, apiUrl: widget.apiUrl)),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(

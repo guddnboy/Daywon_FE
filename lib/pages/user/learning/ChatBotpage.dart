@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 
 class ChatBotPage extends StatefulWidget {
-  const ChatBotPage({Key? key}) : super(key: key);
+  final String apiUrl;
+  final int userId;
+
+  const ChatBotPage({Key? key, required this.apiUrl, required this.userId}) : super(key: key);
 
   @override
   _ChatBotPageState createState() => _ChatBotPageState();
@@ -31,7 +36,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     });
 
     final response = await http.post(
-      Uri.parse('http://yourapiurl.com/chatbot'), // API URL 변경
+      Uri.parse('${widget.apiUrl}/chatbot'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -111,6 +116,41 @@ class _ChatBotPageState extends State<ChatBotPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'My Page',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+            case 1:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+          }
+        },
       ),
     );
   }
