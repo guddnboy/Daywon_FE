@@ -11,6 +11,7 @@ class LearningPage extends StatefulWidget {
   final String selectedCategory;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const LearningPage({
     Key? key,
@@ -19,6 +20,7 @@ class LearningPage extends StatefulWidget {
     required this.selectedCategory,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath
   }) : super(key: key);
 
   @override
@@ -81,6 +83,7 @@ class _LearningPageState extends State<LearningPage> {
             scriptsId: scriptsId, // scripts_id 전달
             userId: widget.userId,
             apiUrl: widget.apiUrl,
+            profileImagePath: widget.profileImagePath,
           ),
         ],
       ),
@@ -123,7 +126,7 @@ class _LearningPageState extends State<LearningPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -131,7 +134,7 @@ class _LearningPageState extends State<LearningPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
