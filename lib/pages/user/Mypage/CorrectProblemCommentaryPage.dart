@@ -1,36 +1,63 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:project/pages/user/Mypage/CorrectProblem.dart';
+import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+class Correctproblemcommentarypage extends StatefulWidget {
+  final int q_id;
+  final String selectedChoice;
+  final int selectedChoiceNum;
+  final int correctOption;
+  final int index;
+  final int userId;
+  final String apiUrl;
 
-void main() {
-  runApp(const MyApp());
-}
-
-// 비동기로 데이터베이스에서 문제 해설 내용을 가져오는 함수
-Future<String> fetchProblemExplanation() async {
-  // 데이터베이스나 API 호출로 데이터를 가져오는 부분
-  await Future.delayed(const Duration(seconds: 1));
-  const commentary = '이곳에 문제에 대한 해설이 기록될 거다.';
-  return commentary;
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  Correctproblemcommentarypage({
+    Key? key,
+    required this.q_id,
+    required this.selectedChoice,
+    required this.selectedChoiceNum,
+    required this.correctOption,
+    required this.index,
+    required this.userId,
+    required this.apiUrl,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Correctproblem(),
-    );
-  }
+  _CorrectproblemcommentarypageState createState() =>
+      _CorrectproblemcommentarypageState();
 }
 
-class Correctproblemcommentarypage extends StatelessWidget {
-  final String selectedChoice;
+class _CorrectproblemcommentarypageState
+    extends State<Correctproblemcommentarypage> {
+  late Future<String> _commentaryFuture;
+  late bool _isCorrect;
 
-  const Correctproblemcommentarypage({super.key, required this.selectedChoice});
+  @override
+  void initState() {
+    super.initState();
+    _commentaryFuture = fetchProblemExplanation();
+    _isCorrect = (widget.selectedChoiceNum == widget.correctOption);
+  }
+
+  Future<String> fetchProblemExplanation() async {
+    final url = Uri.parse('${widget.apiUrl}/questions/${widget.q_id}/comments');
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final commentary = jsonData['combined_comment'];
+      return commentary;
+    } else {
+      print('Correctproblemcommentarypage commtary 로드 실패');
+      throw Exception('Failed to load commentary');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +69,7 @@ class Correctproblemcommentarypage extends StatelessWidget {
             double containerHeight = constraints.maxHeight * 0.65;
 
             return FutureBuilder<String>(
-              future: fetchProblemExplanation(), // 비동기로 문제 해설 내용을 가져옴
+              future: _commentaryFuture, // 비동기로 문제 해설 내용을 가져옴
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -107,7 +134,8 @@ class Correctproblemcommentarypage extends StatelessWidget {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      selectedChoice, // 선택한 보기 내용 표시
+                                                      widget
+                                                          .selectedChoice, // 선택한 보기 내용 표시
                                                       style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 16,
@@ -158,7 +186,10 @@ class Correctproblemcommentarypage extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      Correctproblem()),
+                                                      Correctproblem(
+                                                          userId: widget.userId,
+                                                          apiUrl:
+                                                              widget.apiUrl)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(

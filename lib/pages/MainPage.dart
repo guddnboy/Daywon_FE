@@ -9,7 +9,12 @@ class MainPage extends StatefulWidget {
   final String apiUrl;
   String profileImagePath; // 이 변수는 이제 final이 아닙니다.
 
-  MainPage({Key? key, required this.userId, required this.apiUrl, required this.profileImagePath}) : super(key: key);
+  MainPage(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -27,8 +32,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> fetchUser(int userId) async {
-    final url = Uri.parse('${widget.apiUrl}/users/$userId/read_user');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -43,7 +49,8 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> fetchProfileImage(int userId) async {
     final url = Uri.parse('${widget.apiUrl}/users/$userId/profile-image');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -87,8 +94,7 @@ class _MainPageState extends State<MainPage> {
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
-                            fontWeight: FontWeight.w800
-                        ),
+                            fontWeight: FontWeight.w800),
                       ),
                       const Text(
                         '님, 오늘의 학습을 시작하세요! ',
@@ -230,7 +236,8 @@ class _MainPageState extends State<MainPage> {
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: NetworkImage(widget.profileImagePath),
+                            backgroundImage:
+                                NetworkImage(widget.profileImagePath),
                           ),
                           Column(
                             children: [
@@ -254,8 +261,12 @@ class _MainPageState extends State<MainPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              CategoryPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                                          builder: (context) => CategoryPage(
+                                                userId: widget.userId,
+                                                apiUrl: widget.apiUrl,
+                                                profileImagePath:
+                                                    widget.profileImagePath,
+                                              )),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -329,7 +340,8 @@ class _MainPageState extends State<MainPage> {
                   builder: (context) => MainPage(
                     userId: widget.userId,
                     apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
                   ),
                 ),
               ).then((_) {
@@ -341,12 +353,8 @@ class _MainPageState extends State<MainPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
-                  ),
-                ),
+                    builder: (context) =>
+                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
                 fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
                 fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
