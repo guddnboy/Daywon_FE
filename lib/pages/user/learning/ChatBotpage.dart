@@ -7,8 +7,9 @@ import 'package:project/pages/user/Mypage/MyPage.dart';
 class ChatBotPage extends StatefulWidget {
   final String apiUrl;
   final int userId;
+  final String profileImagePath;
 
-  const ChatBotPage({Key? key, required this.apiUrl, required this.userId}) : super(key: key);
+  const ChatBotPage({Key? key, required this.apiUrl, required this.userId, required this.profileImagePath}) : super(key: key);
 
   @override
   _ChatBotPageState createState() => _ChatBotPageState();
@@ -137,7 +138,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -145,7 +146,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;

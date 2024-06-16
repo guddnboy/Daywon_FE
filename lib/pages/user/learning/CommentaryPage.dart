@@ -13,6 +13,7 @@ class CommentaryPage extends StatelessWidget {
   final String selectedChoice;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const CommentaryPage({
     Key? key,
@@ -24,6 +25,7 @@ class CommentaryPage extends StatelessWidget {
     required this.selectedChoice,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath
   }) : super(key: key);
 
   Future<String> fetchProblemExplanation() async {
@@ -195,7 +197,7 @@ class CommentaryPage extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MainPage(userId: userId, apiUrl: apiUrl)),
+                                                          MainPage(userId: userId, apiUrl: apiUrl, profileImagePath: profileImagePath,)),
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -223,7 +225,7 @@ class CommentaryPage extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ChatBotPage(userId: userId, apiUrl: apiUrl)), // ChatBotPage로 이동합니다.
+                                                          ChatBotPage(userId: userId, apiUrl: apiUrl, profileImagePath: profileImagePath)), // ChatBotPage로 이동합니다.
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
