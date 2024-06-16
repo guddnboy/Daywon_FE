@@ -36,12 +36,14 @@ class _LevelTestPageState extends State<LevelTestPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
 
         setState(() {
           quizzes = responseData.map((questionData) {
             return {
+              'enrollment_quiz_id': questionData['enrollment_quiz_id'] as int,
               'question': questionData['question'] as String,
               'options': [
                 questionData['option_1'] as String,
@@ -56,7 +58,6 @@ class _LevelTestPageState extends State<LevelTestPage> {
           isLoading = false;
         });
       } else {
-        // Handle other status codes if needed
         if (kDebugMode) {
           print('퀴즈 불러오기 실패 : ${response.statusCode}');
         }
@@ -65,7 +66,6 @@ class _LevelTestPageState extends State<LevelTestPage> {
         });
       }
     } catch (e) {
-      // Handle errors
       if (kDebugMode) {
         print('Quizzes Fetching Error : $e');
       }
@@ -98,7 +98,9 @@ class _LevelTestPageState extends State<LevelTestPage> {
                             Text(
                               quizzes[index]['question'] as String,
                               style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 10),
                             Column(
@@ -158,45 +160,48 @@ Future<void> _submitAnswersAndShowResult() async {
     }
 
     userAnswers.add({
-      'enrollment_quiz_id': 1,
+      'enrollment_quiz_id': question['enrollment_quiz_id'],
       'answer': question['selectedAnswerIndex'],
     });
   }
-
-  final serverUri = Config.apiUrl;
-  final response = await http.post(
-    Uri.parse('$serverUri/submit-answers/'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode({"answers": userAnswers}),
-  );
-
-  if (response.statusCode == 200) {
-    // Parse the response body correctly
-    try {
-      final Map<String, dynamic> data = json.decode(response.body);
-      int level = data['level']; // Ensure 'level' is correctly parsed as an integer
-      _showResultDialog(level);
-    } catch (e) {
-      print('Error parsing response: $e');
-      // Handle parsing error if necessary
-    }
-  } else {
-    // Handle other status codes if needed
+  try {
+    final serverUri = Config.apiUrl;
+      final response = await http.post(
+        Uri.parse('$serverUri/submit-answers/'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'answers': userAnswers}),
+      );
+      if (kDebugMode) {
+        print(userAnswers);
+      }
+      if (response.statusCode == 200) {
+        String level = response.body;
+        if (kDebugMode) {
+          print(level);
+        }
+        _showResultDialog(level);
+      } else {
+        if (kDebugMode) {
+          print('답변 제출 실패 : ${response.statusCode}');
+        }
+        return;
+      }
+  } catch (e) {
     if (kDebugMode) {
-      print('답변 제출 실패 : ${response.statusCode}');
+      print('답변 제출 에러 : $e');
     }
   }
 }
 
-  void _showResultDialog(int level) {
+  void _showResultDialog(String level ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('테스트 결과'),
-          content: Text('당신의 레벨은 $level 입니다.'),
+          content: Text('당신의 레벨은 ${level}입니다.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
