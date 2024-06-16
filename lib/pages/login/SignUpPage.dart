@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:project/config.dart';
-import 'package:project/pages/login/LoginPage.dart'; // Config 클래스를 import 합니다.
+import 'package:project/pages/login/LoginPage.dart';
 
 void main() async {
   runApp(const SignupPage());
@@ -27,6 +27,13 @@ class _SignupPageState extends State<SignupPage> {
   bool isNicknameChecked = false;
   bool isEmailChecked = false;
   bool isPasswordMatched = false;
+  bool isTestDone = false;
+
+  void updateTestDone(bool testDone) {
+    setState(() {
+      isTestDone = testDone;
+    });
+  }
 
   Widget _buildTextField({
     required TextEditingController controller,
@@ -74,27 +81,31 @@ class _SignupPageState extends State<SignupPage> {
     required String text,
     required VoidCallback onPressed,
     Color? buttonColor,
+    bool isVisible = true,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            padding:
-                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-            backgroundColor: buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+    return Visibility(
+      visible: isVisible,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              backgroundColor: buttonColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
             ),
-          ),
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
+            child: Text(
+              text,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
         ),
@@ -102,25 +113,8 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 
-  Widget _buildSignupButton(BuildContext context) {
-    return _buildButton(
-      text: '회원가입하기',
-      onPressed: () => _signUp(context),
-      buttonColor: const Color(0xFF4399FF),
-    );
-  }
-
-  Widget _buildPasswordConfirmationButton(BuildContext context) {
-    return _buildButton(
-      text: '비밀번호 확인',
-      onPressed: () => _checkPassword(context),
-      buttonColor: const Color(0xFF4399FF),
-    );
-  }
-
   void _signUp(BuildContext context) async {
     try {
-      // 입력값 검증
       if (_isInputEmpty()) {
         _showDialog(context, '입력 필요', '모든 필드를 입력해주세요.');
         return;
@@ -140,9 +134,14 @@ class _SignupPageState extends State<SignupPage> {
         _showDialog(context, '비밀번호 확인 필요', '비밀번호가 일치하지 않습니다.');
         return;
       }
+      if (!isTestDone) {
+        _showDialog(context, '레벨 테스트 미실시', '레벨 테스트를 진행해주세요.');
+        return; // Stop further execution
+      }
 
-      final serverUri = Config.apiUrl; // Config 클래스를 사용하여 서버 URI 가져오기
+      final serverUri = Config.apiUrl;
 
+      String userLevel = _LevelTestPageState()._getLevel().toString();
       final response = await http.post(
         Uri.parse('$serverUri/users/'),
         headers: <String, String>{
@@ -152,27 +151,33 @@ class _SignupPageState extends State<SignupPage> {
           'name': nameController.text,
           'nickname': nicknameController.text,
           'e_mail': emailController.text,
-          'level': '1',
+          'level': _LevelTestPageState()._getLevel().toString(),
           'user_point': 0,
           'profile_image': 1,
           'hashed_password': passwordController.text,
         }),
       );
-
       if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print(
+              "회원가입 성공_너의 레벨은 : ${_LevelTestPageState()._getLevel().toString()}");
+        }
         _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다.');
 
-        // 회원가입 성공 후 LoginPage로 이동
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => LoginPage(
-                    apiUrl: Config.apiUrl,
-                  )),
+            builder: (context) => LoginPage(
+              apiUrl: Config.apiUrl,
+            ),
+          ),
         );
       } else {
         _showDialog(
-            context, '회원가입 실패', '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}');
+          context,
+          '회원가입 실패',
+          '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}',
+        );
       }
     } catch (e) {
       _showDialog(context, '오류', '회원가입 중 오류가 발생했습니다: $e');
@@ -275,23 +280,22 @@ class _SignupPageState extends State<SignupPage> {
 
     if (password == confirmPassword && password.isNotEmpty) {
       setState(() {
-        isPasswordMatched = true; // 비밀번호 일치 상태 업데이트
+        isPasswordMatched = true;
       });
       _showDialog(context, '확인 완료', '비밀번호가 일치합니다.');
     } else if (password.isEmpty) {
       setState(() {
-        isPasswordMatched = false; // 비밀번호 불일치 상태 업데이트
+        isPasswordMatched = false;
       });
       _showDialog(context, '오류', '비밀번호를 입력하세요.');
     } else {
       setState(() {
-        isPasswordMatched = false; // 비밀번호 불일치 상태 업데이트
+        isPasswordMatched = false;
       });
       _showDialog(context, '일치하지 않음', '비밀번호와 비밀번호 확인이 일치하지 않습니다.');
     }
   }
 
-  // 입력값이 비어있는지 확인하는 메서드
   bool _isInputEmpty() {
     return nameController.text.isEmpty ||
         passwordController.text.isEmpty ||
@@ -348,12 +352,269 @@ class _SignupPageState extends State<SignupPage> {
                     child: const Text('확인'),
                   ),
                 ),
-                _buildSignupButton(context),
+                _buildButton(
+                  text: '레벨 테스트하기',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('레벨 테스트'),
+                          contentPadding: EdgeInsets.all(10.0),
+                          content: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child:
+                                LevelTestPage(updateTestDone: updateTestDone),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  buttonColor: const Color(0xFF4399FF),
+                  isVisible: !isTestDone,
+                ),
+                const SizedBox(height: 10),
+                _buildButton(
+                  text: '회원가입하기',
+                  onPressed: () {
+                    if (isTestDone) {
+                      _signUp(context);
+                    } else {
+                      _showDialog(context, '레벨테스트 필요', '레벨테스트를 먼저 완료해주세요.');
+                    }
+                  },
+                  buttonColor: const Color(0xFF4399FF),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class LevelTestPage extends StatefulWidget {
+  final Function(bool) updateTestDone;
+
+  static var level = _LevelTestPageState()._getLevel();
+
+  const LevelTestPage({Key? key, required this.updateTestDone})
+      : super(key: key);
+
+  @override
+  _LevelTestPageState createState() => _LevelTestPageState();
+}
+
+class _LevelTestPageState extends State<LevelTestPage> {
+  List<Map<String, dynamic>> quizzes = [];
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQuestions();
+  }
+
+  Future<void> fetchQuestions() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final serverUri = Config.apiUrl;
+      final response = await http.get(
+        Uri.parse('$serverUri/enroll_quizzes/'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = jsonDecode(response.body);
+
+        setState(() {
+          quizzes = responseData.map((questionData) {
+            return {
+              'question': questionData['question'] as String,
+              'options': [
+                questionData['option_1'] as String,
+                questionData['option_2'] as String,
+                questionData['option_3'] as String,
+                questionData['option_4'] as String,
+              ],
+              'correctAnswerIndex': questionData['correct'] as int,
+              'selectedAnswerIndex': -1, // Initialize with -1 for no selection
+            };
+          }).toList();
+          isLoading = false;
+        });
+      } else {
+        // Handle other status codes if needed
+        if (kDebugMode) {
+          print('퀴즈 불러오기 실패 : ${response.statusCode}');
+        }
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      // Handle errors
+      if (kDebugMode) {
+        print('Quizzes Fetching Error : $e');
+      }
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  int _getLevel() {
+    int correctAnswers = 0;
+    int level;
+    for (var question in quizzes) {
+      if (question['selectedAnswerIndex'] == question['correctAnswerIndex']) {
+        correctAnswers++;
+      }
+    }
+    if (correctAnswers <= 2) {
+      level = 1;
+    } else if (3 <= correctAnswers && correctAnswers < 5) {
+      level = 2;
+    } else if (5 <= correctAnswers && correctAnswers < 7) {
+      level = 3;
+    } else if (7 <= correctAnswers && correctAnswers < 9) {
+      level = 4;
+    } else {
+      level = 5;
+    }
+    return level;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('레벨 테스트'),
+      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : quizzes.isEmpty
+              ? Center(child: Text('퀴즈를 가져오는 중에 문제가 발생했습니다.'))
+              : ListView.builder(
+                  itemCount: quizzes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      margin: const EdgeInsets.all(10),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              quizzes[index]['question'] as String,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 10),
+                            Column(
+                              children: _buildOptions(index),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showResultDialog();
+        },
+        child: const Icon(Icons.check),
+      ),
+    );
+  }
+
+  List<Widget> _buildOptions(int index) {
+    List<Widget> optionWidgets = [];
+    List<String> options = [
+      quizzes[index]['options'][0] as String,
+      quizzes[index]['options'][1] as String,
+      quizzes[index]['options'][2] as String,
+      quizzes[index]['options'][3] as String,
+    ];
+
+    for (int i = 0; i < options.length; i++) {
+      optionWidgets.add(
+        ListTile(
+          title: Text(options[i]),
+          leading: Radio<int>(
+            value: i,
+            groupValue: quizzes[index]['selectedAnswerIndex'] as int,
+            onChanged: (int? value) {
+              setState(() {
+                quizzes[index]['selectedAnswerIndex'] = value!;
+              });
+            },
+          ),
+        ),
+      );
+    }
+
+    return optionWidgets;
+  }
+
+  void _showResultDialog() {
+    int correctAnswers = 0;
+    bool testDone = true;
+    for (var question in quizzes) {
+      if (question['selectedAnswerIndex'] == -1) {
+        testDone = false;
+        break;
+      }
+      if (question['selectedAnswerIndex'] == question['correctAnswerIndex']) {
+        correctAnswers++;
+      }
+    }
+
+    if (!testDone) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('레벨 테스트 미완료'),
+            content: const Text('모든 문제를 풀어주세요.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('테스트 결과'),
+            content: Text(
+                '문제 ${quizzes.length}개 중에서 맞은 개수는 $correctAnswers개입니다. 레벨은 ${_LevelTestPageState()._getLevel().toString()} 입니다.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  widget.updateTestDone(true);
+                },
+                child: const Text('닫기'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
