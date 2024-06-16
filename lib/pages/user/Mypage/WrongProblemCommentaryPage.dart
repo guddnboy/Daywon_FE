@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
 
 void main() {
   runApp(const MyApp());

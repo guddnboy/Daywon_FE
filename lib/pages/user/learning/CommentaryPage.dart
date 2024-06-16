@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project/config.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:project/pages/user/learning/ChatBotpage.dart';
 
 class CommentaryPage extends StatelessWidget {
@@ -13,6 +11,8 @@ class CommentaryPage extends StatelessWidget {
   final String resultMessage;
   final int points;
   final String selectedChoice;
+  final int userId;
+  final String apiUrl;
 
   const CommentaryPage({
     Key? key,
@@ -22,10 +22,12 @@ class CommentaryPage extends StatelessWidget {
     required this.resultMessage,
     required this.points,
     required this.selectedChoice,
+    required this.userId,
+    required this.apiUrl,
   }) : super(key: key);
 
   Future<String> fetchProblemExplanation() async {
-    final response = await http.get(Uri.parse('${Config.apiUrl}/questions/$qId/comments'));
+    final response = await http.get(Uri.parse('$apiUrl/questions/$qId/comments'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
@@ -35,8 +37,28 @@ class CommentaryPage extends StatelessWidget {
     }
   }
 
+  Future<void> saveUserHistory(bool isCorrect) async {
+    final response = await http.post(
+      Uri.parse('$apiUrl/user_history/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'user_id': userId,
+        'script_id': scriptsId,
+        'T_F': isCorrect,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to save user history');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool isCorrect = resultMessage.contains('맞았습니다');
+
     return Scaffold(
       body: Center(
         child: LayoutBuilder(
@@ -112,8 +134,7 @@ class CommentaryPage extends StatelessWidget {
                                                     Text(
                                                       resultMessage,
                                                       style: TextStyle(
-                                                        color: resultMessage
-                                                                .contains('맞았습니다')
+                                                        color: isCorrect
                                                             ? Colors.green
                                                             : Colors.red,
                                                         fontSize: 18,
@@ -168,12 +189,13 @@ class CommentaryPage extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
                                             ElevatedButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                await saveUserHistory(isCorrect);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MainPage()),
+                                                          MainPage(userId: userId, apiUrl: apiUrl)),
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -195,12 +217,13 @@ class CommentaryPage extends StatelessWidget {
                                               ),
                                             ),
                                             ElevatedButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                await saveUserHistory(isCorrect);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ChatBotPage()), // ChatBotPage로 이동합니다.
+                                                          ChatBotPage(userId: userId, apiUrl: apiUrl)), // ChatBotPage로 이동합니다.
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -277,56 +300,6 @@ class CommentaryPage extends StatelessWidget {
             );
           },
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/backbtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'Back',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/homebtn.png',
-              width: 28,
-              height: 28,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/mypagebtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'My Page',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pop(context);
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage()),
-              );
-              break;
-          }
-        },
       ),
     );
   }

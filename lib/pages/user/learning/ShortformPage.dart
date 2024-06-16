@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:project/config.dart';
+import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/learning/ProblemPage.dart';
 import 'dart:convert';
 import 'package:video_player/video_player.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
   final int scriptsId;
+  final int userId;
+  final String apiUrl;
 
   const ShortformPage({
     Key? key,
     required this.selectedCategory,
     required this.scriptsId,
+    required this.userId,
+    required this.apiUrl,
   }) : super(key: key);
 
   @override
@@ -34,7 +39,7 @@ class _ShortformPageState extends State<ShortformPage> {
   }
 
   Future<void> fetchVideoUrl(int scriptsId) async {
-    final url = '${Config.apiUrl}/get_stream_video/${17}';
+    final url = '${widget.apiUrl}/get_stream_video/$scriptsId';
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -135,6 +140,8 @@ class _ShortformPageState extends State<ShortformPage> {
                                     builder: (context) => ProblemPage(
                                       selectedCategory: selectedCategory,
                                       scriptsId: widget.scriptsId,
+                                      userId: widget.userId,
+                                      apiUrl: widget.apiUrl,
                                     ),
                                   ),
                                 );
@@ -202,6 +209,60 @@ class _ShortformPageState extends State<ShortformPage> {
             );
           },
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/backbtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Back',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/homebtn.png',
+              width: 28,
+              height: 28,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/mypagebtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'My Page',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pop(context);
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+          }
+        },
       ),
     );
   }

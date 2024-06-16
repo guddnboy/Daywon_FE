@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
+import 'dart:convert';
 import 'package:project/pages/user/learning/ShortformPage.dart';
-import 'package:project/config.dart'; // Config 파일 임포트
+import 'package:project/pages/user/Mypage/MyPage.dart';
 
 class LearningPage extends StatefulWidget {
   final int categoryId;
   final int level;
   final String selectedCategory;
+  final int userId;
+  final String apiUrl;
 
   const LearningPage({
     Key? key,
     required this.categoryId,
     required this.level,
     required this.selectedCategory,
+    required this.userId,
+    required this.apiUrl,
   }) : super(key: key);
 
   @override
@@ -39,7 +43,7 @@ class _LearningPageState extends State<LearningPage> {
   }
 
   Future<void> fetchConceptExplanation(int categoryId, int level) async {
-    final url = '${Config.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
+    final url = '${widget.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -75,6 +79,8 @@ class _LearningPageState extends State<LearningPage> {
           ShortformPage(
             selectedCategory: selectedCategory,
             scriptsId: scriptsId, // scripts_id 전달
+            userId: widget.userId,
+            apiUrl: widget.apiUrl,
           ),
         ],
       ),
@@ -114,16 +120,20 @@ class _LearningPageState extends State<LearningPage> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-                // context,
-                // MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-                // context,
-                // MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
               break;
           }
         },
@@ -218,4 +228,3 @@ class LearningPageContent extends StatelessWidget {
     );
   }
 }
-

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/CategoryPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
@@ -257,7 +256,7 @@ class _MainPageState extends State<MainPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const CategoryPage()),
+                                              CategoryPage(userId: widget.userId, apiUrl: widget.apiUrl)),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(

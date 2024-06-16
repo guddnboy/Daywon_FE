@@ -1,10 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:project/pages/user/Mypage/CorrectProblem.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
+
 
 void main() {
   runApp(const MyApp());

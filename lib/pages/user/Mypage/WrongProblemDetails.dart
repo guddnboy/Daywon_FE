@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
 class MyApp extends StatelessWidget {

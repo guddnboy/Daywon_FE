@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project/pages/user/learning/LearningTextPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: CategoryPage(),
-  ));
-}
+import 'package:project/pages/user/learning/LearningTextPage.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({super.key});
+  final int userId;
+  final String apiUrl;
+
+  const CategoryPage({Key? key, required this.userId, required this.apiUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,7 @@ class CategoryPage extends StatelessWidget {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: const Alignment(0, 0.3), // Y축 위치 조정 (-1: top, 0: center, 1: bottom)
+                      alignment: const Alignment(0, 0.3),
                       child: Container(
                         width: containerWidth,
                         height: containerHeight,
@@ -70,7 +67,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 25), // 간격 조정
+                            const SizedBox(height: 25),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFABD2FF),
@@ -84,9 +81,11 @@ class CategoryPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LearningPage(
-                                      level:2,
+                                      level: 2,
                                       categoryId: 1,
-                                      selectedCategory: "세금"
+                                      selectedCategory: "세금",
+                                      userId: userId,
+                                      apiUrl: apiUrl,
                                     ),
                                   ),
                                 );
@@ -100,7 +99,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 25), // 간격 조정
+                            const SizedBox(height: 25),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF55A3FF),
@@ -113,10 +112,12 @@ class CategoryPage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const LearningPage(
-                                      level:2,
+                                    builder: (context) => LearningPage(
+                                      level: 2,
                                       categoryId: 2,
-                                      selectedCategory: "자산관리"
+                                      selectedCategory: "자산관리",
+                                      userId: userId,
+                                      apiUrl: apiUrl,
                                     ),
                                   ),
                                 );
@@ -130,7 +131,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 25), // 간격 조정
+                            const SizedBox(height: 25),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF0075FF),
@@ -144,9 +145,11 @@ class CategoryPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LearningPage(
-                                      level:2,
+                                      level: 2,
                                       categoryId: 3,
-                                      selectedCategory: "금융시사상식"
+                                      selectedCategory: "금융시사상식",
+                                      userId: userId,
+                                      apiUrl: apiUrl,
                                     ),
                                   ),
                                 );
@@ -243,16 +246,20 @@ class CategoryPage extends StatelessWidget {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: userId, apiUrl: apiUrl),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MyPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: userId, apiUrl: apiUrl),
+                ),
+              );
               break;
           }
         },
