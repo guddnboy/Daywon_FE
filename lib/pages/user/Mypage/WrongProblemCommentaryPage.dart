@@ -42,7 +42,7 @@ class _WrongproblemcommentarypageeState
     _commentaryFuture = fetchProblemExplanation();
     _isCorrect = (widget.selectedChoiceNum == widget.correctOption);
     if (_isCorrect) {
-      updateUserHistory();
+      updateUserHistory(_isCorrect);
     }
   }
 
@@ -61,10 +61,17 @@ class _WrongproblemcommentarypageeState
     }
   }
 
-  Future<void> updateUserHistory() async {
-    final url = Uri.parse(
-        '${widget.apiUrl}/user_update_history/${widget.userId}/${widget.index}');
-    final response = await http.put(url);
+  Future<void> updateUserHistory(_isCorrect) async {
+    final url = Uri.parse('${widget.apiUrl}/user_update_history/');
+
+    final response = await http.put(
+      url,
+      body: {
+        'user_id': widget.userId,
+        'script_id': widget.index,
+        'T_F': _isCorrect,
+      },
+    );
     if (response.statusCode == 200) {
       print('히스토리 업데이트 성공');
     } else {

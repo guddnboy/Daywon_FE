@@ -7,14 +7,13 @@ import 'package:project/pages/MainPage.dart';
 import 'findID.dart';
 import 'findPassword.dart';
 
-
-
 class LoginPage extends StatelessWidget {
   final String apiUrl;
 
   LoginPage({Key? key, required this.apiUrl}) : super(key: key);
 
-  Future<void> _login(BuildContext context, String email, String password) async {
+  Future<void> _login(
+      BuildContext context, String email, String password) async {
     final url = Uri.parse('$apiUrl/login/');
     final response = await http.post(
       url,
@@ -27,11 +26,13 @@ class LoginPage extends StatelessWidget {
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
-      final userId = responseData['user_id'];  // Assuming the response contains the user id in 'user_id'
+      final userId = responseData[
+          'user_id']; // Assuming the response contains the user id in 'user_id'
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MainPage(userId: userId, apiUrl: apiUrl)),
+        MaterialPageRoute(
+            builder: (context) => MainPage(userId: userId, apiUrl: apiUrl)),
       );
     } else {
       showDialog(
@@ -103,7 +104,8 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    _login(context, emailController.text, passwordController.text);
+                    _login(
+                        context, emailController.text, passwordController.text);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4399FF),
@@ -129,7 +131,10 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => findID(apiUrl: apiUrl,)),
+                          MaterialPageRoute(
+                              builder: (context) => findID(
+                                    apiUrl: apiUrl,
+                                  )),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -152,7 +157,10 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ChangePassword(apiUrl: apiUrl,)),
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword(
+                                    apiUrl: apiUrl,
+                                  )),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -175,7 +183,8 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignupPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignupPage()),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -214,4 +223,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-

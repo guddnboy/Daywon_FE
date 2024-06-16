@@ -10,7 +10,8 @@ class MainPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
 
-  MainPage({Key? key, required this.userId, required this.apiUrl}) : super(key: key);
+  MainPage({Key? key, required this.userId, required this.apiUrl})
+      : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -29,7 +30,8 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> fetchUser(int userId) async {
     final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
-    final response = await http.get(url, headers: {'Accept': 'application/json'});
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -227,13 +229,14 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ],
                       ),
-                     const SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 50,
-                            backgroundImage: AssetImage(getProfileImagePath(profileImageId)),
+                            backgroundImage:
+                                AssetImage(getProfileImagePath(profileImageId)),
                           ),
                           Column(
                             children: [
@@ -328,7 +331,9 @@ class _MainPageState extends State<MainPage> {
             case 1:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
                 fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
               });
@@ -336,7 +341,9 @@ class _MainPageState extends State<MainPage> {
             case 2:
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
                 fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
               });

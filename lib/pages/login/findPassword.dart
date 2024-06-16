@@ -10,11 +10,14 @@ class ChangePassword extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
-  Future<void> _changePassword(BuildContext context, String email, String name, String newPassword) async {
+  Future<void> _changePassword(BuildContext context, String email, String name,
+      String newPassword) async {
     final url = Uri.parse('$apiUrl/user_update-password');
-    final hashedPassword = base64Encode(utf8.encode(newPassword)); // 해시된 비밀번호 예제 (Base64 인코딩)
+    final hashedPassword =
+        base64Encode(utf8.encode(newPassword)); // 해시된 비밀번호 예제 (Base64 인코딩)
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -88,7 +91,8 @@ class ChangePassword extends StatelessWidget {
         },
       );
     } else {
-      _changePassword(context, emailController.text, nameController.text, newPassword);
+      _changePassword(
+          context, emailController.text, nameController.text, newPassword);
     }
   }
 
@@ -210,8 +214,9 @@ class ChangePassword extends StatelessWidget {
                                       ),
                                       filled: true,
                                       fillColor: const Color(0xFFD9D9D9),
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          vertical: 10.0, horizontal: 20.0),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 20.0),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(24),
                                         borderSide: BorderSide.none,
@@ -222,8 +227,10 @@ class ChangePassword extends StatelessWidget {
                                 IconButton(
                                   icon: Icon(Icons.check),
                                   onPressed: () {
-                                    final newPassword = newPasswordController.text;
-                                    final confirmPassword = confirmPasswordController.text;
+                                    final newPassword =
+                                        newPasswordController.text;
+                                    final confirmPassword =
+                                        confirmPasswordController.text;
 
                                     if (newPassword != confirmPassword) {
                                       showDialog(
@@ -231,7 +238,8 @@ class ChangePassword extends StatelessWidget {
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                             title: Text('비밀번호 불일치'),
-                                            content: Text('입력한 비밀번호가 일치하지 않습니다.'),
+                                            content:
+                                                Text('입력한 비밀번호가 일치하지 않습니다.'),
                                             actions: <Widget>[
                                               TextButton(
                                                 onPressed: () {
@@ -244,7 +252,8 @@ class ChangePassword extends StatelessWidget {
                                         },
                                       );
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         SnackBar(content: Text('비밀번호가 일치합니다.')),
                                       );
                                     }
