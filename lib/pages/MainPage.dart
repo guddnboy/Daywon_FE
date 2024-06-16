@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> fetchUser(int userId) async {
-    final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/read_user');
     final response = await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
