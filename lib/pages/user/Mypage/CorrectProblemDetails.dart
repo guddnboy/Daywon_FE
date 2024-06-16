@@ -203,6 +203,8 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                               index: widget.index,
                                               userId: widget.userId,
                                               apiUrl: widget.apiUrl,
+                                              profileImagePath:
+                                                  widget.profileImagePath,
                                             ),
                                           ),
                                         );

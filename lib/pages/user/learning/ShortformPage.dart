@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'dart:convert';
+import 'dart:io';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
@@ -29,7 +30,7 @@ class ShortformPage extends StatefulWidget {
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
   late VideoPlayerController _videoPlayerController;
-  ChewieController? _chewieController;
+  late ChewieController _chewieController;
   bool isLoading = true;
   String videoUrl = '';
   final int scriptsId = 23;
@@ -43,61 +44,37 @@ class _ShortformPageState extends State<ShortformPage> {
 
   Future<void> fetchVideoUrl(int scriptsId) async {
     final url = '${widget.apiUrl}/get_stream_video/$scriptsId';
-    print('Fetching video URL from: $url'); // 디버깅 로그 추가
+    print('Fetching video URL from $url'); // 비디오 URL을 가져오는 중임을 로그로 표시
+
     try {
-      final response = await http.get(Uri.parse(url));
+      Uri preVideoUrl = Uri.parse(url);
+      final response = await http.get(preVideoUrl);
+
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
+        print("fetch: 비디오 있음");
+        // 비디오 URL이 가져와졌으니, 이 URL을 통해 VideoPlayerController를 초기화합니다.
+        _videoPlayerController = VideoPlayerController.networkUrl(preVideoUrl);
+        await _videoPlayerController.initialize(); // 비디오 플레이어 초기화
 
-        String videoUrl = response.body;
-        _videoPlayerController = VideoPlayerController.network(videoUrl)
-          ..initialize().then((_) {
-            setState(() {
-              _videoPlayerController.play();
-            });
-          });
-
-        // final String videoPath = responseData['video_url'];
-        // print('Received video path: $videoPath'); // 디버깅 로그 추가
-        // fetchStreamVideo(videoPath);
-      } else {
-        throw Exception('Failed to load video URL');
-      }
-    } catch (e) {
-      print('Error fetching video URL: $e'); // 에러 로그 추가
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  Future<void> fetchStreamVideo(String videoPath) async {
-    final url = '${widget.apiUrl}/stream_mobile_video/$videoPath';
-    print('Streaming video from: $url'); // 디버깅 로그 추가
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
+        // ChewieController를 초기화하여 비디오를 재생할 수 있도록 합니다.
         setState(() {
-          videoUrl = json.decode(response.body);
-          print('Received stream video URL: $videoUrl'); // 디버깅 로그 추가
-          if (videoUrl.isNotEmpty) {
-            _videoPlayerController = VideoPlayerController.network(videoUrl);
-            _chewieController = ChewieController(
-              videoPlayerController: _videoPlayerController!,
-              aspectRatio: _videoPlayerController!.value.aspectRatio,
-              autoPlay: true,
-              looping: true,
-            );
-          }
-          isLoading = false;
+          _chewieController = ChewieController(
+            videoPlayerController: _videoPlayerController,
+            aspectRatio: _videoPlayerController.value.aspectRatio,
+            autoPlay: true,
+            looping: true,
+            // 기타 설정을 필요에 따라 추가할 수 있습니다.
+          );
+          isLoading = false; // 로딩 상태를 false로 설정하여 비디오를 표시합니다.
+          print('비디오 함수 완');
         });
       } else {
-        throw Exception('Failed to stream video');
+        throw Exception('Failed to load video'); // 비디오 로드 실패 시 예외 처리
       }
     } catch (e) {
-      print('Error streaming video: $e'); // 에러 로그 추가
+      print('Error fetching video URL: $e'); // 비디오 URL 가져오기 실패 시 오류 로그 출력
       setState(() {
-        isLoading = false;
+        isLoading = false; // 로딩 상태를 false로 설정하여 오류 상태를 표시합니다.
       });
     }
   }
@@ -105,7 +82,7 @@ class _ShortformPageState extends State<ShortformPage> {
   @override
   void dispose() {
     _videoPlayerController.dispose();
-    _chewieController?.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -159,9 +136,13 @@ class _ShortformPageState extends State<ShortformPage> {
                               child: Center(
                                 child: isLoading
                                     ? CircularProgressIndicator()
-                                    : (_chewieController != null
+                                    : (_chewieController != null &&
+                                            _chewieController
+                                                .videoPlayerController
+                                                .value
+                                                .isInitialized
                                         ? Chewie(
-                                            controller: _chewieController!,
+                                            controller: _chewieController,
                                           )
                                         : const Text("No video available")),
                               ),
