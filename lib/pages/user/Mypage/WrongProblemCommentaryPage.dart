@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
@@ -16,6 +17,7 @@ class Wrongproblemcommentarypage extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const Wrongproblemcommentarypage({
     Key? key,
@@ -26,6 +28,7 @@ class Wrongproblemcommentarypage extends StatefulWidget {
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -206,7 +209,7 @@ class _WrongproblemcommentarypageeState
                                                       Wrongproblem(
                                                           userId: widget.userId,
                                                           apiUrl:
-                                                              widget.apiUrl)),
+                                                              widget.apiUrl, profileImagePath: widget.profileImagePath,)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -318,16 +321,16 @@ class _WrongproblemcommentarypageeState
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
           }
         },

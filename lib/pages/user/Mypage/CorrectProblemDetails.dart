@@ -9,12 +9,14 @@ class MyApp extends StatelessWidget {
   final int userId;
   final String apiUrl;
   final int index;
+  final String profileImagePath;
 
   const MyApp({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
         index: index,
         userId: userId,
         apiUrl: apiUrl,
+        profileImagePath: profileImagePath,
       ),
     );
   }
@@ -47,12 +50,14 @@ class Correctproblemdetails extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   Correctproblemdetails({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -199,6 +204,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                               index: widget.index,
                                               userId: widget.userId,
                                               apiUrl: widget.apiUrl,
+                                              profileImagePath: widget.profileImagePath,
                                             ),
                                           ),
                                         );
@@ -340,7 +346,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
               );
               break;
             case 2:
@@ -348,7 +354,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
               );
               break;
           }

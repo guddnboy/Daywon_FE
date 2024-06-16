@@ -354,7 +354,7 @@ class _MainPageState extends State<MainPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
               ).then((_) {
                 fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
                 fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
