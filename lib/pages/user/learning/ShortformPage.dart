@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/learning/ProblemPage.dart';
-import 'dart:convert';
 import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
+import 'dart:convert';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
-  final int scriptsId;
   final int userId;
   final String apiUrl;
 
   const ShortformPage({
     Key? key,
     required this.selectedCategory,
-    required this.scriptsId,
     required this.userId,
-    required this.apiUrl,
+    required this.apiUrl, required int scriptsId,
   }) : super(key: key);
 
   @override
@@ -26,41 +25,76 @@ class ShortformPage extends StatefulWidget {
 
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
-  VideoPlayerController? _controller;
-  Future<void>? _initializeVideoPlayerFuture;
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? _chewieController;
   bool isLoading = true;
   String videoUrl = '';
+  final int scriptsId = 23;
 
   @override
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCategory;
-    fetchVideoUrl(widget.scriptsId);
+    fetchVideoUrl(scriptsId);
   }
 
   Future<void> fetchVideoUrl(int scriptsId) async {
     final url = '${widget.apiUrl}/get_stream_video/$scriptsId';
+    print('Fetching video URL from: $url'); // 디버깅 로그 추가
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        setState(() {
-          videoUrl = data['video_url'];
-          if (videoUrl != null) {
-            _controller = VideoPlayerController.network(videoUrl);
-            _initializeVideoPlayerFuture = _controller!.initialize();
-            _controller!.setLooping(true);
-          }
-          isLoading = false;
-        });
+        final responseData = json.decode(response.body);
+        final String videoPath = responseData['video_url'];
+        print('Received video path: $videoPath'); // 디버깅 로그 추가
+        fetchStreamVideo(videoPath);
       } else {
         throw Exception('Failed to load video URL');
       }
     } catch (e) {
+      print('Error fetching video URL: $e'); // 에러 로그 추가
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  Future<void> fetchStreamVideo(String videoPath) async {
+    final url = '${widget.apiUrl}/stream_mobile_video/$videoPath';
+    print('Streaming video from: $url'); // 디버깅 로그 추가
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        setState(() {
+          videoUrl = json.decode(response.body);
+          print('Received stream video URL: $videoUrl'); // 디버깅 로그 추가
+          if (videoUrl.isNotEmpty) {
+            _videoPlayerController = VideoPlayerController.network(videoUrl);
+            _chewieController = ChewieController(
+              videoPlayerController: _videoPlayerController!,
+              aspectRatio: _videoPlayerController!.value.aspectRatio,
+              autoPlay: true,
+              looping: true,
+            );
+          }
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to stream video');
+      }
+    } catch (e) {
+      print('Error streaming video: $e'); // 에러 로그 추가
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController?.dispose();
+    _chewieController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -113,22 +147,11 @@ class _ShortformPageState extends State<ShortformPage> {
                               child: Center(
                                 child: isLoading
                                     ? CircularProgressIndicator()
-                                    : (_controller != null
-                                        ? FutureBuilder(
-                                            future: _initializeVideoPlayerFuture,
-                                            builder: (context, snapshot) {
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.done) {
-                                                return AspectRatio(
-                                                  aspectRatio: _controller!.value.aspectRatio,
-                                                  child: VideoPlayer(_controller!),
-                                                );
-                                              } else {
-                                                return CircularProgressIndicator();
-                                              }
-                                            },
+                                    : (_chewieController != null
+                                        ? Chewie(
+                                            controller: _chewieController!,
                                           )
-                                        : Text("No video available")),
+                                        : const Text("No video available")),
                               ),
                             ),
                             const SizedBox(height: 50),
@@ -139,7 +162,7 @@ class _ShortformPageState extends State<ShortformPage> {
                                   MaterialPageRoute(
                                     builder: (context) => ProblemPage(
                                       selectedCategory: selectedCategory,
-                                      scriptsId: widget.scriptsId,
+                                      scriptsId: scriptsId,
                                       userId: widget.userId,
                                       apiUrl: widget.apiUrl,
                                     ),
@@ -265,11 +288,5 @@ class _ShortformPageState extends State<ShortformPage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 }
