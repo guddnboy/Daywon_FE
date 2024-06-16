@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
@@ -9,11 +10,15 @@ class MyApp extends StatelessWidget {
   final int userId;
   final String apiUrl;
   final int index;
+  final String profileImagePath;
+
   const MyApp({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
+
   }) : super(key: key);
 
   @override
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
       home: Wrongproblemdetails(
         index: index,
         userId: userId,
-        apiUrl: apiUrl,
+        apiUrl: apiUrl, profileImagePath: profileImagePath,
       ),
     );
   }
@@ -46,12 +51,14 @@ class Wrongproblemdetails extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   Wrongproblemdetails({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -195,7 +202,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                                   problem.correctOption,
                                               index: widget.index,
                                               userId: widget.userId,
-                                              apiUrl: widget.apiUrl,
+                                              apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,
                                             ),
                                           ),
                                         ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
@@ -335,16 +342,16 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
           }
         },

@@ -16,6 +16,7 @@ class Correctproblemcommentarypage extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   Correctproblemcommentarypage({
     Key? key,
@@ -26,6 +27,7 @@ class Correctproblemcommentarypage extends StatefulWidget {
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -189,7 +191,7 @@ class _CorrectproblemcommentarypageState
                                                       Correctproblem(
                                                           userId: widget.userId,
                                                           apiUrl:
-                                                              widget.apiUrl)),
+                                                              widget.apiUrl, profileImagePath: widget.profileImagePath,)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -302,16 +304,16 @@ class _CorrectproblemcommentarypageState
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+              );
               break;
           }
         },

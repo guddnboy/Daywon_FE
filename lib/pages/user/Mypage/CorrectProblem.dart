@@ -8,8 +8,14 @@ import 'dart:convert';
 class Correctproblem extends StatefulWidget {
   final int userId;
   final String apiUrl;
-  Correctproblem({Key? key, required this.userId, required this.apiUrl})
-      : super(key: key);
+  final String profileImagePath;
+
+  Correctproblem({
+    Key? key,
+    required this.userId,
+    required this.apiUrl,
+    required this.profileImagePath,
+  }) : super(key: key);
 
   @override
   _CorrectproblemState createState() => _CorrectproblemState();
@@ -193,6 +199,8 @@ class _CorrectproblemState extends State<Correctproblem> {
                                             index: problem['scripts_id'],
                                             userId: widget.userId,
                                             apiUrl: widget.apiUrl,
+                                            profileImagePath:
+                                                widget.profileImagePath,
                                           ),
                                         ),
                                       );
@@ -276,19 +284,29 @@ class _CorrectproblemState extends State<Correctproblem> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pop(context);
+              Navigator.pop(context); // 이전 페이지로 돌아가기
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const MyPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
+                ),
+              );
               break;
           }
         },
