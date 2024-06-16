@@ -158,10 +158,10 @@ class _SignupPageState extends State<SignupPage> {
         }),
       );
       if (response.statusCode == 200) {
-        if (kDebugMode) {
-          print(
-              "회원가입 성공_너의 레벨은 : ${_LevelTestPageState()._getLevel().toString()}");
-        }
+        // if (kDebugMode) {
+        //   print(
+        //       "회원가입 성공_너의 레벨은 : ${_LevelTestPageState()._getLevel().toString()}");
+        // }
         _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다.');
 
         Navigator.pushReplacement(
