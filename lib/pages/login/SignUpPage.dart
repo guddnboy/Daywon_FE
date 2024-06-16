@@ -430,7 +430,7 @@ class _LevelTestPageState extends State<LevelTestPage> {
         },
       );
       if (response.statusCode == 200) {
-        final List<dynamic> responseData = jsonDecode(response.body);
+        final List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
 
         setState(() {
           quizzes = responseData.map((questionData) {
