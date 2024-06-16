@@ -11,12 +11,15 @@ class ShortformPage extends StatefulWidget {
   final String selectedCategory;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const ShortformPage({
     Key? key,
     required this.selectedCategory,
     required this.userId,
-    required this.apiUrl, required int scriptsId,
+    required this.apiUrl,
+    required this.profileImagePath,
+    required int scriptsId,
   }) : super(key: key);
 
   @override
@@ -25,7 +28,7 @@ class ShortformPage extends StatefulWidget {
 
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
-  VideoPlayerController? _videoPlayerController;
+  late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   bool isLoading = true;
   String videoUrl = '';
@@ -45,9 +48,18 @@ class _ShortformPageState extends State<ShortformPage> {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        final String videoPath = responseData['video_url'];
-        print('Received video path: $videoPath'); // 디버깅 로그 추가
-        fetchStreamVideo(videoPath);
+
+        String videoUrl = response.body;
+        _videoPlayerController = VideoPlayerController.network(videoUrl)
+          ..initialize().then((_) {
+            setState(() {
+              _videoPlayerController.play();
+            });
+          });
+
+        // final String videoPath = responseData['video_url'];
+        // print('Received video path: $videoPath'); // 디버깅 로그 추가
+        // fetchStreamVideo(videoPath);
       } else {
         throw Exception('Failed to load video URL');
       }
@@ -92,7 +104,7 @@ class _ShortformPageState extends State<ShortformPage> {
 
   @override
   void dispose() {
-    _videoPlayerController?.dispose();
+    _videoPlayerController.dispose();
     _chewieController?.dispose();
     super.dispose();
   }
@@ -165,6 +177,7 @@ class _ShortformPageState extends State<ShortformPage> {
                                       scriptsId: scriptsId,
                                       userId: widget.userId,
                                       apiUrl: widget.apiUrl,
+                                      profileImagePath: widget.profileImagePath,
                                     ),
                                   ),
                                 );
@@ -272,7 +285,11 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
                 ),
               );
               break;
@@ -280,7 +297,11 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
                 ),
               );
               break;

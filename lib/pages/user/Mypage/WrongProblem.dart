@@ -8,12 +8,14 @@ import 'dart:convert';
 class Wrongproblem extends StatefulWidget {
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
-  const Wrongproblem({
-    Key? key,
-    required this.userId,
-    required this.apiUrl,
-  }) : super(key: key);
+  const Wrongproblem(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _WrongproblemState createState() => _WrongproblemState();
@@ -194,10 +196,11 @@ class _WrongproblemState extends State<Wrongproblem> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Wrongproblemdetails(
-                                            index: problem['scripts_id'],
-                                            userId: widget.userId,
-                                            apiUrl: widget.apiUrl,
-                                          ),
+                                                  index: problem['scripts_id'],
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl,
+                                                  profileImagePath:
+                                                      widget.profileImagePath),
                                         ),
                                       );
                                     },

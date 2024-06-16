@@ -16,17 +16,19 @@ class Correctproblemcommentarypage extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
-  Correctproblemcommentarypage({
-    Key? key,
-    required this.q_id,
-    required this.selectedChoice,
-    required this.selectedChoiceNum,
-    required this.correctOption,
-    required this.index,
-    required this.userId,
-    required this.apiUrl,
-  }) : super(key: key);
+  Correctproblemcommentarypage(
+      {Key? key,
+      required this.q_id,
+      required this.selectedChoice,
+      required this.selectedChoiceNum,
+      required this.correctOption,
+      required this.index,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _CorrectproblemcommentarypageState createState() =>
@@ -188,8 +190,9 @@ class _CorrectproblemcommentarypageState
                                                   builder: (context) =>
                                                       Correctproblem(
                                                           userId: widget.userId,
-                                                          apiUrl:
-                                                              widget.apiUrl)),
+                                                          apiUrl: widget.apiUrl,
+                                                          profileImagePath: widget
+                                                              .profileImagePath)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(

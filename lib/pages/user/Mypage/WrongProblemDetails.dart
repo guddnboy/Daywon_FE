@@ -9,21 +9,23 @@ class MyApp extends StatelessWidget {
   final int userId;
   final String apiUrl;
   final int index;
+  final String profileImagePath;
   const MyApp({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Wrongproblemdetails(
-        index: index,
-        userId: userId,
-        apiUrl: apiUrl,
-      ),
+          index: index,
+          userId: userId,
+          apiUrl: apiUrl,
+          profileImagePath: profileImagePath),
     );
   }
 }
@@ -46,12 +48,14 @@ class Wrongproblemdetails extends StatefulWidget {
   final int index;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   Wrongproblemdetails({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath,
   }) : super(key: key);
 
   @override
@@ -187,16 +191,17 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 Wrongproblemcommentarypage(
-                                              q_id: problem.q_id,
-                                              selectedChoice:
-                                                  problem.options[i],
-                                              selectedChoiceNum: i + 1,
-                                              correctOption:
-                                                  problem.correctOption,
-                                              index: widget.index,
-                                              userId: widget.userId,
-                                              apiUrl: widget.apiUrl,
-                                            ),
+                                                    q_id: problem.q_id,
+                                                    selectedChoice:
+                                                        problem.options[i],
+                                                    selectedChoiceNum: i + 1,
+                                                    correctOption:
+                                                        problem.correctOption,
+                                                    index: widget.index,
+                                                    userId: widget.userId,
+                                                    apiUrl: widget.apiUrl,
+                                                    profileImagePath: widget
+                                                        .profileImagePath),
                                           ),
                                         ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
                                       },

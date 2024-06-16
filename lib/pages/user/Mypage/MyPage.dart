@@ -310,7 +310,8 @@ class _MyPageState extends State<MyPage> {
                             MaterialPageRoute(
                                 builder: (context) => Correctproblem(
                                     userId: widget.userId,
-                                    apiUrl: widget.apiUrl)),
+                                    apiUrl: widget.apiUrl,
+                                    profileImagePath: widget.profileImagePath)),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -336,7 +337,8 @@ class _MyPageState extends State<MyPage> {
                             MaterialPageRoute(
                                 builder: (context) => Wrongproblem(
                                     userId: widget.userId,
-                                    apiUrl: widget.apiUrl)),
+                                    apiUrl: widget.apiUrl,
+                                    profileImagePath: widget.profileImagePath)),
                           );
                         },
                         style: ElevatedButton.styleFrom(

@@ -13,15 +13,15 @@ class LearningPage extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const LearningPage({
-    Key? key,
-    required this.categoryId,
-    required this.level,
-    required this.selectedCategory,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath
-  }) : super(key: key);
+  const LearningPage(
+      {Key? key,
+      required this.categoryId,
+      required this.level,
+      required this.selectedCategory,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _LearningPageState createState() => _LearningPageState();
@@ -45,12 +45,13 @@ class _LearningPageState extends State<LearningPage> {
   }
 
   Future<void> fetchConceptExplanation(int categoryId, int level) async {
-    final url = '${widget.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
+    final url =
+        '${widget.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
     try {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        print("Raw response body: ${response.body}");  // 원본 응답 로그 출력
+        print("Raw response body: ${response.body}"); // 원본 응답 로그 출력
         final data = json.decode(utf8.decode(response.bodyBytes));
         setState(() {
           explanation = data['combined_content'];
@@ -126,7 +127,10 @@ class _LearningPageState extends State<LearningPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
+                  builder: (context) => MainPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -134,7 +138,10 @@ class _LearningPageState extends State<LearningPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
+                  builder: (context) => MyPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -160,7 +167,8 @@ class LearningPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 0.9;
-    double containerHeight = MediaQuery.of(context).size.height * 0.7; // 네비게이션 위에 고정 크기 설정
+    double containerHeight =
+        MediaQuery.of(context).size.height * 0.7; // 네비게이션 위에 고정 크기 설정
 
     return Center(
       child: LayoutBuilder(
@@ -204,7 +212,8 @@ class LearningPageContent extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: containerHeight - 100, // 네비게이션 바 위에 위치하도록 고정 크기 설정
+                        height:
+                            containerHeight - 100, // 네비게이션 바 위에 위치하도록 고정 크기 설정
                         padding: const EdgeInsets.all(20),
                         child: Center(
                           child: isLoading

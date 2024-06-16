@@ -8,7 +8,12 @@ import 'dart:convert';
 class Correctproblem extends StatefulWidget {
   final int userId;
   final String apiUrl;
-  Correctproblem({Key? key, required this.userId, required this.apiUrl})
+  final String profileImagePath;
+  Correctproblem(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
       : super(key: key);
 
   @override
@@ -190,10 +195,11 @@ class _CorrectproblemState extends State<Correctproblem> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Correctproblemdetails(
-                                            index: problem['scripts_id'],
-                                            userId: widget.userId,
-                                            apiUrl: widget.apiUrl,
-                                          ),
+                                                  index: problem['scripts_id'],
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl,
+                                                  profileImagePath:
+                                                      widget.profileImagePath),
                                         ),
                                       );
                                     },
