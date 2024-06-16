@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:project/config.dart';
 import 'package:project/pages/login/LoginPage.dart';
 
@@ -28,8 +28,6 @@ class _SignupPageState extends State<SignupPage> {
   bool isEmailChecked = false;
   bool isPasswordMatched = false;
   bool isTestDone = false;
-
-  set level(value) => LevelTestPage.level = value;
 
   void updateTestDone(bool testDone) {
     setState(() {
@@ -143,6 +141,7 @@ class _SignupPageState extends State<SignupPage> {
 
       final serverUri = Config.apiUrl;
 
+      String userLevel = _LevelTestPageState()._getLevel().toString();
       final response = await http.post(
         Uri.parse('$serverUri/users/'),
         headers: <String, String>{
@@ -152,14 +151,17 @@ class _SignupPageState extends State<SignupPage> {
           'name': nameController.text,
           'nickname': nicknameController.text,
           'e_mail': emailController.text,
-          'level': LevelTestPage.level.toString(),
+          'level': _LevelTestPageState()._getLevel().toString(),
           'user_point': 0,
           'profile_image': 1,
           'hashed_password': passwordController.text,
         }),
       );
-
       if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print(
+              "회원가입 성공_너의 레벨은 : ${_LevelTestPageState()._getLevel().toString()}");
+        }
         _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다.');
 
         Navigator.pushReplacement(
@@ -395,7 +397,7 @@ class _SignupPageState extends State<SignupPage> {
 class LevelTestPage extends StatefulWidget {
   final Function(bool) updateTestDone;
 
-  static var level;
+  static var level = _LevelTestPageState()._getLevel();
 
   const LevelTestPage({Key? key, required this.updateTestDone})
       : super(key: key);
@@ -420,8 +422,7 @@ class _LevelTestPageState extends State<LevelTestPage> {
     });
 
     try {
-      final serverUri =
-          Config.apiUrl; // Replace with your FastAPI server endpoint
+      final serverUri = Config.apiUrl;
       final response = await http.get(
         Uri.parse('$serverUri/enroll_quizzes/'),
         headers: <String, String>{
@@ -465,6 +466,28 @@ class _LevelTestPageState extends State<LevelTestPage> {
         isLoading = false;
       });
     }
+  }
+
+  int _getLevel() {
+    int correctAnswers = 0;
+    int level;
+    for (var question in quizzes) {
+      if (question['selectedAnswerIndex'] == question['correctAnswerIndex']) {
+        correctAnswers++;
+      }
+    }
+    if (correctAnswers <= 2) {
+      level = 1;
+    } else if (3 <= correctAnswers && correctAnswers < 5) {
+      level = 2;
+    } else if (5 <= correctAnswers && correctAnswers < 7) {
+      level = 3;
+    } else if (7 <= correctAnswers && correctAnswers < 9) {
+      level = 4;
+    } else {
+      level = 5;
+    }
+    return level;
   }
 
   @override
@@ -553,23 +576,6 @@ class _LevelTestPageState extends State<LevelTestPage> {
       }
     }
 
-    int level;
-    if (correctAnswers <= 2) {
-      level = 1;
-    } else if (3 <= correctAnswers && correctAnswers < 5) {
-      level = 2;
-    } else if (5 <= correctAnswers && correctAnswers < 7) {
-      level = 3;
-    } else if (7 <= correctAnswers && correctAnswers < 9) {
-      level = 4;
-    } else {
-      level = 5;
-    }
-
-    if (kDebugMode) {
-      print("사용자 레벨은 $level");
-    }
-
     if (!testDone) {
       showDialog(
         context: context,
@@ -594,8 +600,8 @@ class _LevelTestPageState extends State<LevelTestPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('테스트 결과'),
-            content:
-                Text('문제 ${quizzes.length}개 중에서 맞은 개수는 $correctAnswers개입니다.'),
+            content: Text(
+                '문제 ${quizzes.length}개 중에서 맞은 개수는 $correctAnswers개입니다. 레벨은 ${_LevelTestPageState()._getLevel().toString()} 입니다.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
