@@ -59,6 +59,7 @@ class ProblemPage extends StatefulWidget {
   final int scriptsId;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const ProblemPage({
     Key? key,
@@ -66,6 +67,7 @@ class ProblemPage extends StatefulWidget {
     required this.scriptsId,
     required this.userId,
     required this.apiUrl,
+    required this.profileImagePath
   }) : super(key: key);
 
   @override
@@ -108,6 +110,7 @@ class _ProblemPageState extends State<ProblemPage> {
             selectedChoice: problem.options[selectedOption - 1],
             userId: widget.userId,
             apiUrl: widget.apiUrl,
+            profileImagePath: widget.profileImagePath,
           ),
         ),
       );
@@ -334,7 +337,7 @@ class _ProblemPageState extends State<ProblemPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -342,7 +345,7 @@ class _ProblemPageState extends State<ProblemPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
