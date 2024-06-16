@@ -1,46 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/learning/ShortformPage.dart';
-
-void main() {
-  runApp(const MaterialApp(
-    home: LearningPage(selectedCategory: ''),
-  ));
-}
+import 'package:project/config.dart'; // Config 파일 임포트
 
 class LearningPage extends StatefulWidget {
+  final int categoryId;
+  final int level;
   final String selectedCategory;
 
-  const LearningPage({Key? key, required this.selectedCategory})
-      : super(key: key);
+  const LearningPage({
+    Key? key,
+    required this.categoryId,
+    required this.level,
+    required this.selectedCategory,
+  }) : super(key: key);
 
   @override
   _LearningPageState createState() => _LearningPageState();
 }
 
 class _LearningPageState extends State<LearningPage> {
-  late String selectedCategory; // 선택된 카테고리를 저장할 변수
-  String explanation = ''; // 개념 설명을 저장할 변수
+  late int categoryId;
+  late int level;
+  late String selectedCategory;
+  String explanation = '';
+  int scriptsId = 0; // scripts_id를 저장할 변수 추가
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    categoryId = widget.categoryId;
+    level = widget.level;
     selectedCategory = widget.selectedCategory;
-    fetchConceptExplanation(selectedCategory); // 선택된 카테고리에 대한 개념 설명 가져오기
+    fetchConceptExplanation(categoryId, level);
   }
 
-  // 데이터베이스에서 개념 설명 가져오는 함수 (가상의 함수)
-  void fetchConceptExplanation(String category) {
-    // 이 부분에서 실제로 데이터베이스에서 텍스트를 가져와야 합니다.
-    // 이 예시에서는 가상의 텍스트를 사용합니다.
-    // category에 따라 다른 개념 설명을 가져오도록 구현해야 합니다.
-    setState(() {
-      // 가상의 개념 설명 텍스트 설정
-      explanation = '''
-        이 부분은 가상의 개념 설명입니다.
-        데이터베이스에서 실제 텍스트를 가져와야 합니다.
-        ''';
-    });
+  Future<void> fetchConceptExplanation(int categoryId, int level) async {
+    final url = '${Config.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        print("Raw response body: ${response.body}");  // 원본 응답 로그 출력
+        final data = json.decode(utf8.decode(response.bodyBytes));
+        setState(() {
+          explanation = data['combined_content'];
+          scriptsId = data['scripts_id']; // scripts_id 저장
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to load script');
+      }
+    } catch (e) {
+      setState(() {
+        explanation = 'Failed to load explanation: $e';
+        isLoading = false;
+      });
+    }
   }
 
   @override
@@ -51,10 +70,12 @@ class _LearningPageState extends State<LearningPage> {
           LearningPageContent(
             selectedCategory: selectedCategory,
             explanation: explanation,
+            isLoading: isLoading,
           ),
           ShortformPage(
             selectedCategory: selectedCategory,
-          ), // 추가된 ShortformPage
+            scriptsId: scriptsId, // scripts_id 전달
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -88,7 +109,6 @@ class _LearningPageState extends State<LearningPage> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          // Handle tap logic here, e.g., navigating to different pages
           switch (index) {
             case 0:
               Navigator.pop(context);
@@ -115,128 +135,87 @@ class _LearningPageState extends State<LearningPage> {
 class LearningPageContent extends StatelessWidget {
   final String selectedCategory;
   final String explanation;
+  final bool isLoading;
 
   const LearningPageContent({
     Key? key,
     required this.selectedCategory,
     required this.explanation,
+    required this.isLoading,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double containerWidth = MediaQuery.of(context).size.width * 0.9;
+    double containerHeight = MediaQuery.of(context).size.height * 0.7; // 네비게이션 위에 고정 크기 설정
+
     return Center(
       child: LayoutBuilder(
         builder: (context, constraints) {
-          double containerWidth = constraints.maxWidth * 0.8;
-          double containerHeight = constraints.maxHeight * 0.65;
-
-          return Stack(
-            children: [
-              Center(
-                child: Container(
-                  width: constraints.maxWidth,
-                  height: constraints.maxHeight,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
+          return Container(
+            width: containerWidth,
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Container(
+                  width: containerWidth,
+                  decoration: ShapeDecoration(
                     color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(
+                        width: 2,
+                        color: Color(0xFF4399FF),
+                      ),
+                      borderRadius: BorderRadius.circular(17),
+                    ),
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  child: Align(
-                    alignment: const Alignment(0, 0.3),
-                    child: Container(
-                      width: containerWidth,
-                      height: containerHeight,
-                      decoration: ShapeDecoration(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                            width: 2,
-                            color: Color(0xFF4399FF),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Text(
+                          selectedCategory,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
-                          borderRadius: BorderRadius.circular(17),
                         ),
-                        shadows: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Text(
-                              selectedCategory.isNotEmpty
-                                  ? selectedCategory
-                                  : '오늘의 학습',
-                              style: const TextStyle(
-                                fontSize: 30,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Center(
-                              child: Text(
-                                explanation,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
+                      Container(
+                        height: containerHeight - 100, // 네비게이션 바 위에 위치하도록 고정 크기 설정
+                        padding: const EdgeInsets.all(20),
+                        child: Center(
+                          child: isLoading
+                              ? CircularProgressIndicator()
+                              : SingleChildScrollView(
+                                  child: Text(
+                                    explanation,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ),
-              Positioned(
-                top: 60,
-                right: 50,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    'assets/img/backbtn.png',
-                    width: 45,
-                    height: 45,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 68,
-                left: 55,
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/img/circle.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 5),
-                    const Text(
-                      '오늘의 학습',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
     );
   }
 }
+

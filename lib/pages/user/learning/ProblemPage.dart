@@ -1,35 +1,112 @@
 import 'package:flutter/material.dart';
+import 'package:project/config.dart';
 import 'package:project/pages/user/learning/CommentaryPage.dart';
 import 'package:project/pages/MainPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Problem {
+  final int qId;
+  final int scriptsId;
+  final String question;
+  final List<String> options;
+  final int answerOption;
+  final int plusPoint;
+  final int minusPoint;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProblemPage(),
+  Problem({
+    required this.qId,
+    required this.scriptsId,
+    required this.question,
+    required this.options,
+    required this.answerOption,
+    required this.plusPoint,
+    required this.minusPoint,
+  });
+
+  factory Problem.fromJson(Map<String, dynamic> json) {
+    return Problem(
+      qId: json['q_id'],
+      scriptsId: json['scripts_id'],
+      question: json['question'],
+      options: [
+        json['option_1'],
+        json['option_2'],
+        json['option_3'],
+        json['option_4']
+      ],
+      answerOption: json['answer_option'],
+      plusPoint: json['plus_point'],
+      minusPoint: json['minus_point'],
     );
   }
 }
 
-class Problem {
-  final String question;
-  final List<String> choices;
+Future<Problem> fetchProblem(int scriptsId) async {
+  final response = await http.get(Uri.parse('${Config.apiUrl}/scripts/$scriptsId/questions'));
 
-  Problem({required this.question, required this.choices});
+  if (response.statusCode == 200) {
+    final jsonData = json.decode(response.body)[0];
+    return Problem.fromJson(jsonData);
+  } else {
+    throw Exception('Failed to load problem');
+  }
 }
 
-Future<Problem> fetchProblem() async {
-  // 데이터베이스나 API 호출로 데이터를 가져오는 부분
-  await Future.delayed(const Duration(seconds: 2)); // 데이터 가져오는 시간 시뮬레이션
-  return Problem(
-    question: '문제 예시가 무언가 있음 이 상황에서 선택해야하는 상품은?',
-    choices: ['보기 1번', '보기 2번', '보기 3번', '보기 4번'],
-  );
+class ProblemPage extends StatefulWidget {
+  final String selectedCategory;
+  final int scriptsId;
+
+  const ProblemPage({
+    Key? key,
+    required this.selectedCategory,
+    required this.scriptsId,
+  }) : super(key: key);
+
+  @override
+  _ProblemPageState createState() => _ProblemPageState();
 }
 
-class ProblemPage extends StatelessWidget {
+class _ProblemPageState extends State<ProblemPage> {
+  late Future<Problem> futureProblem;
+  bool isAnswered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    futureProblem = fetchProblem(widget.scriptsId);
+  }
+
+  void checkAnswer(int selectedOption, Problem problem) {
+    if (!isAnswered) {
+      isAnswered = true;
+      String resultMessage;
+      int points;
+
+      if (selectedOption == problem.answerOption) {
+        resultMessage = '맞았습니다! +${problem.plusPoint} 점';
+        points = problem.plusPoint;
+      } else {
+        resultMessage = '틀렸습니다! -${problem.minusPoint} 점';
+        points = problem.minusPoint;
+      }
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CommentaryPage(
+            selectedCategory: widget.selectedCategory,
+            scriptsId: widget.scriptsId,
+            qId: problem.qId,
+            resultMessage: resultMessage,
+            points: points,
+            selectedChoice: problem.options[selectedOption - 1],
+          ),
+        ),
+      );
+    }
+  }
+
   final List<Color> buttonColors = [
     const Color(0xFF8BC0FF),
     const Color(0xFF55A3FF),
@@ -42,7 +119,7 @@ class ProblemPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Problem>(
-          future: fetchProblem(),
+          future: futureProblem,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -90,50 +167,35 @@ class ProblemPage extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-                                  const SizedBox(height: 15), // 간격 조정
+                                  const SizedBox(height: 15),
                                   SizedBox(
                                     width: 200,
                                     child: Text(
                                       problem.question,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 14, // 텍스트 크기 조정
-
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                  const SizedBox(height: 20), // 간격 조정
-                                  for (int i = 0;
-                                      i < problem.choices.length;
-                                      i++) ...[
+                                  const SizedBox(height: 20),
+                                  for (int i = 0; i < problem.options.length; i++) ...[
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: buttonColors[i],
-                                        fixedSize:
-                                            const Size(210, 50), // 버튼 크기 조정
+                                        fixedSize: const Size(210, 50),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                       ),
                                       onPressed: () {
-                                        // 보기 버튼을 누를 때 CommentaryPage로 해당 보기의 텍스트 전달
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CommentaryPage(
-                                                    selectedChoice:
-                                                        problem.choices[i]),
-                                          ),
-                                        );
+                                        checkAnswer(i + 1, problem);
                                       },
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Stack(
                                             alignment: Alignment.center,
@@ -141,8 +203,7 @@ class ProblemPage extends StatelessWidget {
                                               Container(
                                                 width: 20,
                                                 height: 20,
-                                                decoration:
-                                                    const ShapeDecoration(
+                                                decoration: const ShapeDecoration(
                                                   color: Colors.white,
                                                   shape: OvalBorder(),
                                                 ),
@@ -151,23 +212,20 @@ class ProblemPage extends StatelessWidget {
                                                 '${i + 1}',
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
-                                                  fontSize: 20, // 텍스트 크기 조정
-
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.w800,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(
-                                              width: 10), // 적절한 간격을 위해 추가
+                                          const SizedBox(width: 10),
                                           Expanded(
                                             child: Center(
                                               child: Text(
-                                                problem.choices[i],
+                                                problem.options[i],
                                                 style: const TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 16, // 텍스트 크기 조정
-
+                                                  fontSize: 16,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
@@ -176,7 +234,7 @@ class ProblemPage extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(height: 20), // 간격 조정
+                                    const SizedBox(height: 20),
                                   ],
                                 ],
                               ),
@@ -212,7 +270,7 @@ class ProblemPage extends StatelessWidget {
                             const Text(
                               '오늘의 학습',
                               style: TextStyle(
-                                fontSize: 18, // 텍스트 크기 조정
+                                fontSize: 18,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -266,16 +324,16 @@ class ProblemPage extends StatelessWidget {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainPage()),
+              );
               break;
           }
         },
