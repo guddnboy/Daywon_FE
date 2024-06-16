@@ -8,8 +8,10 @@ class findID extends StatelessWidget {
 
   findID({Key? key, required this.apiUrl}) : super(key: key);
 
-  Future<void> _findID(BuildContext context, String nickname, String name) async {
-    final url = Uri.parse('$apiUrl/user_find-email?nickname=$nickname&name=$name');
+  Future<void> _findID(
+      BuildContext context, String nickname, String name) async {
+    final url =
+        Uri.parse('$apiUrl/user_find-email?nickname=$nickname&name=$name');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -32,7 +34,6 @@ class findID extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
-                 
                 },
                 child: Text('확인'),
               ),
@@ -61,6 +62,7 @@ class findID extends StatelessWidget {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final nicknameController = TextEditingController();
@@ -142,7 +144,8 @@ class findID extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                             _findID(context, nicknameController.text, nameController.text);
+                            _findID(context, nicknameController.text,
+                                nameController.text);
                           },
                           child: const Text('아이디 찾기'),
                         ),
@@ -157,4 +160,4 @@ class findID extends StatelessWidget {
       ),
     );
   }
- }
+}

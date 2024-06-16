@@ -39,7 +39,8 @@ class CommentaryPage extends StatelessWidget {
     }
   }
 
-  Future<void> saveUserHistory(bool isCorrect) async {
+Future<void> saveUserHistory(bool isCorrect) async {
+  try {
     final response = await http.post(
       Uri.parse('$apiUrl/user_history/'),
       headers: <String, String>{
@@ -52,11 +53,15 @@ class CommentaryPage extends StatelessWidget {
       }),
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      print('Failed to save user history: ${response.statusCode}');
+      print('Response body: ${response.body}');
       throw Exception('Failed to save user history');
     }
+  } catch (e) {
+    print('Error saving user history: $e');
   }
-
+}
   @override
   Widget build(BuildContext context) {
     bool isCorrect = resultMessage.contains('맞았습니다');

@@ -1,46 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final int userId;
+  final String apiUrl;
+  final int index;
+  const MyApp({
+    Key? key,
+    required this.index,
+    required this.userId,
+    required this.apiUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Wrongproblemdetails(index: 0),
+      home: Wrongproblemdetails(
+        index: index,
+        userId: userId,
+        apiUrl: apiUrl,
+      ),
     );
   }
 }
 
 class Problem {
+  final int q_id;
   final String question;
-  final List<String> choices;
+  final List<String> options;
+  final int correctOption;
 
-  Problem({required this.question, required this.choices});
+  Problem({
+    required this.q_id,
+    required this.question,
+    required this.options,
+    required this.correctOption,
+  });
 }
 
-Future<Problem> fetchProblem(int index) async {
-  // 데이터베이스나 API 호출로 데이터를 가져오는 부분
-  await Future.delayed(const Duration(seconds: 1)); // 데이터 가져오는 시간 시뮬레이션
-  // 인덱스에 따라 다른 문제 반환
-  List<Problem> problems = [
-    Problem(
-      question: '문제 예시가 무언가 있음 이 상황에서 선택해야하는 상품은?',
-      choices: ['보기 1번', '보기 2번', '보기 3번', '보기 4번'],
-    ),
-    Problem(
-      question: '다른 문제 예시가 있음. 무엇을 고르겠습니까?',
-      choices: ['선택지 1번', '선택지 2번', '선택지 3번', '선택지 4번'],
-    ),
-    // 추가 문제를 여기에 추가
-  ];
-  return problems[index % problems.length];
-}
-
-class Wrongproblemdetails extends StatelessWidget {
+class Wrongproblemdetails extends StatefulWidget {
   final int index;
+  final int userId;
+  final String apiUrl;
 
-  Wrongproblemdetails({Key? key, required this.index}) : super(key: key);
+  Wrongproblemdetails({
+    Key? key,
+    required this.index,
+    required this.userId,
+    required this.apiUrl,
+  }) : super(key: key);
+
+  @override
+  _WrongproblemdetailsState createState() => _WrongproblemdetailsState();
+}
+
+class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
+  late Future<Problem> _futureProblem;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureProblem = fetchProblem(widget.index);
+  }
+
+  Future<Problem> fetchProblem(int index) async {
+    final url = Uri.parse('${widget.apiUrl}/scripts/$index/questions');
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body)[0];
+
+      return Problem(
+        q_id: jsonResponse['q_id'],
+        question: jsonResponse['question'],
+        options: [
+          jsonResponse['option_1'],
+          jsonResponse['option_2'],
+          jsonResponse['option_3'],
+          jsonResponse['option_4'],
+        ],
+        correctOption: jsonResponse['answer_option'],
+      );
+    } else {
+      throw Exception('Failed to load question');
+    }
+  }
 
   final List<Color> buttonColors = [
     const Color(0xFF8BC0FF),
@@ -54,7 +103,7 @@ class Wrongproblemdetails extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: FutureBuilder<Problem>(
-          future: fetchProblem(index),
+          future: _futureProblem,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -62,6 +111,7 @@ class Wrongproblemdetails extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
               Problem problem = snapshot.data!;
+
               return LayoutBuilder(
                 builder: (context, constraints) {
                   double containerWidth = constraints.maxWidth * 0.8;
@@ -119,7 +169,7 @@ class Wrongproblemdetails extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 20), // 간격 조정
                                   for (int i = 0;
-                                      i < problem.choices.length;
+                                      i < problem.options.length;
                                       i++) ...[
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -137,8 +187,16 @@ class Wrongproblemdetails extends StatelessWidget {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 Wrongproblemcommentarypage(
-                                                    selectedChoice:
-                                                        problem.choices[i]),
+                                              q_id: problem.q_id,
+                                              selectedChoice:
+                                                  problem.options[i],
+                                              selectedChoiceNum: i + 1,
+                                              correctOption:
+                                                  problem.correctOption,
+                                              index: widget.index,
+                                              userId: widget.userId,
+                                              apiUrl: widget.apiUrl,
+                                            ),
                                           ),
                                         ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
                                       },
@@ -174,7 +232,7 @@ class Wrongproblemdetails extends StatelessWidget {
                                           Expanded(
                                             child: Center(
                                               child: Text(
-                                                problem.choices[i],
+                                                problem.options[i],
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16, // 텍스트 크기 조정

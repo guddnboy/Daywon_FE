@@ -37,9 +37,9 @@ class _ChatBotPageState extends State<ChatBotPage> {
     });
 
     final response = await http.post(
-      Uri.parse('${widget.apiUrl}/chatbot'),
+      Uri.parse('${widget.apiUrl}/api/chatbot'),
       headers: <String, String>{
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
         'message': message,
@@ -47,7 +47,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     );
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
       setState(() {
         _messages.add({"role": "assistant", "content": jsonResponse['response']});
       });

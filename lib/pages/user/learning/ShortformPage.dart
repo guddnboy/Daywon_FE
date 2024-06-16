@@ -11,12 +11,15 @@ class ShortformPage extends StatefulWidget {
   final String selectedCategory;
   final int userId;
   final String apiUrl;
+  final String profileImagePath;
 
   const ShortformPage({
     Key? key,
     required this.selectedCategory,
     required this.userId,
-    required this.apiUrl, required int scriptsId,
+    required this.apiUrl, 
+    required this.profileImagePath,
+    required int scriptsId,
   }) : super(key: key);
 
   @override
@@ -165,6 +168,7 @@ class _ShortformPageState extends State<ShortformPage> {
                                       scriptsId: scriptsId,
                                       userId: widget.userId,
                                       apiUrl: widget.apiUrl,
+                                      profileImagePath: widget.profileImagePath,
                                     ),
                                   ),
                                 );
@@ -272,7 +276,7 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,),
                 ),
               );
               break;
@@ -280,7 +284,7 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,),
                 ),
               );
               break;

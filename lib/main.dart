@@ -3,6 +3,7 @@ import 'package:project/pages/login/LoginPage.dart';
 import 'config.dart';
 
 void main() {
+  print('API URL: ${Config.apiUrl}');
   runApp(MyApp(apiUrl: Config.apiUrl));
 }
 
