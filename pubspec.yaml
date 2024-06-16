@@ -33,15 +33,14 @@ dependencies:
   flutter_dotenv: ^5.0.2
   shared_preferences: ^2.0.6
     
-  flutter_native_splash: ^2.4.0 # 스플래시 스크린
+  flutter_native_splash: ^2.4.0
   http: ^1.2.1
   video_player: ^2.7.2
 
 flutter_native_splash:
-  image: assets/img/SplashScreen.png # 추가할 이미지 파일 경로를 추가
-  color: "#ffffff"
+  background_image: assets/img/splash.png
   fullscreen: true
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,6 +76,7 @@ flutter:
     - assets/img/rank1.png
     - assets/img/rank2.png
     - assets/img/rank3.png
+    - assets/img/splash.png
     
   # To add assets to your application, add an assets section, like this:
   # assets:
