@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
@@ -10,8 +8,12 @@ import 'dart:convert';
 class Wrongproblem extends StatefulWidget {
   final int userId;
   final String apiUrl;
-  const Wrongproblem({Key? key, required this.userId, required this.apiUrl})
-      : super(key: key);
+
+  const Wrongproblem({
+    Key? key,
+    required this.userId,
+    required this.apiUrl,
+  }) : super(key: key);
 
   @override
   _WrongproblemState createState() => _WrongproblemState();
@@ -20,27 +22,36 @@ class Wrongproblem extends StatefulWidget {
 class _WrongproblemState extends State<Wrongproblem> {
   String nickname = '';
   List<dynamic> wrongProblems = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    fetchWrongproblems(widget.userId);
+    fetchData(widget.userId);
   }
 
-  Future<void> fetchWrongproblems(int userId) async {
-    final url =
-        Uri.parse('${widget.apiUrl}/get_user_history/$userId/?T_F=false');
+  Future<void> fetchData(int userId) async {
+    try {
+      final url = Uri.parse(
+          '${widget.apiUrl}/get_user_history/${widget.userId}?T_F=false');
+      final response =
+          await http.get(url, headers: {'Accept': 'application/json'});
 
-    final response =
-        await http.get(url, headers: {'Accept': 'application/json'});
-
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        setState(() {
+          wrongProblems = json.decode(response.body);
+          isLoading = false;
+        });
+      } else {
+        print('틀린 히스토리 로드 실패');
+        throw Exception('Failed to load wrong problems');
+      }
+    } catch (e) {
+      print('예외 발생: $e');
       setState(() {
-        wrongProblems = json.decode(response.body);
+        wrongProblems = [];
+        isLoading = false;
       });
-    } else {
-      print('사용자 틀린 히스트리 로드 실패');
-      throw Exception('Failed to load wrong problems');
     }
   }
 
@@ -160,7 +171,7 @@ class _WrongproblemState extends State<Wrongproblem> {
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: ListView.builder(
-                          itemCount: 20,
+                          itemCount: wrongProblems.length,
                           itemBuilder: (context, index) {
                             final problem = wrongProblems[index];
                             return Padding(
@@ -183,14 +194,15 @@ class _WrongproblemState extends State<Wrongproblem> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Wrongproblemdetails(
-                                                  index: problem['scripts_id'],
-                                                  userId: widget.userId,
-                                                  apiUrl: widget.apiUrl),
+                                            index: problem['scripts_id'],
+                                            userId: widget.userId,
+                                            apiUrl: widget.apiUrl,
+                                          ),
                                         ),
                                       );
                                     },
                                     child: Text(
-                                      'Button ${index + 1}',
+                                      'Scripts ID: ${problem['scripts_id']}',
                                       style: TextStyle(
                                         fontSize: width * 0.035,
                                         color: Colors.black,

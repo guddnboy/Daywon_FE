@@ -73,7 +73,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
         await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
+      final jsonResponse = json.decode(response.body)[0];
 
       return Problem(
         q_id: jsonResponse['q_id'],
@@ -187,6 +187,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 Wrongproblemcommentarypage(
+                                              q_id: problem.q_id,
                                               selectedChoice:
                                                   problem.options[i],
                                               selectedChoiceNum: i + 1,

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'config.dart';
 
 void main() {
+  print('API URL: ${Config.apiUrl}');
   runApp(MyApp(apiUrl: Config.apiUrl));
 }
 

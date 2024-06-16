@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/Mypage/CorrectProblemDetails.dart';
 import 'package:project/pages/MainPage.dart';
@@ -18,8 +16,8 @@ class Correctproblem extends StatefulWidget {
 }
 
 class _CorrectproblemState extends State<Correctproblem> {
-  String nickname = '';
   List<dynamic> correctProblems = [];
+  bool loading = true;
 
   @override
   void initState() {
@@ -28,19 +26,28 @@ class _CorrectproblemState extends State<Correctproblem> {
   }
 
   Future<void> fetchCorrectProblems(int userId) async {
-    final url =
-        Uri.parse('${widget.apiUrl}/get_user_history/$userId/?T_F=true');
+    try {
+      final url =
+          Uri.parse('${widget.apiUrl}/get_user_history/$userId?T_F=true');
 
-    final response =
-        await http.get(url, headers: {'Accept': 'application/json'});
+      final response =
+          await http.get(url, headers: {'Accept': 'application/json'});
 
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
+        setState(() {
+          correctProblems = json.decode(response.body);
+          loading = false;
+        });
+      } else {
+        print('사용자 맞은 히스토리 로드 실패');
+        throw Exception('Failed to load correct problems');
+      }
+    } catch (e) {
+      print('예외 발생: $e');
       setState(() {
-        correctProblems = json.decode(response.body);
+        correctProblems = [];
+        loading = false;
       });
-    } else {
-      print('사용자 맞은 히스토리 로드 실패');
-      throw Exception('Failed to load correct problems');
     }
   }
 
@@ -183,9 +190,10 @@ class _CorrectproblemState extends State<Correctproblem> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Correctproblemdetails(
-                                                  index: problem['scripts_id'],
-                                                  userId: widget.userId,
-                                                  apiUrl: widget.apiUrl),
+                                            index: problem['scripts_id'],
+                                            userId: widget.userId,
+                                            apiUrl: widget.apiUrl,
+                                          ),
                                         ),
                                       );
                                     },

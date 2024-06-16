@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Correctproblemcommentarypage extends StatefulWidget {
+  final int q_id;
   final String selectedChoice;
   final int selectedChoiceNum;
   final int correctOption;
@@ -18,6 +19,7 @@ class Correctproblemcommentarypage extends StatefulWidget {
 
   Correctproblemcommentarypage({
     Key? key,
+    required this.q_id,
     required this.selectedChoice,
     required this.selectedChoiceNum,
     required this.correctOption,
@@ -44,12 +46,11 @@ class _CorrectproblemcommentarypageState
   }
 
   Future<String> fetchProblemExplanation() async {
-    final url =
-        Uri.parse('${widget.apiUrl}/questions/${widget.index}/comments');
+    final url = Uri.parse('${widget.apiUrl}/questions/${widget.q_id}/comments');
     final response =
         await http.get(url, headers: {'Accept': 'application/json'});
     if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
+      final jsonData = json.decode(response.body);
       final commentary = jsonData['combined_comment'];
       return commentary;
     } else {

@@ -74,10 +74,13 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
         await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
+      final jsonResponse = json.decode(response.body)[0];
+
+      // q_id가 이미 정수이므로 직접 할당
+      int qId = jsonResponse['q_id'];
 
       return Problem(
-        q_id: jsonResponse['q_id'],
+        q_id: qId,
         question: jsonResponse['question'],
         options: [
           jsonResponse['option_1'],
@@ -187,6 +190,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 Correctproblemcommentarypage(
+                                              q_id: problem.q_id,
                                               selectedChoice:
                                                   problem.options[i],
                                               selectedChoiceNum: i + 1,
