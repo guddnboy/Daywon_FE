@@ -8,8 +8,11 @@ import 'package:http/http.dart' as http;
 class MyPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
+  final String profileImagePath; // 추가된 프로필 이미지 URL
+  
 
-  MyPage({Key? key, required this.userId, required this.apiUrl}) : super(key: key);
+
+  MyPage({Key? key, required this.userId, required this.apiUrl, required this.profileImagePath}) : super(key: key);
 
   @override
   _MyPageState createState() => _MyPageState();
@@ -18,14 +21,17 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   String nickname = '';
   int points = 0;
-  int profileImageId = 0;
+  String profileImagePath = '';
   int ranking = 0;
   List<Map<String, dynamic>> userRankings = [];
+  int selectedProfileImageId = 0;
 
   @override
   void initState() {
     super.initState();
+    profileImagePath = widget.profileImagePath; // 초기화
     fetchUser(widget.userId);
+    fetchProfileImage(widget.userId);
     fetchRanking(widget.userId);
     fetchAllRankings();
   }
@@ -39,10 +45,23 @@ class _MyPageState extends State<MyPage> {
       setState(() {
         nickname = responseData['nickname'] ?? 'Unknown';
         points = responseData['user_point'] ?? 0;
-        profileImageId = responseData['profile_image'] ?? 0;
       });
     } else {
       print('사용자 데이터 로드 실패');
+    }
+  }
+
+  Future<void> fetchProfileImage(int userId) async {
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/profile-image');
+    final response = await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      setState(() {
+        profileImagePath = responseData['profile_image_url'];
+      });
+    } else {
+      print('프로필 이미지 로드 실패');
     }
   }
 
@@ -79,22 +98,9 @@ class _MyPageState extends State<MyPage> {
     }
   }
 
-  String getProfileImagePath(int profileImageId) {
-    switch (profileImageId) {
-      case 1:
-        return 'assets/img/marimo_1.png';
-      case 2:
-        return 'assets/img/marimo_2.png';
-      case 3:
-        return 'assets/img/marimo_3.png';
-      default:
-        return 'assets/img/marimo_4.png';
-    }
-  }
-
   void showProfileEditPopup(BuildContext context) {
     TextEditingController nicknameController = TextEditingController(text: nickname);
-    int selectedProfileImageId = profileImageId;
+    // int selectedProfileImageId = 0;
 
     showDialog(
       context: context,
@@ -139,11 +145,10 @@ class _MyPageState extends State<MyPage> {
               onPressed: () {
                 setState(() {
                   nickname = nicknameController.text;
-                  profileImageId = selectedProfileImageId;
+                  profileImagePath = getProfileImagePath(selectedProfileImageId);
                 });
-                updateProfile(widget.userId, nickname, profileImageId).then((_) {
-                  Navigator.of(context).pop(true); // 프로필 업데이트 후 true 반환
-                });
+                updateProfile(widget.userId, nickname, selectedProfileImageId);
+                Navigator.of(context).pop();
               },
             ),
           ],
@@ -152,21 +157,48 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-  Future<void> updateProfile(int userId, String newNickname, int newProfileImageId) async {
-    final url = Uri.parse('${widget.apiUrl}/user/$userId/update');
-    final response = await http.put(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'nickname': newNickname,
-        'profile_image': newProfileImageId,
-      }),
-    );
+ Future<void> updateProfile(int userId, String newNickname, int newProfileImageId) async {
 
-    if (response.statusCode == 200) {
-      print('프로필 업데이트 성공');
-    } else {
-      print('프로필 업데이트 실패');
+  print("--------------------------------------");
+  print(newProfileImageId);
+  print("--------------------------------------");
+  
+  final url = Uri.parse('${widget.apiUrl}/user/$userId/update');
+  final response = await http.put(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: json.encode({
+      'nickname': newNickname,
+      'profile_image': newProfileImageId + 2,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print('프로필 업데이트 성공');
+    print('Updated Nickname: $newNickname');
+    print('Updated Profile Image Path: ${getProfileImagePath(newProfileImageId)}');
+  } else {
+    print('프로필 업데이트 실패');
+    print('Status code: ${response.statusCode}');
+    print('Response body: ${response.body}');
+  }
+}
+
+  String getProfileImagePath(int profileImageId) {
+    switch (profileImageId) {
+      case 1:
+        return 'assets/img/marimo_1.png';
+      case 2:
+        return 'assets/img/marimo_2.png';
+      case 3:
+        return 'assets/img/marimo_3.png';
+      case 4:
+        return 'assets/img/marimo_4.png';
+      default:
+        return 'assets/img/marimo_4.png';
     }
   }
 
@@ -193,7 +225,7 @@ class _MyPageState extends State<MyPage> {
                     children: [
                       CircleAvatar(
                         radius: 40,
-                        backgroundImage: AssetImage(getProfileImagePath(profileImageId)),
+                        backgroundImage: NetworkImage(profileImagePath),
                       ),
                       const SizedBox(width: 16),
                       Column(
@@ -415,21 +447,33 @@ class _MyPageState extends State<MyPage> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
               ).then((_) {
-                // MainPage로 돌아올 때 상태를 새로 고침합니다.
-                fetchUser(widget.userId);
+                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
+                fetchProfileImage(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
               });
               break;
             case 2:
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
               ).then((_) {
-                // MainPage로 돌아올 때 상태를 새로 고침합니다.
-                fetchUser(widget.userId);
+                fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
+                fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
               });
               break;
           }
