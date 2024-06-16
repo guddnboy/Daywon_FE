@@ -47,7 +47,7 @@ Future<Problem> fetchProblem(int scriptsId) async {
   final response = await http.get(Uri.parse('${Config.apiUrl}/scripts/$scriptsId/questions'));
 
   if (response.statusCode == 200) {
-    final jsonData = json.decode(response.body)[0];
+    final jsonData = json.decode(utf8.decode(response.bodyBytes))[0];
     return Problem.fromJson(jsonData);
   } else {
     throw Exception('Failed to load problem');
