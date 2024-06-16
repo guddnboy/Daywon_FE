@@ -1,6 +1,4 @@
-// ignore_for_file: unnecessary_const
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:project/pages/user/CategoryPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
@@ -9,8 +7,13 @@ import 'package:http/http.dart' as http;
 class MainPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
+  String profileImagePath; // 이 변수는 이제 final이 아닙니다.
 
-  MainPage({Key? key, required this.userId, required this.apiUrl})
+  MainPage(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
       : super(key: key);
 
   @override
@@ -20,12 +23,12 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String nickname = '';
   int points = 0;
-  int profileImageId = 0;
 
   @override
   void initState() {
     super.initState();
     fetchUser(widget.userId);
+    fetchProfileImage(widget.userId);
   }
 
   Future<void> fetchUser(int userId) async {
@@ -38,24 +41,24 @@ class _MainPageState extends State<MainPage> {
       setState(() {
         nickname = responseData['nickname'] ?? 'Unknown';
         points = responseData['user_point'] ?? 0;
-        profileImageId = responseData['profile_image'] ?? 0;
       });
     } else {
-      // Handle error
-      print('Failed to load user data');
+      print('사용자 데이터 로드 실패');
     }
   }
 
-  String getProfileImagePath(int profileImageId) {
-    switch (profileImageId) {
-      case 1:
-        return 'assets/img/marimo_1.png';
-      case 2:
-        return 'assets/img/marimo_2.png';
-      case 3:
-        return 'assets/img/marimo_3.png';
-      default:
-        return 'assets/img/marimo_4.png';
+  Future<void> fetchProfileImage(int userId) async {
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/profile-image');
+    final response =
+        await http.get(url, headers: {'Accept': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      setState(() {
+        widget.profileImagePath = responseData['profile_image_url'];
+      });
+    } else {
+      print('프로필 이미지 로드 실패');
     }
   }
 
@@ -91,9 +94,7 @@ class _MainPageState extends State<MainPage> {
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
-                            fontWeight: FontWeight.w800
-                            // height: 0,
-                            ),
+                            fontWeight: FontWeight.w800),
                       ),
                       const Text(
                         '님, 오늘의 학습을 시작하세요! ',
@@ -236,7 +237,7 @@ class _MainPageState extends State<MainPage> {
                           CircleAvatar(
                             radius: 50,
                             backgroundImage:
-                                AssetImage(getProfileImagePath(profileImageId)),
+                                NetworkImage(widget.profileImagePath),
                           ),
                           Column(
                             children: [
@@ -260,8 +261,12 @@ class _MainPageState extends State<MainPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CategoryPage()),
+                                          builder: (context) => CategoryPage(
+                                                userId: widget.userId,
+                                                apiUrl: widget.apiUrl,
+                                                profileImagePath:
+                                                    widget.profileImagePath,
+                                              )),
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -329,23 +334,30 @@ class _MainPageState extends State<MainPage> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl)),
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
               ).then((_) {
-                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
+                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
+                fetchProfileImage(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
               });
               break;
             case 2:
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
                         MyPage(userId: widget.userId, apiUrl: widget.apiUrl)),
               ).then((_) {
-                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침합니다.
+                fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
+                fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
               });
               break;
           }

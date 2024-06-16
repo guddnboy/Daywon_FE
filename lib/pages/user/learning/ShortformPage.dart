@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/learning/ProblemPage.dart';
 import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
+import 'dart:convert';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
+  final int userId;
+  final String apiUrl;
 
-  const ShortformPage({Key? key, required this.selectedCategory})
-      : super(key: key);
+  const ShortformPage({
+    Key? key,
+    required this.selectedCategory,
+    required this.userId,
+    required this.apiUrl, required int scriptsId,
+  }) : super(key: key);
 
   @override
   _ShortformPageState createState() => _ShortformPageState();
@@ -15,18 +25,76 @@ class ShortformPage extends StatefulWidget {
 
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
-  late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? _chewieController;
+  bool isLoading = true;
+  String videoUrl = '';
+  final int scriptsId = 23;
 
   @override
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCategory;
-    _controller = VideoPlayerController.network(
-      'Vedio_URL',
-    );
-    _initializeVideoPlayerFuture = _controller.initialize();
-    _controller.setLooping(true);
+    fetchVideoUrl(scriptsId);
+  }
+
+  Future<void> fetchVideoUrl(int scriptsId) async {
+    final url = '${widget.apiUrl}/get_stream_video/$scriptsId';
+    print('Fetching video URL from: $url'); // 디버깅 로그 추가
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        final String videoPath = responseData['video_url'];
+        print('Received video path: $videoPath'); // 디버깅 로그 추가
+        fetchStreamVideo(videoPath);
+      } else {
+        throw Exception('Failed to load video URL');
+      }
+    } catch (e) {
+      print('Error fetching video URL: $e'); // 에러 로그 추가
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> fetchStreamVideo(String videoPath) async {
+    final url = '${widget.apiUrl}/stream_mobile_video/$videoPath';
+    print('Streaming video from: $url'); // 디버깅 로그 추가
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        setState(() {
+          videoUrl = json.decode(response.body);
+          print('Received stream video URL: $videoUrl'); // 디버깅 로그 추가
+          if (videoUrl.isNotEmpty) {
+            _videoPlayerController = VideoPlayerController.network(videoUrl);
+            _chewieController = ChewieController(
+              videoPlayerController: _videoPlayerController!,
+              aspectRatio: _videoPlayerController!.value.aspectRatio,
+              autoPlay: true,
+              looping: true,
+            );
+          }
+          isLoading = false;
+        });
+      } else {
+        throw Exception('Failed to stream video');
+      }
+    } catch (e) {
+      print('Error streaming video: $e'); // 에러 로그 추가
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController?.dispose();
+    _chewieController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -71,62 +139,54 @@ class _ShortformPageState extends State<ShortformPage> {
                             ),
                           ],
                         ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Center(
-                                  child: FutureBuilder(
-                                    future: _initializeVideoPlayerFuture,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
-                                        return AspectRatio(
-                                          aspectRatio:
-                                              _controller.value.aspectRatio,
-                                          child: VideoPlayer(_controller),
-                                        );
-                                      } else {
-                                        return CircularProgressIndicator();
-                                      }
-                                    },
-                                  ),
-                                ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Center(
+                                child: isLoading
+                                    ? CircularProgressIndicator()
+                                    : (_chewieController != null
+                                        ? Chewie(
+                                            controller: _chewieController!,
+                                          )
+                                        : const Text("No video available")),
                               ),
-                              const SizedBox(height: 50),
-                              Positioned(
-                                bottom: 20,
-                                right: 20,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProblemPage()),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 20),
-                                  ),
-                                  child: const Text(
-                                    '문제 풀러 가기',
-                                    style: TextStyle(
-                                      color: const Color(0xFF4399FF),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800,
+                            ),
+                            const SizedBox(height: 50),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProblemPage(
+                                      selectedCategory: selectedCategory,
+                                      scriptsId: scriptsId,
+                                      userId: widget.userId,
+                                      apiUrl: widget.apiUrl,
                                     ),
                                   ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 20),
+                              ),
+                              child: const Text(
+                                '문제 풀러 가기',
+                                style: TextStyle(
+                                  color: Color(0xFF4399FF),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -173,12 +233,60 @@ class _ShortformPageState extends State<ShortformPage> {
           },
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/backbtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'Back',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/homebtn.png',
+              width: 28,
+              height: 28,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/img/mypagebtn.png',
+              width: 24,
+              height: 24,
+            ),
+            label: 'My Page',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pop(context);
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+            case 2:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl),
+                ),
+              );
+              break;
+          }
+        },
+      ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
   }
 }

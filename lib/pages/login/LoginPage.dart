@@ -29,11 +29,39 @@ class LoginPage extends StatelessWidget {
       final userId = responseData[
           'user_id']; // Assuming the response contains the user id in 'user_id'
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => MainPage(userId: userId, apiUrl: apiUrl)),
-      );
+      // Fetch profile image after login success
+      final profileUrl = Uri.parse('$apiUrl/users/$userId/profile-image');
+      final profileResponse =
+          await http.get(profileUrl, headers: {'Accept': 'application/json'});
+
+      if (profileResponse.statusCode == 200) {
+        final profileData = json.decode(profileResponse.body);
+        final profileImagePath = profileData['profile_image_url'];
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainPage(
+                userId: userId,
+                apiUrl: apiUrl,
+                profileImagePath: profileImagePath),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Profile Load Failed'),
+            content: Text('Failed to load profile image'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     } else {
       showDialog(
         context: context,
@@ -132,9 +160,7 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => findID(
-                                    apiUrl: apiUrl,
-                                  )),
+                              builder: (context) => findID(apiUrl: apiUrl)),
                         );
                       },
                       style: TextButton.styleFrom(
@@ -158,9 +184,8 @@ class LoginPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ChangePassword(
-                                    apiUrl: apiUrl,
-                                  )),
+                              builder: (context) =>
+                                  ChangePassword(apiUrl: apiUrl)),
                         );
                       },
                       style: TextButton.styleFrom(
