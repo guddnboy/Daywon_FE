@@ -310,68 +310,6 @@ class _ShortformPageState extends State<ShortformPage> {
           },
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/backbtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'Back',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/homebtn.png',
-              width: 28,
-              height: 28,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/mypagebtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'My Page',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pop(context);
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath,
-                  ),
-                ),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath,
-                  ),
-                ),
-              );
-              break;
-          }
-        },
-      ),
     );
   }
 }
