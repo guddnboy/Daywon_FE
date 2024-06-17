@@ -164,7 +164,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                       problem.question,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 14, // 텍스트 크기 조정
+                                        fontSize: 18, // 텍스트 크기 조정
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
@@ -225,8 +225,8 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                                 '${i + 1}',
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
-                                                  fontSize: 20, // 텍스트 크기 조정
-                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 12, // 텍스트 크기 조정
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ],
