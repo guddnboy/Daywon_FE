@@ -35,8 +35,10 @@ class _CorrectproblemState extends State<Correctproblem> {
       final url =
           Uri.parse('${widget.apiUrl}/get_user_history/$userId?T_F=true');
 
-      final response =
-          await http.get(url, headers: {'Accept': 'application/json'});
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8'
+      });
 
       if (response.statusCode == 200) {
         setState(() {

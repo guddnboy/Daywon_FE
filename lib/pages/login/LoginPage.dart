@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'SignUpPage.dart';
 import 'package:project/pages/MainPage.dart';
 import 'findID.dart';
-import 'findPassword.dart';
+import 'ChangePassword.dart';
 
 class LoginPage extends StatelessWidget {
   final String apiUrl;

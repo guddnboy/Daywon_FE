@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
@@ -77,7 +78,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
         await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body)[0];
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes))[0];
 
       return Problem(
         q_id: jsonResponse['q_id'],
@@ -164,7 +165,6 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 14, // 텍스트 크기 조정
-
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
                                       ),
@@ -226,7 +226,6 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                                 style: const TextStyle(
                                                   color: Color(0xFF0075FF),
                                                   fontSize: 20, // 텍스트 크기 조정
-
                                                   fontWeight: FontWeight.w800,
                                                 ),
                                               ),
@@ -241,7 +240,6 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                                 style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16, // 텍스트 크기 조정
-
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                               ),
@@ -340,16 +338,28 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
+                ),
+              );
               break;
           }
         },
