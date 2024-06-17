@@ -112,7 +112,7 @@ class _WrongproblemState extends State<Wrongproblem> {
                     left: width * 0.07,
                     top: height * 0.14,
                     child: Text(
-                      '마리모님, 틀린 문제를 확인하세요!',
+                      '틀린 문제를 확인하세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: width * 0.035,
