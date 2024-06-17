@@ -20,8 +20,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController nicknameController = TextEditingController();
 
@@ -29,10 +28,20 @@ class _SignupPageState extends State<SignupPage> {
   bool isEmailChecked = false;
   bool isPasswordMatched = false;
   bool isTestDone = false;
+  String userLevel = '';  // level 값을 숫자로 받기 위해 int 타입으로 변경
 
   void updateTestDone(bool testDone) {
     setState(() {
       isTestDone = testDone;
+    });
+  }
+
+  void updateLevel(String level) {  // level 값을 String 타입으로 받음
+    setState(() {
+      userLevel = level;
+      if (kDebugMode) {
+        print('회원가입페이지 에서의 레벨 : $level');
+      }
     });
   }
 
@@ -93,8 +102,7 @@ class _SignupPageState extends State<SignupPage> {
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
               backgroundColor: buttonColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
@@ -135,9 +143,10 @@ class _SignupPageState extends State<SignupPage> {
         _showDialog(context, '비밀번호 확인 필요', '비밀번호가 일치하지 않습니다.');
         return;
       }
+
       if (!isTestDone) {
         _showDialog(context, '레벨 테스트 미실시', '레벨 테스트를 진행해주세요.');
-        return; // Stop further execution
+        return;
       }
 
       final serverUri = Config.apiUrl;
@@ -150,19 +159,18 @@ class _SignupPageState extends State<SignupPage> {
           'name': nameController.text,
           'nickname': nicknameController.text,
           'e_mail': emailController.text,
-          'level': "1",
+          'level': userLevel,  // level 값을 숫자로 전송
           'user_point': 0,
           'profile_image': 1,
           'hashed_password': passwordController.text,
         }),
       );
-      if (response.statusCode == 200) {
-        // if (kDebugMode) {
-        //   print(
-        //       "회원가입 성공_너의 레벨은 : ${_LevelTestPageState()._getLevel().toString()}");
-        // }
-        _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다.');
 
+      if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print('회원가입 성공: $userLevel');
+        }  // 회원가입 성공 시 서버에서 반환하는 메시지 출력
+        _showDialog(context, '회원가입 성공', '회원가입이 성공적으로 완료되었습니다. 당신의 레벨은 $userLevel 입니다. 로그인 페이지로 이동합니다.');
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -172,11 +180,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
         );
       } else {
-        _showDialog(
-          context,
-          '회원가입 실패',
-          '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}',
-        );
+        _showDialog(context, '회원가입 실패', '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}');
       }
     } catch (e) {
       _showDialog(context, '오류', '회원가입 중 오류가 발생했습니다: $e');
@@ -252,7 +256,7 @@ class _SignupPageState extends State<SignupPage> {
       _showDialog(context, '오류', '이메일 확인 중 오류가 발생했습니다: $e');
     }
   }
-
+  
   void _showDialog(BuildContext context, String title, String content) {
     showDialog(
       context: context,
@@ -358,12 +362,14 @@ class _SignupPageState extends State<SignupPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('레벨 테스트'),
-                          contentPadding: EdgeInsets.all(10.0),
+                          title: const Text('레벨 테스트'),
+                          contentPadding: const EdgeInsets.all(10.0),
                           content: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child:
-                                LevelTestPage(updateTestDone: updateTestDone),
+                            child: LevelTestPage(
+                              updateLevel: updateLevel,
+                              updateTestDone: updateTestDone,
+                            ),
                           ),
                         );
                       },
@@ -379,7 +385,7 @@ class _SignupPageState extends State<SignupPage> {
                     if (isTestDone) {
                       _signUp(context);
                     } else {
-                      _showDialog(context, '레벨테스트 필요', '레벨테스트를 먼저 완료해주세요.');
+                      _showDialog(context, '레벨 테스트 필요', '레벨 테스트를 먼저 완료해주세요.');
                     }
                   },
                   buttonColor: const Color(0xFF4399FF),

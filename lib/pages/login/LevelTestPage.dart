@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:project/config.dart';
 
 class LevelTestPage extends StatefulWidget {
+  final void Function(String) updateLevel;
   final void Function(bool) updateTestDone;
 
-  const LevelTestPage({Key? key, required this.updateTestDone}) : super(key: key);
+  LevelTestPage({Key? key, required this.updateLevel, required this.updateTestDone}) : super(key: key);
 
   @override
   _LevelTestPageState createState() => _LevelTestPageState();
@@ -52,27 +53,40 @@ class _LevelTestPageState extends State<LevelTestPage> {
                 questionData['option_4'] as String,
               ],
               'correctAnswerIndex': questionData['correct'] as int,
-              'selectedAnswerIndex': -1, // Initialize with -1 for no selection
+              'selectedAnswerIndex': -1,
             };
           }).toList();
-          isLoading = false;
         });
       } else {
-        if (kDebugMode) {
-          print('퀴즈 불러오기 실패 : ${response.statusCode}');
-        }
-        setState(() {
-          isLoading = false;
-        });
+        _showErrorDialog('퀴즈 불러오기 실패: ${response.statusCode}');
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Quizzes Fetching Error : $e');
-      }
+      _showErrorDialog('퀴즈 불러오기 에러: $e');
+    } finally {
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('오류 발생'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('확인'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -113,9 +127,7 @@ class _LevelTestPageState extends State<LevelTestPage> {
                   },
                 ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _submitAnswersAndShowResult();
-        },
+        onPressed: _submitAnswersAndShowResult,
         child: const Icon(Icons.check),
       ),
     );
@@ -123,12 +135,7 @@ class _LevelTestPageState extends State<LevelTestPage> {
 
   List<Widget> _buildOptions(int index) {
     List<Widget> optionWidgets = [];
-    List<String> options = [
-      quizzes[index]['options'][0] as String,
-      quizzes[index]['options'][1] as String,
-      quizzes[index]['options'][2] as String,
-      quizzes[index]['options'][3] as String,
-    ];
+    List<String> options = quizzes[index]['options'].cast<String>();
 
     for (int i = 0; i < options.length; i++) {
       optionWidgets.add(
@@ -150,22 +157,23 @@ class _LevelTestPageState extends State<LevelTestPage> {
     return optionWidgets;
   }
 
-Future<void> _submitAnswersAndShowResult() async {
-  List<Map<String, dynamic>> userAnswers = [];
+  Future<void> _submitAnswersAndShowResult() async {
+    List<Map<String, dynamic>> userAnswers = [];
 
-  for (var question in quizzes) {
-    if (question['selectedAnswerIndex'] == -1) {
-      _showIncompleteDialog();
-      return;
+    for (var question in quizzes) {
+      if (question['selectedAnswerIndex'] == -1) {
+        _showIncompleteDialog();
+        return;
+      }
+
+      userAnswers.add({
+        'enrollment_quiz_id': question['enrollment_quiz_id'],
+        'answer': question['selectedAnswerIndex'],
+      });
     }
 
-    userAnswers.add({
-      'enrollment_quiz_id': question['enrollment_quiz_id'],
-      'answer': question['selectedAnswerIndex'],
-    });
-  }
-  try {
-    final serverUri = Config.apiUrl;
+    try {
+      final serverUri = Config.apiUrl;
       final response = await http.post(
         Uri.parse('$serverUri/submit-answers/'),
         headers: <String, String>{
@@ -173,48 +181,21 @@ Future<void> _submitAnswersAndShowResult() async {
         },
         body: jsonEncode({'answers': userAnswers}),
       );
-      if (kDebugMode) {
-        print(userAnswers);
-      }
-      if (response.statusCode == 200) {
-        String level = response.body;
-        if (kDebugMode) {
-          print(level);
-        }
-        _showResultDialog(level);
-      } else {
-        if (kDebugMode) {
-          print('답변 제출 실패 : ${response.statusCode}');
-        }
-        return;
-      }
-  } catch (e) {
-    if (kDebugMode) {
-      print('답변 제출 에러 : $e');
-    }
-  }
-}
 
-  void _showResultDialog(String level ) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('테스트 결과'),
-          content: Text('당신의 레벨은 ${level}입니다.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-                widget.updateTestDone(true);
-              },
-              child: const Text('닫기'),
-            ),
-          ],
-        );
-      },
-    );
+      if (response.statusCode == 200) {
+        String level = response.body.replaceAll('"', '');
+        if (kDebugMode) {
+          print('레벨테스트 페이지에서의 레벨: $level');
+        }
+        widget.updateLevel(level);  // 콜백으로 level 전달
+        widget.updateTestDone(true); // 콜백으로 테스트 완료 상태 전달
+        Navigator.of(context).pop();  // 다이얼로그 닫기
+      } else {
+        _showErrorDialog('답변 제출 실패: ${response.statusCode}');
+      }
+    } catch (e) {
+      _showErrorDialog('답변 제출 에러: $e');
+    }
   }
 
   void _showIncompleteDialog() {
