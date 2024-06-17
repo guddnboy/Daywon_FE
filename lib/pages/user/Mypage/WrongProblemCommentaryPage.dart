@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblemDetails.dart';
@@ -19,17 +18,17 @@ class Wrongproblemcommentarypage extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const Wrongproblemcommentarypage({
-    Key? key,
-    required this.q_id,
-    required this.selectedChoice,
-    required this.selectedChoiceNum,
-    required this.correctOption,
-    required this.index,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath,
-  }) : super(key: key);
+  const Wrongproblemcommentarypage(
+      {Key? key,
+      required this.q_id,
+      required this.selectedChoice,
+      required this.selectedChoiceNum,
+      required this.correctOption,
+      required this.index,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _WrongproblemcommentarypageeState createState() =>
@@ -208,8 +207,9 @@ class _WrongproblemcommentarypageeState
                                                   builder: (context) =>
                                                       Wrongproblem(
                                                           userId: widget.userId,
-                                                          apiUrl:
-                                                              widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                                                          apiUrl: widget.apiUrl,
+                                                          profileImagePath: widget
+                                                              .profileImagePath)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -321,16 +321,16 @@ class _WrongproblemcommentarypageeState
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
           }
         },

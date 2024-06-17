@@ -6,6 +6,9 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 
 class ShortformPage extends StatefulWidget {
   final String selectedCategory;
@@ -17,7 +20,7 @@ class ShortformPage extends StatefulWidget {
     Key? key,
     required this.selectedCategory,
     required this.userId,
-    required this.apiUrl, 
+    required this.apiUrl,
     required this.profileImagePath,
     required int scriptsId,
   }) : super(key: key);
@@ -28,75 +31,142 @@ class ShortformPage extends StatefulWidget {
 
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
-  VideoPlayerController? _videoPlayerController;
-  ChewieController? _chewieController;
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
   bool isLoading = true;
   String videoUrl = '';
   final int scriptsId = 23;
+  Future<void>? _initializeVideoPlayerFuture;
+
+  void _initializeVideoPlayer(scriptsId) async {
+    final videoUrl =
+        '${widget.apiUrl}/get_stream_video/$scriptsId'; // API 엔드포인트를 이곳에 입력하세요
+    final request = http.Request('GET', Uri.parse(videoUrl));
+
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print('response : 200 OK');
+      final contentLength = response.contentLength;
+      print('contentLength : $contentLength');
+      List<int> bytes = await response.stream.toBytes();
+      print('bytes : OK');
+
+      Uint8List memoryBytes = Uint8List.fromList(bytes);
+      print('memoryBytes: OK');
+
+      //   _videoPlayerController = VideoPlayerController.memory(memoryBytes);
+      //   VideoPlayerController.
+      //   // 임시 디렉토리에 파일로 저장
+
+      //   try {
+      //     final tempDir = await getTemporaryDirectory();
+      //     print('tempDir : $tempDir');
+      //     // Do something with tempDir
+      //   } catch (e) {
+      //     print("Error getting temporary directory: $e");
+      //   }
+      //   print('tempDir : $tempDir');
+
+      //   final tempFile = File('${tempDir.path}/temp_video.mp4');
+      //   print('tempFile : $tempFile');
+      //   await tempFile.writeAsBytes(bytes);
+      //   print('tempFile.writeAsBytes(bytes): Ok');
+      //   _videoPlayerController = VideoPlayerController.file(tempFile);
+      //   print('_videoPlayerController : OK');
+      //   _initializeVideoPlayerFuture = _videoPlayerController!.initialize();
+      //   print('_initializeVideoPlayerFuture :  OK');
+      //   await _initializeVideoPlayerFuture;
+      //   print('await _initializeVideoPlayerFuture; : OK');
+      //   _chewieController = ChewieController(
+      //     videoPlayerController: _videoPlayerController!,
+      //     aspectRatio: _videoPlayerController!.value.aspectRatio,
+      //     autoPlay: true,
+      //     looping: true,
+      //   );
+      //   print('ChewieController :OK');
+      //   setState(() {
+      //     print('setState : OK');
+      //     isLoading = false;
+      //   });
+      // } else {
+      //   // 에러 처리
+      //   print('Failed to load video');
+      //   setState(() {
+      //     isLoading = false;
+      //   });
+      // }
+      // print('isLoading');
+      // print(isLoading);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsFlutterBinding.ensureInitialized();
     selectedCategory = widget.selectedCategory;
+    //fetchVideoUrl(scriptsId);
+    //_initializeVideoPlayer(scriptsId);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //_initializeVideoPlayer(scriptsId);
     fetchVideoUrl(scriptsId);
   }
 
   Future<void> fetchVideoUrl(int scriptsId) async {
     final url = '${widget.apiUrl}/get_stream_video/$scriptsId';
-    print('Fetching video URL from: $url'); // 디버깅 로그 추가
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        final String videoPath = responseData['video_url'];
-        print('Received video path: $videoPath'); // 디버깅 로그 추가
-        fetchStreamVideo(videoPath);
-      } else {
-        throw Exception('Failed to load video URL');
-      }
-    } catch (e) {
-      print('Error fetching video URL: $e'); // 에러 로그 추가
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+    print('Fetching video URL from $url'); // 비디오 URL을 가져오는 중임을 로그로 표시
 
-  Future<void> fetchStreamVideo(String videoPath) async {
-    final url = '${widget.apiUrl}/stream_mobile_video/$videoPath';
-    print('Streaming video from: $url'); // 디버깅 로그 추가
     try {
-      final response = await http.get(Uri.parse(url));
+      Uri preVideoUrl = Uri.parse(url);
+      final response = await http.get(preVideoUrl);
+
       if (response.statusCode == 200) {
+        print("fetch: 비디오 있음");
+        // 비디오 URL이 가져와졌으니, 이 URL을 통해 VideoPlayerController를 초기화합니다.
+
+        _videoPlayerController = VideoPlayerController.networkUrl(preVideoUrl)
+          ..initialize();
+
+        //_videoPlayerController.initialize();
+        // 비디오 플레이어 초기화
+
+        // ChewieController를 초기화하여 비디오를 재생할 수 있도록 합니다.
         setState(() {
-          videoUrl = json.decode(response.body);
-          print('Received stream video URL: $videoUrl'); // 디버깅 로그 추가
-          if (videoUrl.isNotEmpty) {
-            _videoPlayerController = VideoPlayerController.network(videoUrl);
-            _chewieController = ChewieController(
-              videoPlayerController: _videoPlayerController!,
-              aspectRatio: _videoPlayerController!.value.aspectRatio,
-              autoPlay: true,
-              looping: true,
-            );
-          }
-          isLoading = false;
+          _videoPlayerController.initialize();
+          _videoPlayerController.play();
+          isLoading = false; // 로딩 상태를 false로 설정하여 비디오를 표시합니다.
+          print('isLoading : $isLoading');
+          print('비디오 함수 완');
         });
       } else {
-        throw Exception('Failed to stream video');
+        throw Exception('Failed to load video'); // 비디오 로드 실패 시 예외 처리
       }
     } catch (e) {
-      print('Error streaming video: $e'); // 에러 로그 추가
+      print('Error fetching video URL: $e'); // 비디오 URL 가져오기 실패 시 오류 로그 출력
       setState(() {
-        isLoading = false;
+        isLoading = false; // 로딩 상태를 false로 설정하여 오류 상태를 표시합니다.
       });
     }
+
+    print('isLoading: $isLoading');
+  }
+
+  void playVideo(int scriptsId) {
+    fetchVideoUrl(scriptsId).then((_) {
+      // 비디오 플레이어 컨트롤러가 초기화된 후에 실행될 코드
+      // 여기서 비디오를 재생하는 로직을 추가할 수 있습니다.
+      _videoPlayerController.play();
+    });
   }
 
   @override
   void dispose() {
-    _videoPlayerController?.dispose();
-    _chewieController?.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
@@ -150,9 +220,12 @@ class _ShortformPageState extends State<ShortformPage> {
                               child: Center(
                                 child: isLoading
                                     ? CircularProgressIndicator()
-                                    : (_chewieController != null
-                                        ? Chewie(
-                                            controller: _chewieController!,
+                                    : (_videoPlayerController != null
+                                        ? AspectRatio(
+                                            aspectRatio: _videoPlayerController
+                                                .value.aspectRatio,
+                                            child: VideoPlayer(
+                                                _videoPlayerController),
                                           )
                                         : const Text("No video available")),
                               ),
@@ -276,7 +349,11 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,),
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
                 ),
               );
               break;
@@ -284,7 +361,11 @@ class _ShortformPageState extends State<ShortformPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,),
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
                 ),
               );
               break;

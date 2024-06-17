@@ -11,23 +11,22 @@ class MyApp extends StatelessWidget {
   final int index;
   final String profileImagePath;
 
-  const MyApp({
-    Key? key,
-    required this.index,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath,
-  }) : super(key: key);
+  const MyApp(
+      {Key? key,
+      required this.index,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Correctproblemdetails(
-        index: index,
-        userId: userId,
-        apiUrl: apiUrl,
-        profileImagePath: profileImagePath,
-      ),
+          index: index,
+          userId: userId,
+          apiUrl: apiUrl,
+          profileImagePath: profileImagePath),
     );
   }
 }
@@ -52,13 +51,13 @@ class Correctproblemdetails extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  Correctproblemdetails({
-    Key? key,
-    required this.index,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath,
-  }) : super(key: key);
+  Correctproblemdetails(
+      {Key? key,
+      required this.index,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _CorrectproblemdetailsState createState() => _CorrectproblemdetailsState();
@@ -204,7 +203,8 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                               index: widget.index,
                                               userId: widget.userId,
                                               apiUrl: widget.apiUrl,
-                                              profileImagePath: widget.profileImagePath,
+                                              profileImagePath:
+                                                  widget.profileImagePath,
                                             ),
                                           ),
                                         );
@@ -345,16 +345,20 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                    builder: (context) => MainPage(
+                        userId: widget.userId,
+                        apiUrl: widget.apiUrl,
+                        profileImagePath: widget.profileImagePath)),
               );
               break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                    builder: (context) => MyPage(
+                        userId: widget.userId,
+                        apiUrl: widget.apiUrl,
+                        profileImagePath: widget.profileImagePath)),
               );
               break;
           }

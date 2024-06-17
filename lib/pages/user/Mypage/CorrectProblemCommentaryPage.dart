@@ -18,17 +18,17 @@ class Correctproblemcommentarypage extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  Correctproblemcommentarypage({
-    Key? key,
-    required this.q_id,
-    required this.selectedChoice,
-    required this.selectedChoiceNum,
-    required this.correctOption,
-    required this.index,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath,
-  }) : super(key: key);
+  Correctproblemcommentarypage(
+      {Key? key,
+      required this.q_id,
+      required this.selectedChoice,
+      required this.selectedChoiceNum,
+      required this.correctOption,
+      required this.index,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _CorrectproblemcommentarypageState createState() =>
@@ -190,8 +190,9 @@ class _CorrectproblemcommentarypageState
                                                   builder: (context) =>
                                                       Correctproblem(
                                                           userId: widget.userId,
-                                                          apiUrl:
-                                                              widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                                                          apiUrl: widget.apiUrl,
+                                                          profileImagePath: widget
+                                                              .profileImagePath)),
                                             );
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -304,16 +305,16 @@ class _CorrectproblemcommentarypageState
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
           }
         },

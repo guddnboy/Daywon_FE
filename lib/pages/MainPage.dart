@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> fetchUser(int userId) async {
-    final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/read_user');
     final response =
         await http.get(url, headers: {'Accept': 'application/json'});
 
@@ -353,8 +353,10 @@ class _MainPageState extends State<MainPage> {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
+                    builder: (context) => MyPage(
+                        userId: widget.userId,
+                        apiUrl: widget.apiUrl,
+                        profileImagePath: widget.profileImagePath)),
               ).then((_) {
                 fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
                 fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침

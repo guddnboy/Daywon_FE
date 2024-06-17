@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
-import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
@@ -11,24 +10,22 @@ class MyApp extends StatelessWidget {
   final String apiUrl;
   final int index;
   final String profileImagePath;
-
   const MyApp({
     Key? key,
     required this.index,
     required this.userId,
     required this.apiUrl,
     required this.profileImagePath,
-
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Wrongproblemdetails(
-        index: index,
-        userId: userId,
-        apiUrl: apiUrl, profileImagePath: profileImagePath,
-      ),
+          index: index,
+          userId: userId,
+          apiUrl: apiUrl,
+          profileImagePath: profileImagePath),
     );
   }
 }
@@ -194,16 +191,17 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 Wrongproblemcommentarypage(
-                                              q_id: problem.q_id,
-                                              selectedChoice:
-                                                  problem.options[i],
-                                              selectedChoiceNum: i + 1,
-                                              correctOption:
-                                                  problem.correctOption,
-                                              index: widget.index,
-                                              userId: widget.userId,
-                                              apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,
-                                            ),
+                                                    q_id: problem.q_id,
+                                                    selectedChoice:
+                                                        problem.options[i],
+                                                    selectedChoiceNum: i + 1,
+                                                    correctOption:
+                                                        problem.correctOption,
+                                                    index: widget.index,
+                                                    userId: widget.userId,
+                                                    apiUrl: widget.apiUrl,
+                                                    profileImagePath: widget
+                                                        .profileImagePath),
                                           ),
                                         ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
                                       },
@@ -342,16 +340,16 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
           }
         },

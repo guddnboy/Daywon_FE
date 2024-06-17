@@ -32,11 +32,12 @@ dependencies:
     sdk: flutter
   flutter_dotenv: ^5.0.2
   shared_preferences: ^2.0.6
-    
+  path_provider: ^2.0.11  
   flutter_native_splash: ^2.4.0
   http: ^1.2.1
   video_player: ^2.2.11
   chewie: ^1.2.2
+  
 
 flutter_native_splash:
   background_image: assets/img/splash.png

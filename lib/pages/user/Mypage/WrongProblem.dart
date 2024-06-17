@@ -10,12 +10,12 @@ class Wrongproblem extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const Wrongproblem({
-    Key? key,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath,
-  }) : super(key: key);
+  const Wrongproblem(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _WrongproblemState createState() => _WrongproblemState();
@@ -196,10 +196,11 @@ class _WrongproblemState extends State<Wrongproblem> {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               Wrongproblemdetails(
-                                            index: problem['scripts_id'],
-                                            userId: widget.userId,
-                                            apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath,
-                                          ),
+                                                  index: problem['scripts_id'],
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl,
+                                                  profileImagePath:
+                                                      widget.profileImagePath),
                                         ),
                                       );
                                     },
@@ -285,16 +286,16 @@ class _WrongproblemState extends State<Wrongproblem> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MainPage()),
+              // );
               break;
             case 2:
-               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath)),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const MyPage()),
+              // );
               break;
           }
         },
