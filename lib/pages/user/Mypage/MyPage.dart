@@ -411,8 +411,20 @@ class _MyPageState extends State<MyPage> {
               ],
             ),
           ),
-          Container(
-            alignment: Alignment.centerRight,
+          const Positioned(
+            top: 35, // 원하는 top 위치
+            left: 16, // 원하는 left 위치
+            child: Text(
+              '마이페이지',
+              style: TextStyle(
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 35,
+            right: 16,
             child: GestureDetector(
               onTap: () {
                 Navigator.pushReplacement(
@@ -428,17 +440,6 @@ class _MyPageState extends State<MyPage> {
                 'assets/img/logout.png',
                 width: 100,
                 height: 50,
-              ),
-            ),
-          ),
-          const Positioned(
-            top: 35, // 원하는 top 위치
-            left: 16, // 원하는 left 위치
-            child: Text(
-              '마이페이지',
-              style: TextStyle(
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ),
