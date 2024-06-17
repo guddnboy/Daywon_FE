@@ -202,38 +202,38 @@ class LearningPageContent extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Text(
-                        selectedCategory,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Text(
+                          selectedCategory,
+                          style: const TextStyle(
+                            fontSize: 30,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height:
-                          containerHeight - 100, // 네비게이션 바 위에 위치하도록 고정 크기 설정
-                      padding: const EdgeInsets.all(20),
-                      child: Center(
-                        child: isLoading
-                            ? CircularProgressIndicator()
-                            : SingleChildScrollView(
-                                child: Text(
-                                  explanation,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: Center(
+                          child: isLoading
+                              ? CircularProgressIndicator()
+                              : SingleChildScrollView(
+                                  child: Text(
+                                    explanation,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                              ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
