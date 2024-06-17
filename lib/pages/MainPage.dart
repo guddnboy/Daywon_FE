@@ -331,40 +331,43 @@ class _MainPageState extends State<MainPage> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pop(context);
               break;
             case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath:
-                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
-                  ),
-                ),
-              ).then((_) {
-                fetchUser(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
-                fetchProfileImage(widget.userId); // MainPage로 돌아올 때 상태를 새로 고침
-              });
               break;
             case 2:
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MyPage(
-                        userId: widget.userId,
-                        apiUrl: widget.apiUrl,
-                        profileImagePath: widget.profileImagePath)),
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
+                ),
               ).then((_) {
-                fetchUser(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
-                fetchProfileImage(widget.userId); // MyPage로 돌아올 때 상태를 새로 고침
+                // Refresh state when returning from MyPage
+                fetchUser(widget.userId);
+                fetchProfileImage(widget.userId);
               });
               break;
           }
         },
       ),
     );
+  }
+
+  void _handlePopAction(BuildContext context) {
+    // 현재 라우트를 가져옵니다.
+    Route<dynamic>? currentRoute = ModalRoute.of(context);
+
+    // 현재 라우트가 존재하고, 이전 페이지가 LoginPage인 경우에만 동작합니다.
+    if (currentRoute != null && currentRoute.settings.name == "/login") {
+      // 이전 페이지가 LoginPage인 경우 뒤로 가기를 막습니다.
+      // 추가적인 작업을 수행할 수도 있습니다.
+      return; // 뒤로 가기 동작을 막고 함수를 종료합니다.
+    }
+
+    // 그 외의 경우에는 기본적인 Navigator.pop을 실행합니다.
+    Navigator.pop(context);
   }
 }
