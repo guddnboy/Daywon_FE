@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project/pages/login/LoginPage.dart';
 import 'config.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   print('API URL: ${Config.apiUrl}');
   runApp(MyApp(apiUrl: Config.apiUrl));
 }
