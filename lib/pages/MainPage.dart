@@ -334,7 +334,7 @@ class _MainPageState extends State<MainPage> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MainPage(
@@ -350,7 +350,7 @@ class _MainPageState extends State<MainPage> {
               });
               break;
             case 2:
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => MyPage(

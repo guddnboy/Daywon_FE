@@ -40,7 +40,7 @@ class _MyPageState extends State<MyPage> {
   }
 
   Future<void> fetchUser(int userId) async {
-    final url = Uri.parse('${widget.apiUrl}/users/$userId/readuser');
+    final url = Uri.parse('${widget.apiUrl}/users/$userId/read_user');
     final response =
         await http.get(url, headers: {'Accept': 'application/json'});
 
@@ -176,7 +176,7 @@ class _MyPageState extends State<MyPage> {
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'nickname': newNickname,
-        'profile_image': newProfileImageId,
+        'profile_image': newProfileImageId + 2,
       }),
     );
 
@@ -458,7 +458,7 @@ class _MyPageState extends State<MyPage> {
               Navigator.pop(context);
               break;
             case 1:
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MainPage(
@@ -473,7 +473,7 @@ class _MyPageState extends State<MyPage> {
               });
               break;
             case 2:
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyPage(
