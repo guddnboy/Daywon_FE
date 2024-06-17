@@ -71,7 +71,6 @@ class findID extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 40.0),
             width: MediaQuery.sizeOf(context).width,
             height: MediaQuery.sizeOf(context).height,
             color: Colors.white,
@@ -79,25 +78,18 @@ class findID extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  height: MediaQuery.sizeOf(context).height * 0.1,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/img/DayWon.png"),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('아이디'),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.sizeOf(context).width * 0.8,
                     child: Column(
                       children: [
                         TextField(
@@ -122,7 +114,7 @@ class findID extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.sizeOf(context).width * 0.8,
                             child: TextField(
                               controller: nicknameController,
                               decoration: InputDecoration(

@@ -102,33 +102,25 @@ class ChangePassword extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 40.0),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.sizeOf(context).width,
+            height: MediaQuery.sizeOf(context).height,
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  height: MediaQuery.sizeOf(context).height * 0.1,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/img/DayWon.png"),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text('비밀번호 변경'),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.sizeOf(context).width * 0.8,
                     child: Column(
                       children: [
                         TextField(
@@ -153,7 +145,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.sizeOf(context).width * 0.8,
                             child: TextField(
                               controller: nameController,
                               decoration: InputDecoration(
@@ -176,7 +168,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.sizeOf(context).width * 0.8,
                             child: TextField(
                               controller: newPasswordController,
                               obscureText: true,
@@ -200,7 +192,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.8,
+                            width: MediaQuery.sizeOf(context).width * 0.8,
                             child: Row(
                               children: [
                                 Expanded(
