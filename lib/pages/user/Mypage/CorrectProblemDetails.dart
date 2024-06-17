@@ -228,23 +228,23 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                                 '${i + 1}',
                                                 style: TextStyle(
                                                   color: Color(0xFF0075FF),
-                                                  fontSize: 12,
+                                                  fontSize: 10,
                                                   fontFamily: 'KCC-Hanbit',
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          SizedBox(width: 10),
+                                          const SizedBox(width: 10),
                                           Expanded(
                                             child: Center(
                                               child: Text(
                                                 problem.options[i],
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 16,
+                                                  fontSize: 10,
                                                   fontFamily: 'KCC-Hanbit',
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ),
