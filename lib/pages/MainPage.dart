@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 0.5,
+                        width: MediaQuery.sizeOf(context).width * 0.8,
                         height: MediaQuery.sizeOf(context).height * 0.2,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
