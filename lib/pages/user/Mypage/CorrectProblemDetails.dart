@@ -78,7 +78,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
         await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body)[0];
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes))[0];
 
       // q_id가 이미 정수이므로 직접 할당
       int qId = jsonResponse['q_id'];
