@@ -40,7 +40,7 @@ class _CorrectproblemState extends State<Correctproblem> {
 
       if (response.statusCode == 200) {
         setState(() {
-          correctProblems = json.decode(response.body);
+          correctProblems = json.decode(utf8.decode(response.bodyBytes));
           loading = false;
         });
       } else {
