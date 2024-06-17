@@ -216,21 +216,24 @@ class _ShortformPageState extends State<ShortformPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
                               child: Center(
                                 child: isLoading
                                     ? CircularProgressIndicator()
                                     : (_videoPlayerController != null
-                                        ? AspectRatio(
-                                            aspectRatio: _videoPlayerController
-                                                .value.aspectRatio,
+                                        ? Container(
+                                            width: constraints
+                                                .maxWidth, // 원하는 너비를 설정
+                                            height: constraints.maxWidth *
+                                                0.8, // 원하는 높이를 설정
                                             child: VideoPlayer(
                                                 _videoPlayerController),
                                           )
                                         : const Text("No video available")),
                               ),
                             ),
-                            const SizedBox(height: 50),
+                            const SizedBox(height: 30),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
