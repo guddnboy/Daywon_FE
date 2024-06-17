@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:project/config.dart';
+import 'package:project/pages/login/LoginPage.dart';
 import 'package:project/pages/user/CategoryPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:http/http.dart' as http;
@@ -66,236 +68,262 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.all(20.0),
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/img/DayWon.png"),
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                height: MediaQuery.sizeOf(context).height,
+                padding: const EdgeInsets.all(20.0),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 0.5,
+                        height: MediaQuery.sizeOf(context).height * 0.2,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/img/DayWon.png"),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        nickname,
-                        style: const TextStyle(
+                    Row(
+                      children: [
+                        Text(
+                          nickname,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800),
+                        ),
+                        const Text(
+                          '님, 오늘의 학습을 시작하세요! ',
+                          style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
-                            fontWeight: FontWeight.w800),
-                      ),
-                      const Text(
-                        '님, 오늘의 학습을 시작하세요! ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          height: 0,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10.0),
-                  Stack(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                          horizontal: 10.0,
-                        ),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF4399FF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24),
+                            height: 0,
                           ),
-                          shadows: const [
-                            BoxShadow(
-                              color: Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
-                            )
-                          ],
                         ),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          nickname,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        const Text(
-                                          "님의, 자유 입출금 통장",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  points.toString(),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    height: 0,
-                                  ),
-                                ),
-                                const Text(
-                                  '원',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    height: 0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      decoration: const ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Color.fromARGB(255, 222, 222, 222),
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                      ),
+                      ],
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              width: 18,
-                              height: 18,
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFF0075FF),
-                                shape: OvalBorder(),
-                              ),
+                    const SizedBox(height: 10.0),
+                    Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 10.0,
+                          ),
+                          width: MediaQuery.sizeOf(context).width,
+                          height: MediaQuery.sizeOf(context).height * 0.2,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFF4399FF),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24),
                             ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x3F000000),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              )
+                            ],
                           ),
-                          const SizedBox(width: 10.0),
-                          const Text(
-                            '오늘의 학습',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              height: 0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CircleAvatar(
-                            radius: 50,
-                            backgroundImage:
-                                NetworkImage(widget.profileImagePath),
-                          ),
-                          Column(
+                          child: Column(
                             children: [
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(width: 10),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            nickname,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          const Text(
+                                            "님의, 자유 입출금 통장",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    points.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      height: 0,
+                                    ),
+                                  ),
                                   const Text(
-                                    '오늘도 파이팅하세요!',
+                                    '원',
                                     style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontSize: 30,
                                       height: 0,
                                     ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 20),
-                              SizedBox(
-                                width: MediaQuery.sizeOf(context).width * 0.4,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CategoryPage(
-                                                userId: widget.userId,
-                                                apiUrl: widget.apiUrl,
-                                                profileImagePath:
-                                                    widget.profileImagePath,
-                                              )),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        decoration: const ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1,
+                              color: Color.fromARGB(255, 222, 222, 222),
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: 18,
+                                height: 18,
+                                decoration: const ShapeDecoration(
+                                  color: Color(0xFF0075FF),
+                                  shape: OvalBorder(),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10.0),
+                            const Text(
+                              '오늘의 학습',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                height: 0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 50),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundImage:
+                                  NetworkImage(widget.profileImagePath),
+                            ),
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      '오늘도 파이팅하세요!',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        height: 0,
+                                      ),
                                     ),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12),
-                                  ),
-                                  child: const Text(
-                                    '학습하기',
-                                    style: TextStyle(
-                                      color: Color(0xFF4399FF),
-                                      fontSize: 18,
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                SizedBox(
+                                  width: MediaQuery.sizeOf(context).width * 0.4,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CategoryPage(
+                                                  userId: widget.userId,
+                                                  apiUrl: widget.apiUrl,
+                                                  profileImagePath:
+                                                      widget.profileImagePath,
+                                                )),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                    ),
+                                    child: const Text(
+                                      '학습하기',
+                                      style: TextStyle(
+                                        color: Color(0xFF4399FF),
+                                        fontSize: 18,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(
+                                    apiUrl: Config.apiUrl,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/img/logout.png',
+                              width: 100,
+                              height: 50,
+                            ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -354,20 +382,5 @@ class _MainPageState extends State<MainPage> {
         },
       ),
     );
-  }
-
-  void _handlePopAction(BuildContext context) {
-    // 현재 라우트를 가져옵니다.
-    Route<dynamic>? currentRoute = ModalRoute.of(context);
-
-    // 현재 라우트가 존재하고, 이전 페이지가 LoginPage인 경우에만 동작합니다.
-    if (currentRoute != null && currentRoute.settings.name == "/login") {
-      // 이전 페이지가 LoginPage인 경우 뒤로 가기를 막습니다.
-      // 추가적인 작업을 수행할 수도 있습니다.
-      return; // 뒤로 가기 동작을 막고 함수를 종료합니다.
-    }
-
-    // 그 외의 경우에는 기본적인 Navigator.pop을 실행합니다.
-    Navigator.pop(context);
   }
 }
