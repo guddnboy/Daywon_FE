@@ -167,7 +167,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                       problem.question,
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 14,
+                                        fontSize: 18,
                                         fontFamily: 'KCC-Hanbit',
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
@@ -228,9 +228,9 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                                 '${i + 1}',
                                                 style: TextStyle(
                                                   color: Color(0xFF0075FF),
-                                                  fontSize: 20,
+                                                  fontSize: 12,
                                                   fontFamily: 'KCC-Hanbit',
-                                                  fontWeight: FontWeight.w800,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
                                             ],
