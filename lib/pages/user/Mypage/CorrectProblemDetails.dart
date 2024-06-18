@@ -114,7 +114,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
           future: _futureProblem,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
@@ -132,18 +132,18 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                           width: constraints.maxWidth,
                           height: constraints.maxHeight,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                           ),
                           child: Align(
-                            alignment: Alignment(0, 0.3),
+                            alignment: const Alignment(0, 0.3),
                             child: Container(
                               width: containerWidth,
                               height: containerHeight,
                               decoration: ShapeDecoration(
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  side: BorderSide(
+                                  side: const BorderSide(
                                     width: 2,
                                     color: Color(0xFF4399FF),
                                   ),
@@ -154,107 +154,110 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                                     color: Colors.black.withOpacity(0.1),
                                     spreadRadius: 2,
                                     blurRadius: 10,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 20),
-                                  SizedBox(
-                                    width: 224,
-                                    child: Text(
-                                      problem.question,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontFamily: 'KCC-Hanbit',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    SizedBox(
+                                      width: 224,
+                                      child: Text(
+                                        problem.question,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontFamily: 'KCC-Hanbit',
+                                          fontWeight: FontWeight.w800,
+                                          height: 1.5,
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
                                     ),
-                                  ),
-                                  SizedBox(height: 20),
-                                  for (int i = 0;
-                                      i < problem.options.length;
-                                      i++) ...[
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColors[i],
-                                        fixedSize: Size(210, 50),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                    const SizedBox(height: 20),
+                                    for (int i = 0;
+                                        i < problem.options.length;
+                                        i++) ...[
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: buttonColors[i],
+                                          fixedSize: const Size(300, 80),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Correctproblemcommentarypage(
+                                                q_id: problem.q_id,
+                                                selectedChoice:
+                                                    problem.options[i],
+                                                selectedChoiceNum: i + 1,
+                                                correctOption:
+                                                    problem.correctOption,
+                                                index: widget.index,
+                                                userId: widget.userId,
+                                                apiUrl: widget.apiUrl,
+                                                profileImagePath:
+                                                    widget.profileImagePath,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration:
+                                                      const ShapeDecoration(
+                                                    color: Colors.white,
+                                                    shape: CircleBorder(),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${i + 1}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF0075FF),
+                                                    fontSize: 14,
+                                                    fontFamily: 'KCC-Hanbit',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  problem.options[i],
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontFamily: 'KCC-Hanbit',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Correctproblemcommentarypage(
-                                              q_id: problem.q_id,
-                                              selectedChoice:
-                                                  problem.options[i],
-                                              selectedChoiceNum: i + 1,
-                                              correctOption:
-                                                  problem.correctOption,
-                                              index: widget.index,
-                                              userId: widget.userId,
-                                              apiUrl: widget.apiUrl,
-                                              profileImagePath:
-                                                  widget.profileImagePath,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Container(
-                                                width: 25,
-                                                height: 25,
-                                                decoration: ShapeDecoration(
-                                                  color: Colors.white,
-                                                  shape: CircleBorder(),
-                                                ),
-                                              ),
-                                              Text(
-                                                '${i + 1}',
-                                                style: TextStyle(
-                                                  color: Color(0xFF0075FF),
-                                                  fontSize: 10,
-                                                  fontFamily: 'KCC-Hanbit',
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Center(
-                                              child: Text(
-                                                problem.options[i],
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 10,
-                                                  fontFamily: 'KCC-Hanbit',
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
+                                      const SizedBox(height: 20),
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
                           ),
@@ -284,8 +287,8 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                               width: 20,
                               height: 20,
                             ),
-                            SizedBox(width: 5),
-                            Text(
+                            const SizedBox(width: 5),
+                            const Text(
                               '맞은 문제',
                               style: TextStyle(
                                 fontSize: 18,
@@ -301,7 +304,7 @@ class _CorrectproblemdetailsState extends State<Correctproblemdetails> {
                 },
               );
             } else {
-              return Text('No data');
+              return const Text('No data');
             }
           },
         ),
