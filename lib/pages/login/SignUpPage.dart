@@ -153,7 +153,7 @@ class _SignupPageState extends State<SignupPage> {
           'e_mail': emailController.text,
           'level': _LevelTestPageState()._getLevel().toString(),
           'user_point': 0,
-          'profile_image': 1,
+          'profile_image': 3,
           'hashed_password': passwordController.text,
         }),
       );
