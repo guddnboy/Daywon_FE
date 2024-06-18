@@ -35,7 +35,7 @@ class _ShortformPageState extends State<ShortformPage> {
   late ChewieController _chewieController;
   bool isLoading = true;
   String videoUrl = '';
-  final int scriptsId = 23;
+  final int scriptsId = 92;
   Future<void>? _initializeVideoPlayerFuture;
 
   void _initializeVideoPlayer(scriptsId) async {

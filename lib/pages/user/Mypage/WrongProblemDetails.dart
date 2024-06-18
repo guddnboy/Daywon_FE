@@ -165,7 +165,8 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                         problem.question,
                                         style: const TextStyle(
                                           color: Colors.black,
-                                          fontSize: 18, // 텍스트 크기 조정
+                                          fontSize: 18,
+                                          fontFamily: 'KCC-Hanbit',
                                           fontWeight: FontWeight.w800,
                                           height: 1.5,
                                         ),

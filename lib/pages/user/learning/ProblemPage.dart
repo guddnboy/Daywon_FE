@@ -176,83 +176,88 @@ class _ProblemPageState extends State<ProblemPage> {
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 15),
-                                  SizedBox(
-                                    width: 200,
-                                    child: Text(
-                                      problem.question,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  for (int i = 0;
-                                      i < problem.options.length;
-                                      i++) ...[
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColors[i],
-                                        fixedSize: const Size(210, 50),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    SizedBox(
+                                      width: 224,
+                                      child: Text(
+                                        problem.question,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontFamily: 'KCC-Hanbit',
+                                          fontWeight: FontWeight.w800,
+                                          height: 1.5,
                                         ),
-                                      ),
-                                      onPressed: () {
-                                        checkAnswer(i + 1, problem);
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Container(
-                                                width: 20,
-                                                height: 20,
-                                                decoration:
-                                                    const ShapeDecoration(
-                                                  color: Colors.white,
-                                                  shape: OvalBorder(),
-                                                ),
-                                              ),
-                                              Text(
-                                                '${i + 1}',
-                                                style: const TextStyle(
-                                                  color: Color(0xFF0075FF),
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Center(
-                                              child: Text(
-                                                problem.options[i],
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                     const SizedBox(height: 20),
+                                    for (int i = 0;
+                                        i < problem.options.length;
+                                        i++) ...[
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: buttonColors[i],
+                                          fixedSize: const Size(300, 80),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          checkAnswer(i + 1, problem);
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration:
+                                                      const ShapeDecoration(
+                                                    color: Colors.white,
+                                                    shape: OvalBorder(),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${i + 1}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF0075FF),
+                                                    fontSize: 14,
+                                                    fontFamily: 'KCC-Hanbit',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  problem.options[i],
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontFamily: 'KCC-Hanbit',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
                           ),
