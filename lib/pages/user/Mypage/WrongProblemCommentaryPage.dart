@@ -156,17 +156,45 @@ class _WrongproblemcommentarypageeState
                                               child: Center(
                                                 child: Column(
                                                   children: [
-                                                    Text(
-                                                      widget
-                                                          .selectedChoice, // 선택한 보기 내용 표시
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        height: 0,
+                                                    const SizedBox(height: 10),
+                                                    SizedBox(
+                                                      width: 200,
+                                                      child: Text.rich(
+                                                        TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text: widget
+                                                                  .selectedChoice,
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                height: 0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.justify,
                                                       ),
                                                     ),
+                                                    // Text(
+                                                    //   widget
+                                                    //       .selectedChoice, // 선택한 보기 내용 표시
+                                                    //   style: const TextStyle(
+                                                    //     color: Colors.black,
+                                                    //     fontSize: 14,
+                                                    //     fontFamily:
+                                                    //         'KCC-Hanbit',
+                                                    //     fontWeight:
+                                                    //         FontWeight.w700,
+                                                    //     height: 0,
+                                                    //   ),
+                                                    // ),
                                                     const SizedBox(height: 10),
                                                     SizedBox(
                                                       width: 186,

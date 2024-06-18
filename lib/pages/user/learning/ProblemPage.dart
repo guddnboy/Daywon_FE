@@ -44,7 +44,8 @@ class Problem {
 }
 
 Future<Problem> fetchProblem(int scriptsId) async {
-  final response = await http.get(Uri.parse('${Config.apiUrl}/scripts/$scriptsId/questions'));
+  final response = await http
+      .get(Uri.parse('${Config.apiUrl}/scripts/$scriptsId/questions'));
 
   if (response.statusCode == 200) {
     final jsonData = json.decode(utf8.decode(response.bodyBytes))[0];
@@ -61,14 +62,14 @@ class ProblemPage extends StatefulWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const ProblemPage({
-    Key? key,
-    required this.selectedCategory,
-    required this.scriptsId,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath
-  }) : super(key: key);
+  const ProblemPage(
+      {Key? key,
+      required this.selectedCategory,
+      required this.scriptsId,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   _ProblemPageState createState() => _ProblemPageState();
@@ -192,20 +193,24 @@ class _ProblemPageState extends State<ProblemPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 20),
-                                  for (int i = 0; i < problem.options.length; i++) ...[
+                                  for (int i = 0;
+                                      i < problem.options.length;
+                                      i++) ...[
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: buttonColors[i],
                                         fixedSize: const Size(210, 50),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                       onPressed: () {
                                         checkAnswer(i + 1, problem);
                                       },
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Stack(
                                             alignment: Alignment.center,
@@ -213,7 +218,8 @@ class _ProblemPageState extends State<ProblemPage> {
                                               Container(
                                                 width: 20,
                                                 height: 20,
-                                                decoration: const ShapeDecoration(
+                                                decoration:
+                                                    const ShapeDecoration(
                                                   color: Colors.white,
                                                   shape: OvalBorder(),
                                                 ),
@@ -337,7 +343,10 @@ class _ProblemPageState extends State<ProblemPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
+                  builder: (context) => MainPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -345,7 +354,10 @@ class _ProblemPageState extends State<ProblemPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: widget.userId, apiUrl: widget.apiUrl, profileImagePath: widget.profileImagePath),
+                  builder: (context) => MyPage(
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;

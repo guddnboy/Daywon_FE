@@ -112,7 +112,7 @@ class _WrongproblemState extends State<Wrongproblem> {
                     left: width * 0.07,
                     top: height * 0.14,
                     child: Text(
-                      '마리모님, 틀린 문제를 확인하세요!',
+                      '틀린 문제를 확인하세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: width * 0.035,
@@ -286,16 +286,30 @@ class _WrongproblemState extends State<Wrongproblem> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const MyPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
+              );
               break;
           }
         },

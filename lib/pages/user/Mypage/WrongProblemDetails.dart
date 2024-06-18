@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblemCommentaryPage.dart';
 
@@ -77,7 +78,7 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
         await http.get(url, headers: {'Accept': 'application/json'});
 
     if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body)[0];
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes))[0];
 
       return Problem(
         q_id: jsonResponse['q_id'],
@@ -154,105 +155,105 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 20), // 간격 조정
-                                  SizedBox(
-                                    width: 224,
-                                    child: Text(
-                                      problem.question,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14, // 텍스트 크기 조정
-
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20), // 간격 조정
-                                  for (int i = 0;
-                                      i < problem.options.length;
-                                      i++) ...[
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: buttonColors[i],
-                                        fixedSize:
-                                            const Size(210, 50), // 버튼 크기 조정
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 20), // 간격 조정
+                                    SizedBox(
+                                      width: 224,
+                                      child: Text(
+                                        problem.question,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18, // 텍스트 크기 조정
+                                          fontWeight: FontWeight.w800,
+                                          height: 1.5,
                                         ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Wrongproblemcommentarypage(
-                                                    q_id: problem.q_id,
-                                                    selectedChoice:
-                                                        problem.options[i],
-                                                    selectedChoiceNum: i + 1,
-                                                    correctOption:
-                                                        problem.correctOption,
-                                                    index: widget.index,
-                                                    userId: widget.userId,
-                                                    apiUrl: widget.apiUrl,
-                                                    profileImagePath: widget
-                                                        .profileImagePath),
-                                          ),
-                                        ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Container(
-                                                width: 25,
-                                                height: 25,
-                                                decoration:
-                                                    const ShapeDecoration(
-                                                  color: Colors.white,
-                                                  shape: OvalBorder(),
-                                                ),
-                                              ),
-                                              Text(
-                                                '${i + 1}',
-                                                style: const TextStyle(
-                                                  color: Color(0xFF0075FF),
-                                                  fontSize: 20, // 텍스트 크기 조정
-
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                              width: 10), // 적절한 간격을 위해 추가
-                                          Expanded(
-                                            child: Center(
-                                              child: Text(
-                                                problem.options[i],
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16, // 텍스트 크기 조정
-
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                     const SizedBox(height: 20), // 간격 조정
+                                    for (int i = 0;
+                                        i < problem.options.length;
+                                        i++) ...[
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: buttonColors[i],
+                                          fixedSize:
+                                              const Size(300, 80), // 버튼 크기 조정
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Wrongproblemcommentarypage(
+                                                      q_id: problem.q_id,
+                                                      selectedChoice:
+                                                          problem.options[i],
+                                                      selectedChoiceNum: i + 1,
+                                                      correctOption:
+                                                          problem.correctOption,
+                                                      index: widget.index,
+                                                      userId: widget.userId,
+                                                      apiUrl: widget.apiUrl,
+                                                      profileImagePath: widget
+                                                          .profileImagePath),
+                                            ),
+                                          ); // 보기 버튼을 누를 때 페이지로 해당 보기의 텍스트 전달
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 35,
+                                                  height: 35,
+                                                  decoration:
+                                                      const ShapeDecoration(
+                                                    color: Colors.white,
+                                                    shape: OvalBorder(),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${i + 1}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF0075FF),
+                                                    fontSize: 14, // 텍스트 크기 조정
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                                width: 10), // 적절한 간격을 위해 추가
+                                            Expanded(
+                                              child: Center(
+                                                child: Text(
+                                                  problem.options[i],
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14, // 텍스트 크기 조정
+                                                    fontFamily: 'KCC-Hanbit',
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20), // 간격 조정
+                                    ],
                                   ],
-                                ],
+                                ),
                               ),
                             ),
                           ),
@@ -340,16 +341,28 @@ class _WrongproblemdetailsState extends State<Wrongproblemdetails> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath: widget.profileImagePath,
+                  ),
+                ),
+              );
               break;
           }
         },

@@ -15,16 +15,14 @@ class ChangePassword extends StatelessWidget {
 
   Future<void> _changePassword(BuildContext context, String email, String name,
       String newPassword) async {
-    final url = Uri.parse('$apiUrl/user_update-password');
-    final hashedPassword =
-        base64Encode(utf8.encode(newPassword)); // 해시된 비밀번호 예제 (Base64 인코딩)
-    final response = await http.post(
+    final url = Uri.parse('$apiUrl/change-password/');
+    final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
-        'email': email,
+        'e_mail': email,
         'name': name,
-        'newPassword': hashedPassword,
+        'new_password': newPassword,
       }),
     );
 
@@ -102,25 +100,33 @@ class ChangePassword extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            width: MediaQuery.sizeOf(context).width,
-            height: MediaQuery.sizeOf(context).height,
+            margin: const EdgeInsets.symmetric(horizontal: 40.0),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             color: Colors.white,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MediaQuery.sizeOf(context).width * 0.5,
-                  height: MediaQuery.sizeOf(context).height * 0.1,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.1,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/img/DayWon.png"),
                     ),
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('비밀번호 변경'),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.8,
                     child: Column(
                       children: [
                         TextField(
@@ -145,7 +151,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
                               controller: nameController,
                               decoration: InputDecoration(
@@ -168,7 +174,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: TextField(
                               controller: newPasswordController,
                               obscureText: true,
@@ -192,7 +198,7 @@ class ChangePassword extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: SizedBox(
-                            width: MediaQuery.sizeOf(context).width * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.8,
                             child: Row(
                               children: [
                                 Expanded(

@@ -166,38 +166,43 @@ class LearningPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double containerWidth = MediaQuery.of(context).size.width * 0.9;
-    double containerHeight =
-        MediaQuery.of(context).size.height * 0.7; // 네비게이션 위에 고정 크기 설정
-
     return Center(
       child: LayoutBuilder(
         builder: (context, constraints) {
+          double containerWidth = constraints.maxWidth * 0.8;
+          double containerHeight = constraints.maxHeight * 0.65;
+
           return Container(
-            width: containerWidth,
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Container(
-                  width: containerWidth,
-                  decoration: ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 2,
-                        color: Color(0xFF4399FF),
-                      ),
-                      borderRadius: BorderRadius.circular(17),
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Align(
+              alignment: const Alignment(0, 0.3),
+              child: Container(
+                width: containerWidth,
+                height: containerHeight,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      width: 2,
+                      color: Color(0xFF4399FF),
                     ),
-                    shadows: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                    borderRadius: BorderRadius.circular(17),
                   ),
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Padding(
@@ -212,8 +217,6 @@ class LearningPageContent extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height:
-                            containerHeight - 100, // 네비게이션 바 위에 위치하도록 고정 크기 설정
                         padding: const EdgeInsets.all(20),
                         child: Center(
                           child: isLoading
@@ -232,7 +235,7 @@ class LearningPageContent extends StatelessWidget {
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           );
         },

@@ -212,58 +212,64 @@ class _ShortformPageState extends State<ShortformPage> {
                             ),
                           ],
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Center(
-                                child: isLoading
-                                    ? CircularProgressIndicator()
-                                    : (_videoPlayerController != null
-                                        ? AspectRatio(
-                                            aspectRatio: _videoPlayerController
-                                                .value.aspectRatio,
-                                            child: VideoPlayer(
-                                                _videoPlayerController),
-                                          )
-                                        : const Text("No video available")),
-                              ),
-                            ),
-                            const SizedBox(height: 50),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProblemPage(
-                                      selectedCategory: selectedCategory,
-                                      scriptsId: scriptsId,
-                                      userId: widget.userId,
-                                      apiUrl: widget.apiUrl,
-                                      profileImagePath: widget.profileImagePath,
-                                    ),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 20),
-                              ),
-                              child: const Text(
-                                '문제 풀러 가기',
-                                style: TextStyle(
-                                  color: Color(0xFF4399FF),
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
+                                    vertical: 10, horizontal: 10),
+                                child: Center(
+                                  child: isLoading
+                                      ? CircularProgressIndicator()
+                                      : (_videoPlayerController != null
+                                          ? Container(
+                                              width: constraints
+                                                  .maxWidth, // 원하는 너비를 설정
+                                              height: constraints.maxWidth *
+                                                  0.8, // 원하는 높이를 설정
+                                              child: VideoPlayer(
+                                                  _videoPlayerController),
+                                            )
+                                          : const Text("No video available")),
                                 ),
                               ),
-                            ),
-                          ],
+                              const SizedBox(height: 30),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProblemPage(
+                                        selectedCategory: selectedCategory,
+                                        scriptsId: scriptsId,
+                                        userId: widget.userId,
+                                        apiUrl: widget.apiUrl,
+                                        profileImagePath:
+                                            widget.profileImagePath,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 20),
+                                ),
+                                child: const Text(
+                                  '문제 풀러 가기',
+                                  style: TextStyle(
+                                    color: Color(0xFF4399FF),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -309,68 +315,6 @@ class _ShortformPageState extends State<ShortformPage> {
             );
           },
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/backbtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'Back',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/homebtn.png',
-              width: 28,
-              height: 28,
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/img/mypagebtn.png',
-              width: 24,
-              height: 24,
-            ),
-            label: 'My Page',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pop(context);
-              break;
-            case 1:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MainPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath,
-                  ),
-                ),
-              );
-              break;
-            case 2:
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyPage(
-                    userId: widget.userId,
-                    apiUrl: widget.apiUrl,
-                    profileImagePath: widget.profileImagePath,
-                  ),
-                ),
-              );
-              break;
-          }
-        },
       ),
     );
   }

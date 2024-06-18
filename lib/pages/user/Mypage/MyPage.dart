@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:project/config.dart';
 import 'package:project/pages/MainPage.dart';
+import 'package:project/pages/login/LoginPage.dart';
 import 'package:project/pages/user/Mypage/CorrectProblem.dart';
 import 'package:project/pages/user/Mypage/WrongProblem.dart';
 import 'package:http/http.dart' as http;
@@ -420,6 +422,27 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
           ),
+          Positioned(
+            top: 35,
+            right: 16,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(
+                      apiUrl: Config.apiUrl,
+                    ),
+                  ),
+                );
+              },
+              child: Image.asset(
+                'assets/img/logout.png',
+                width: 100,
+                height: 50,
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -455,7 +478,7 @@ class _MyPageState extends State<MyPage> {
         onTap: (index) {
           switch (index) {
             case 0:
-              Navigator.pop(context);
+              _handlePopAction(context);
               break;
             case 1:
               Navigator.push(
@@ -491,5 +514,20 @@ class _MyPageState extends State<MyPage> {
         },
       ),
     );
+  }
+
+  void _handlePopAction(BuildContext context) {
+    // 현재 라우트를 가져옵니다.
+    Route<dynamic>? currentRoute = ModalRoute.of(context);
+
+    // 현재 라우트가 존재하고, 이전 페이지가 LoginPage인 경우에만 동작합니다.
+    if (currentRoute != null && currentRoute.settings.name == "/login") {
+      // 이전 페이지가 LoginPage인 경우 뒤로 가기를 막습니다.
+      // 추가적인 작업을 수행할 수도 있습니다.
+      return; // 뒤로 가기 동작을 막고 함수를 종료합니다.
+    }
+
+    // 그 외의 경우에는 기본적인 Navigator.pop을 실행합니다.
+    Navigator.pop(context);
   }
 }

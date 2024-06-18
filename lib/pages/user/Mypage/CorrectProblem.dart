@@ -35,12 +35,14 @@ class _CorrectproblemState extends State<Correctproblem> {
       final url =
           Uri.parse('${widget.apiUrl}/get_user_history/$userId?T_F=true');
 
-      final response =
-          await http.get(url, headers: {'Accept': 'application/json'});
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8'
+      });
 
       if (response.statusCode == 200) {
         setState(() {
-          correctProblems = json.decode(response.body);
+          correctProblems = json.decode(utf8.decode(response.bodyBytes));
           loading = false;
         });
       } else {
@@ -111,7 +113,7 @@ class _CorrectproblemState extends State<Correctproblem> {
                     left: width * 0.07,
                     top: height * 0.14,
                     child: Text(
-                      '마리모님, 맞은 문제를 확인하세요!',
+                      '맞은 문제를 확인하세요!',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: width * 0.035,
@@ -285,16 +287,30 @@ class _CorrectproblemState extends State<Correctproblem> {
               Navigator.pop(context);
               break;
             case 1:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
+              );
               break;
             case 2:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const MyPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPage(
+                    userId: widget.userId,
+                    apiUrl: widget.apiUrl,
+                    profileImagePath:
+                        widget.profileImagePath, // 업데이트된 프로필 이미지 경로 전달
+                  ),
+                ),
+              );
               break;
           }
         },
