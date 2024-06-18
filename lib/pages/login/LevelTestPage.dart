@@ -8,7 +8,9 @@ class LevelTestPage extends StatefulWidget {
   final void Function(String) updateLevel;
   final void Function(bool) updateTestDone;
 
-  LevelTestPage({Key? key, required this.updateLevel, required this.updateTestDone}) : super(key: key);
+  LevelTestPage(
+      {Key? key, required this.updateLevel, required this.updateTestDone})
+      : super(key: key);
 
   @override
   _LevelTestPageState createState() => _LevelTestPageState();
@@ -39,7 +41,8 @@ class _LevelTestPageState extends State<LevelTestPage> {
       );
 
       if (response.statusCode == 200) {
-        final List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes));
+        final List<dynamic> responseData =
+            json.decode(utf8.decode(response.bodyBytes));
 
         setState(() {
           quizzes = responseData.map((questionData) {
@@ -187,9 +190,9 @@ class _LevelTestPageState extends State<LevelTestPage> {
         if (kDebugMode) {
           print('레벨테스트 페이지에서의 레벨: $level');
         }
-        widget.updateLevel(level);  // 콜백으로 level 전달
+        widget.updateLevel(level); // 콜백으로 level 전달
         widget.updateTestDone(true); // 콜백으로 테스트 완료 상태 전달
-        Navigator.of(context).pop();  // 다이얼로그 닫기
+        Navigator.of(context).pop(); // 다이얼로그 닫기
       } else {
         _showErrorDialog('답변 제출 실패: ${response.statusCode}');
       }
