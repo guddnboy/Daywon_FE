@@ -297,26 +297,6 @@ class _MainPageState extends State<MainPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(
-                                    apiUrl: Config.apiUrl,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Image.asset(
-                              'assets/img/logout.png',
-                              width: 100,
-                              height: 50,
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ],
