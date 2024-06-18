@@ -173,19 +173,37 @@ class _SignupPageState extends State<SignupPage> {
         if (kDebugMode) {
           print('회원가입 성공: $userLevel');
         } // 회원가입 성공 시 서버에서 반환하는 메시지 출력
-        _showDialog(context, '회원가입 성공',
-            '회원가입이 성공적으로 완료되었습니다. 당신의 레벨은 $userLevel 입니다. 로그인 페이지로 이동합니다.');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LoginPage(
-              apiUrl: Config.apiUrl,
-            ),
-          ),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('회원가입 성공'),
+              content: Text('회원가입이 성공적으로 완료되었습니다. 당신의 레벨은 $userLevel 입니다.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(
+                          apiUrl: Config.apiUrl,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('확인'),
+                ),
+              ],
+            );
+          },
         );
       } else {
         _showDialog(
-            context, '회원가입 실패', '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}');
+          context,
+          '회원가입 실패',
+          '회원가입에 실패했습니다. 에러 코드: ${response.statusCode}',
+        );
       }
     } catch (e) {
       _showDialog(context, '오류', '회원가입 중 오류가 발생했습니다: $e');
