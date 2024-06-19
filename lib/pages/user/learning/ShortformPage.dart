@@ -15,6 +15,7 @@ class ShortformPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
   final String profileImagePath;
+  final int scriptsId;
 
   const ShortformPage({
     Key? key,
@@ -22,7 +23,7 @@ class ShortformPage extends StatefulWidget {
     required this.userId,
     required this.apiUrl,
     required this.profileImagePath,
-    required int scriptsId,
+    required this.scriptsId,
   }) : super(key: key);
 
   @override
@@ -32,10 +33,9 @@ class ShortformPage extends StatefulWidget {
 class _ShortformPageState extends State<ShortformPage> {
   late String selectedCategory;
   late VideoPlayerController _videoPlayerController;
-  late ChewieController _chewieController;
   bool isLoading = true;
   String videoUrl = '';
-  final int scriptsId = 92;
+  late int scriptsId = widget.scriptsId;
   Future<void>? _initializeVideoPlayerFuture;
 
   void _initializeVideoPlayer(scriptsId) async {
@@ -128,10 +128,8 @@ class _ShortformPageState extends State<ShortformPage> {
         print("fetch: 비디오 있음");
         // 비디오 URL이 가져와졌으니, 이 URL을 통해 VideoPlayerController를 초기화합니다.
 
-        _videoPlayerController = VideoPlayerController.networkUrl(preVideoUrl)
-          ..initialize();
-
-        //_videoPlayerController.initialize();
+        _videoPlayerController = VideoPlayerController.networkUrl(preVideoUrl);
+        _videoPlayerController.initialize();
         // 비디오 플레이어 초기화
 
         // ChewieController를 초기화하여 비디오를 재생할 수 있도록 합니다.
@@ -166,7 +164,6 @@ class _ShortformPageState extends State<ShortformPage> {
   @override
   void dispose() {
     _videoPlayerController.dispose();
-    _chewieController.dispose();
     super.dispose();
   }
 

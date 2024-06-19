@@ -178,7 +178,7 @@ class _MyPageState extends State<MyPage> {
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         'nickname': newNickname,
-        'profile_image': newProfileImageId + 2,
+        'profile_image': newProfileImageId,
       }),
     );
 

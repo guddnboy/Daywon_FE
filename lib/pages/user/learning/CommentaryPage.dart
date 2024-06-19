@@ -15,21 +15,22 @@ class CommentaryPage extends StatelessWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const CommentaryPage({
-    Key? key,
-    required this.selectedCategory,
-    required this.scriptsId,
-    required this.qId,
-    required this.resultMessage,
-    required this.points,
-    required this.selectedChoice,
-    required this.userId,
-    required this.apiUrl,
-    required this.profileImagePath
-  }) : super(key: key);
+  const CommentaryPage(
+      {Key? key,
+      required this.selectedCategory,
+      required this.scriptsId,
+      required this.qId,
+      required this.resultMessage,
+      required this.points,
+      required this.selectedChoice,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   Future<String> fetchProblemExplanation() async {
-    final response = await http.get(Uri.parse('$apiUrl/questions/$qId/comments'));
+    final response =
+        await http.get(Uri.parse('$apiUrl/questions/$qId/comments'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
@@ -39,29 +40,31 @@ class CommentaryPage extends StatelessWidget {
     }
   }
 
-Future<void> saveUserHistory(bool isCorrect) async {
-  try {
-    final response = await http.post(
-      Uri.parse('$apiUrl/user_history/'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'user_id': userId,
-        'script_id': scriptsId,
-        'T_F': isCorrect,
-      }),
-    );
+  Future<void> saveUserHistory(
+      bool isCorrect, int userId, int scriptsId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$apiUrl/user_history/'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'user_id': userId,
+          'script_id': scriptsId,
+          'T_F': isCorrect,
+        }),
+      );
 
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      print('Failed to save user history: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      throw Exception('Failed to save user history');
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        print('Failed to save user history: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to save user history');
+      }
+    } catch (e) {
+      print('Error saving user history: $e');
     }
-  } catch (e) {
-    print('Error saving user history: $e');
   }
-}
+
   @override
   Widget build(BuildContext context) {
     bool isCorrect = resultMessage.contains('맞았습니다');
@@ -193,16 +196,23 @@ Future<void> saveUserHistory(bool isCorrect) async {
                                           ),
                                         ),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
                                           children: [
                                             ElevatedButton(
                                               onPressed: () async {
-                                                await saveUserHistory(isCorrect);
+                                                await saveUserHistory(isCorrect,
+                                                    userId, scriptsId);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          MainPage(userId: userId, apiUrl: apiUrl, profileImagePath: profileImagePath,)),
+                                                          MainPage(
+                                                            userId: userId,
+                                                            apiUrl: apiUrl,
+                                                            profileImagePath:
+                                                                profileImagePath,
+                                                          )),
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -211,8 +221,10 @@ Future<void> saveUserHistory(bool isCorrect) async {
                                                   borderRadius:
                                                       BorderRadius.circular(14),
                                                 ),
-                                                padding: const EdgeInsets.symmetric(
-                                                    vertical: 12, horizontal: 20),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 20),
                                               ),
                                               child: const Text(
                                                 '학습 완료',
@@ -225,12 +237,17 @@ Future<void> saveUserHistory(bool isCorrect) async {
                                             ),
                                             ElevatedButton(
                                               onPressed: () async {
-                                                await saveUserHistory(isCorrect);
+                                                await saveUserHistory(isCorrect,
+                                                    userId, scriptsId);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          ChatBotPage(userId: userId, apiUrl: apiUrl, profileImagePath: profileImagePath)), // ChatBotPage로 이동합니다.
+                                                          ChatBotPage(
+                                                              userId: userId,
+                                                              apiUrl: apiUrl,
+                                                              profileImagePath:
+                                                                  profileImagePath)), // ChatBotPage로 이동합니다.
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -239,8 +256,10 @@ Future<void> saveUserHistory(bool isCorrect) async {
                                                   borderRadius:
                                                       BorderRadius.circular(14),
                                                 ),
-                                                padding: const EdgeInsets.symmetric(
-                                                    vertical: 12, horizontal: 20),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 12,
+                                                        horizontal: 20),
                                               ),
                                               child: const Text(
                                                 '추가 질문하기',
