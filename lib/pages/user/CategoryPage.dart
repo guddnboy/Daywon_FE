@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/Mypage/MyPage.dart';
 import 'package:project/pages/user/learning/LearningTextPage.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   final int userId;
   final String apiUrl;
   final String profileImagePath;
@@ -14,6 +16,73 @@ class CategoryPage extends StatelessWidget {
       required this.apiUrl,
       required this.profileImagePath})
       : super(key: key);
+
+  @override
+  _CategoryPageState createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+  bool isLoading = false;
+  late int level = 0;
+
+  void initState() {
+    super.initState();
+  }
+
+  Future<String> fetchUserLevel(int userId, String apiUrl) async {
+    final apiUrl = widget.apiUrl;
+    final userId = widget.userId;
+    final response =
+        await http.get(Uri.parse('$apiUrl/users/$userId/read_user'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print(data['level']);
+      return data['level'];
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+  void navigateToLearningPage(BuildContext context, String level,
+      int categoryId, String selectedCategory) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LearningPage(
+          level: level,
+          categoryId: categoryId,
+          selectedCategory: selectedCategory,
+          userId: widget.userId,
+          apiUrl: widget.apiUrl,
+          profileImagePath: widget.profileImagePath,
+        ),
+      ),
+    );
+  }
+
+  void onCategorySelected(
+      BuildContext context, int categoryId, String selectedCategory) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      String level = await fetchUserLevel(widget.userId, widget.apiUrl);
+      setState(() {
+        isLoading = false;
+      });
+      navigateToLearningPage(context, level, categoryId, selectedCategory);
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+      // 에러 처리
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load user level')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,19 +152,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LearningPage(
-                                      level: 1,
-                                      categoryId: 1,
-                                      selectedCategory: "세금",
-                                      userId: userId,
-                                      apiUrl: apiUrl,
-                                      profileImagePath: profileImagePath,
-                                    ),
-                                  ),
-                                );
+                                onCategorySelected(context, 1, '세금');
                               },
                               child: const Text(
                                 '세금',
@@ -116,19 +173,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LearningPage(
-                                      level: 1,
-                                      categoryId: 2,
-                                      selectedCategory: "자산관리",
-                                      userId: userId,
-                                      apiUrl: apiUrl,
-                                      profileImagePath: profileImagePath,
-                                    ),
-                                  ),
-                                );
+                                onCategorySelected(context, 2, '자산관리');
                               },
                               child: const Text(
                                 '자산관리',
@@ -149,19 +194,7 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LearningPage(
-                                      level: 1,
-                                      categoryId: 3,
-                                      selectedCategory: "금융시사상식",
-                                      userId: userId,
-                                      apiUrl: apiUrl,
-                                      profileImagePath: profileImagePath,
-                                    ),
-                                  ),
-                                );
+                                onCategorySelected(context, 3, '금융시사상식');
                               },
                               child: const Text(
                                 '금융시사상식',
@@ -172,6 +205,11 @@ class CategoryPage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            if (isLoading)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: CircularProgressIndicator(),
+                              ),
                           ],
                         ),
                       ),
@@ -259,9 +297,9 @@ class CategoryPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MainPage(
-                      userId: userId,
-                      apiUrl: apiUrl,
-                      profileImagePath: profileImagePath),
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;
@@ -270,9 +308,9 @@ class CategoryPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyPage(
-                      userId: userId,
-                      apiUrl: apiUrl,
-                      profileImagePath: profileImagePath),
+                      userId: widget.userId,
+                      apiUrl: widget.apiUrl,
+                      profileImagePath: widget.profileImagePath),
                 ),
               );
               break;

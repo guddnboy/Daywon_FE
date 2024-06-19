@@ -7,7 +7,7 @@ import 'package:project/pages/user/Mypage/MyPage.dart';
 
 class LearningPage extends StatefulWidget {
   final int categoryId;
-  final int level;
+  final String level;
   final String selectedCategory;
   final int userId;
   final String apiUrl;
@@ -29,7 +29,7 @@ class LearningPage extends StatefulWidget {
 
 class _LearningPageState extends State<LearningPage> {
   late int categoryId;
-  late int level;
+  late String level;
   late String selectedCategory;
   String explanation = '';
   int scriptsId = 0; // scripts_id를 저장할 변수 추가
@@ -52,7 +52,7 @@ class _LearningPageState extends State<LearningPage> {
     super.dispose();
   }
 
-  Future<void> fetchConceptExplanation(int categoryId, int level) async {
+  Future<void> fetchConceptExplanation(int categoryId, String level) async {
     final url =
         '${widget.apiUrl}/read/scripts/random?category_label=$categoryId&level=$level';
     try {

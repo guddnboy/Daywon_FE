@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:project/pages/MainPage.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project/pages/MainPage.dart';
 import 'package:project/pages/user/learning/ChatBotpage.dart';
 
-class CommentaryPage extends StatelessWidget {
+class CommentaryPage extends StatefulWidget {
   final String selectedCategory;
   final int scriptsId;
   final int qId;
@@ -14,23 +17,51 @@ class CommentaryPage extends StatelessWidget {
   final int userId;
   final String apiUrl;
   final String profileImagePath;
+  final bool isCorrect;
 
-  const CommentaryPage(
-      {Key? key,
-      required this.selectedCategory,
-      required this.scriptsId,
-      required this.qId,
-      required this.resultMessage,
-      required this.points,
-      required this.selectedChoice,
-      required this.userId,
-      required this.apiUrl,
-      required this.profileImagePath})
-      : super(key: key);
+  const CommentaryPage({
+    Key? key,
+    required this.selectedCategory,
+    required this.scriptsId,
+    required this.qId,
+    required this.resultMessage,
+    required this.points,
+    required this.selectedChoice,
+    required this.userId,
+    required this.apiUrl,
+    required this.profileImagePath,
+    required this.isCorrect,
+  }) : super(key: key);
+
+  @override
+  _CommentaryPageState createState() => _CommentaryPageState();
+}
+
+class _CommentaryPageState extends State<CommentaryPage> {
+  late Future<String> _futureExplanation;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureExplanation = fetchProblemExplanation();
+  }
+
+  Future<String> fetchPointUpdate(int userId, int points) async {
+    final url = Uri.parse('${widget.apiUrl}/user/${widget.userId}/points');
+    final response = await http.put(url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({"points": widget.points}));
+
+    if (response.statusCode == 200) {
+      return "success";
+    } else {
+      throw Exception('Failed to load explanation');
+    }
+  }
 
   Future<String> fetchProblemExplanation() async {
-    final response =
-        await http.get(Uri.parse('$apiUrl/questions/$qId/comments'));
+    final response = await http
+        .get(Uri.parse('${widget.apiUrl}/questions/${widget.qId}/comments'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
@@ -41,34 +72,34 @@ class CommentaryPage extends StatelessWidget {
   }
 
   Future<void> saveUserHistory(
-      bool isCorrect, int userId, int scriptsId) async {
+      int userId, int scriptsId, bool isCorrect) async {
     try {
       final response = await http.post(
-        Uri.parse('$apiUrl/user_history/'),
+        Uri.parse(
+            '${widget.apiUrl}/user_history/?user_id=$userId&script_id=$scriptsId&T_F=$isCorrect'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(<String, dynamic>{
-          'user_id': userId,
-          'script_id': scriptsId,
-          'T_F': isCorrect,
-        }),
       );
 
-      if (response.statusCode != 200 && response.statusCode != 201) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("isCorrect: $isCorrect");
+        print('User history saved successfully');
+      } else {
         print('Failed to save user history: ${response.statusCode}');
         print('Response body: ${response.body}');
         throw Exception('Failed to save user history');
       }
     } catch (e) {
       print('Error saving user history: $e');
+      throw Exception('Failed to save user history: $e');
     }
+
+    fetchPointUpdate(widget.userId, widget.points);
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isCorrect = resultMessage.contains('맞았습니다');
-
     return Scaffold(
       body: Center(
         child: LayoutBuilder(
@@ -77,7 +108,7 @@ class CommentaryPage extends StatelessWidget {
             double containerHeight = constraints.maxHeight * 0.65;
 
             return FutureBuilder<String>(
-              future: fetchProblemExplanation(),
+              future: _futureExplanation,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -142,9 +173,9 @@ class CommentaryPage extends StatelessWidget {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      resultMessage,
+                                                      widget.resultMessage,
                                                       style: TextStyle(
-                                                        color: isCorrect
+                                                        color: widget.isCorrect
                                                             ? Colors.green
                                                             : Colors.red,
                                                         fontSize: 18,
@@ -154,7 +185,7 @@ class CommentaryPage extends StatelessWidget {
                                                     ),
                                                     const SizedBox(height: 10),
                                                     Text(
-                                                      '획득 포인트: $points',
+                                                      '획득 포인트: ${widget.points}',
                                                       style: const TextStyle(
                                                         color: Colors.black,
                                                         fontSize: 14,
@@ -201,18 +232,21 @@ class CommentaryPage extends StatelessWidget {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () async {
-                                                await saveUserHistory(isCorrect,
-                                                    userId, scriptsId);
+                                                await saveUserHistory(
+                                                    widget.userId,
+                                                    widget.scriptsId,
+                                                    widget.isCorrect);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          MainPage(
-                                                            userId: userId,
-                                                            apiUrl: apiUrl,
-                                                            profileImagePath:
-                                                                profileImagePath,
-                                                          )),
+                                                    builder: (context) =>
+                                                        MainPage(
+                                                      userId: widget.userId,
+                                                      apiUrl: widget.apiUrl,
+                                                      profileImagePath: widget
+                                                          .profileImagePath,
+                                                    ),
+                                                  ),
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(
@@ -237,17 +271,21 @@ class CommentaryPage extends StatelessWidget {
                                             ),
                                             ElevatedButton(
                                               onPressed: () async {
-                                                await saveUserHistory(isCorrect,
-                                                    userId, scriptsId);
+                                                await saveUserHistory(
+                                                    widget.userId,
+                                                    widget.scriptsId,
+                                                    widget.isCorrect);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ChatBotPage(
-                                                              userId: userId,
-                                                              apiUrl: apiUrl,
-                                                              profileImagePath:
-                                                                  profileImagePath)), // ChatBotPage로 이동합니다.
+                                                    builder: (context) =>
+                                                        ChatBotPage(
+                                                      userId: widget.userId,
+                                                      apiUrl: widget.apiUrl,
+                                                      profileImagePath: widget
+                                                          .profileImagePath,
+                                                    ),
+                                                  ),
                                                 );
                                               },
                                               style: ElevatedButton.styleFrom(

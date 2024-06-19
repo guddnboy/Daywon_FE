@@ -78,6 +78,7 @@ class ProblemPage extends StatefulWidget {
 class _ProblemPageState extends State<ProblemPage> {
   late Future<Problem> futureProblem;
   bool isAnswered = false;
+  late bool isCorrect;
 
   @override
   void initState() {
@@ -93,9 +94,11 @@ class _ProblemPageState extends State<ProblemPage> {
 
       if (selectedOption == problem.answerOption) {
         resultMessage = '맞았습니다! +${problem.plusPoint} 점';
+        isCorrect = true;
         points = problem.plusPoint;
       } else {
         resultMessage = '틀렸습니다! -${problem.minusPoint} 점';
+        isCorrect = false;
         points = problem.minusPoint;
       }
 
@@ -112,6 +115,7 @@ class _ProblemPageState extends State<ProblemPage> {
             userId: widget.userId,
             apiUrl: widget.apiUrl,
             profileImagePath: widget.profileImagePath,
+            isCorrect: isCorrect,
           ),
         ),
       );
