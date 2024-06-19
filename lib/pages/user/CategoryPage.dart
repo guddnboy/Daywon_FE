@@ -8,7 +8,12 @@ class CategoryPage extends StatelessWidget {
   final String apiUrl;
   final String profileImagePath;
 
-  const CategoryPage({Key? key, required this.userId, required this.apiUrl, required this.profileImagePath}) : super(key: key);
+  const CategoryPage(
+      {Key? key,
+      required this.userId,
+      required this.apiUrl,
+      required this.profileImagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,7 @@ class CategoryPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LearningPage(
-                                      level: 2,
+                                      level: 1,
                                       categoryId: 1,
                                       selectedCategory: "세금",
                                       userId: userId,
@@ -115,7 +120,7 @@ class CategoryPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LearningPage(
-                                      level: 2,
+                                      level: 1,
                                       categoryId: 2,
                                       selectedCategory: "자산관리",
                                       userId: userId,
@@ -148,7 +153,7 @@ class CategoryPage extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LearningPage(
-                                      level: 2,
+                                      level: 1,
                                       categoryId: 3,
                                       selectedCategory: "금융시사상식",
                                       userId: userId,
@@ -253,7 +258,10 @@ class CategoryPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MainPage(userId: userId, apiUrl: apiUrl, profileImagePath:profileImagePath),
+                  builder: (context) => MainPage(
+                      userId: userId,
+                      apiUrl: apiUrl,
+                      profileImagePath: profileImagePath),
                 ),
               );
               break;
@@ -261,7 +269,10 @@ class CategoryPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyPage(userId: userId, apiUrl: apiUrl, profileImagePath: profileImagePath),
+                  builder: (context) => MyPage(
+                      userId: userId,
+                      apiUrl: apiUrl,
+                      profileImagePath: profileImagePath),
                 ),
               );
               break;
