@@ -34,6 +34,7 @@ class _LearningPageState extends State<LearningPage> {
   String explanation = '';
   int scriptsId = 0; // scripts_id를 저장할 변수 추가
   bool isLoading = true;
+  late PageController _pageController;
 
   @override
   void initState() {
@@ -42,6 +43,13 @@ class _LearningPageState extends State<LearningPage> {
     level = widget.level;
     selectedCategory = widget.selectedCategory;
     fetchConceptExplanation(categoryId, level);
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> fetchConceptExplanation(int categoryId, int level) async {
@@ -73,11 +81,13 @@ class _LearningPageState extends State<LearningPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        controller: _pageController,
         children: [
           LearningPageContent(
             selectedCategory: selectedCategory,
             explanation: explanation,
             isLoading: isLoading,
+            key: ValueKey('LearningPageContent'), // 고유한 키 추가
           ),
           ShortformPage(
             selectedCategory: selectedCategory,
@@ -85,6 +95,7 @@ class _LearningPageState extends State<LearningPage> {
             userId: widget.userId,
             apiUrl: widget.apiUrl,
             profileImagePath: widget.profileImagePath,
+            key: ValueKey('ShortformPage'), // 고유한 키 추가
           ),
         ],
       ),
