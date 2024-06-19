@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project/pages/MainPage.dart';
@@ -43,6 +46,19 @@ class _CommentaryPageState extends State<CommentaryPage> {
     _futureExplanation = fetchProblemExplanation();
   }
 
+  Future<String> fetchPointUpdate(int userId, int points) async {
+    final url = Uri.parse('${widget.apiUrl}/user/${widget.userId}/points');
+    final response = await http.put(url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({"points": widget.points}));
+
+    if (response.statusCode == 200) {
+      return "success";
+    } else {
+      throw Exception('Failed to load explanation');
+    }
+  }
+
   Future<String> fetchProblemExplanation() async {
     final response = await http
         .get(Uri.parse('${widget.apiUrl}/questions/${widget.qId}/comments'));
@@ -78,6 +94,8 @@ class _CommentaryPageState extends State<CommentaryPage> {
       print('Error saving user history: $e');
       throw Exception('Failed to save user history: $e');
     }
+
+    fetchPointUpdate(widget.userId, widget.points);
   }
 
   @override
